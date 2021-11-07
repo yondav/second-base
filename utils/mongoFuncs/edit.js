@@ -6,44 +6,45 @@ exports.edit = {
       new: true,
     }),
   gear: async (update, gearId, type) => {
-    let updatedGear;
-
     switch (type) {
       case 'control_room':
-        updatedGear = await gear.ControlRoom.findByIdAndUpdate(gearId, update, {
+        return await gear.ControlRoom.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       case 'monitoring':
-        updatedGear = await gear.Monitoring.findByIdAndUpdate(gearId, update, {
+        return await gear.Monitoring.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       case 'amps':
-        updatedGear = await gear.Amp.findByIdAndUpdate(gearId, update, {
+        return await gear.Amp.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       case 'drums':
-        updatedGear = await gear.Drum.findByIdAndUpdate(gearId, update, {
+        return await gear.Drum.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       case 'microphones':
-        updatedGear = await gear.Microphone.findByIdAndUpdate(gearId, update, {
+        return await gear.Microphone.findByIdAndUpdate(gearId, update, {
+          new: true,
+          useFindAndModify: false,
+        });
+      case 'guitars':
+        return await gear.Guitar.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       case 'keys':
-        updatedGear = await gear.Key.findByIdAndUpdate(gearId, update, {
+        return await gear.Key.findByIdAndUpdate(gearId, update, {
           new: true,
           useFindAndModify: false,
         });
       default:
         break;
     }
-
-    return updatedGear;
   },
   artist: async (update, artistId) =>
     await Artist.findByIdAndUpdate(artistId, update, {

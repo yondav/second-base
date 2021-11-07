@@ -4,8 +4,9 @@ const router = express.Router();
 const { getRoutes } = require('./routes.get');
 const { postRoutes } = require('./routes.post');
 const { putRoutes } = require('./routes.put');
+const { deleteRoutes } = require('./routes.delete');
 
-const api = [...getRoutes, ...postRoutes, ...putRoutes];
+const api = [...getRoutes, ...postRoutes, ...putRoutes, ...deleteRoutes];
 
 api.map(route => {
   let { path, method, func, middleware } = route;

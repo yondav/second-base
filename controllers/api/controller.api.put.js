@@ -5,7 +5,7 @@ exports.put = {
     try {
       const data = await edit.studio(req.body);
 
-      res.status(204).json(data);
+      res.status(202).json(data);
     } catch (err) {
       next(err);
       console.log(err);
@@ -19,7 +19,7 @@ exports.put = {
         req.params.gear_type
       );
 
-      res.status(204).json(data);
+      res.status(202).json(data);
     } catch (err) {
       next(err);
     }
@@ -28,7 +28,7 @@ exports.put = {
     try {
       const data = await edit.artist(req.body, req.params.artist_id);
 
-      res.status(204).json(data);
+      res.status(202).json(data);
     } catch (err) {
       next(err);
     }
@@ -37,7 +37,7 @@ exports.put = {
     try {
       const data = await edit.project(req.body, req.params.project_id);
 
-      res.status(204).json(data);
+      res.status(202).json(data);
     } catch (err) {
       next(err);
     }
