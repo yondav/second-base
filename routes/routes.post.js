@@ -1,28 +1,28 @@
-const { post } = require('../controllers/api/controller.api.post');
+const { postController } = require('../controllers/api/controller.api.post');
 
 exports.postRoutes = [
   {
     path: '/secondBase',
     method: 'post',
-    func: post.studio,
+    func: postController.studio,
     middleware: [],
   },
   {
     path: '/gear/:gear_type',
     method: 'post',
-    func: post.gear,
+    func: postController.gear,
     middleware: [],
   },
   {
     path: '/artists',
     method: 'post',
-    func: post.artist,
+    func: postController.artist,
     middleware: [],
   },
   {
     path: '/artists/:artist_id/projects',
     method: 'post',
-    func: post.project,
+    func: postController.project,
     middleware: [],
   },
 ];

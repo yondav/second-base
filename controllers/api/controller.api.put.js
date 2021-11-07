@@ -1,6 +1,6 @@
 const { edit } = require('../../utils/mongoFuncs/edit');
 
-exports.put = {
+exports.putController = {
   studio: async (req, res, next) => {
     try {
       const data = await edit.studio(req.body);

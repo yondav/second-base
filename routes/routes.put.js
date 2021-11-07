@@ -1,28 +1,28 @@
-const { put } = require('../controllers/api/controller.api.put');
+const { putController } = require('../controllers/api/controller.api.put');
 
 exports.putRoutes = [
   {
     path: '/secondBase',
     method: 'put',
-    func: put.studio,
+    func: putController.studio,
     middleware: [],
   },
   {
     path: '/gear/:gear_type/:gear_id',
     method: 'put',
-    func: put.gear,
+    func: putController.gear,
     middleware: [],
   },
   {
     path: '/artists/:artist_id/',
     method: 'put',
-    func: put.artist,
+    func: putController.artist,
     middleware: [],
   },
   {
     path: '/artists/projects/:project_id',
     method: 'put',
-    func: put.project,
+    func: putController.project,
     middleware: [],
   },
 ];

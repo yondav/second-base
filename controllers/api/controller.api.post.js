@@ -1,7 +1,7 @@
 const { create } = require('../../utils/mongoFuncs/create');
 const { find } = require('../../utils/mongoFuncs/find');
 
-exports.post = {
+exports.postController = {
   studio: async (req, res, next) => {
     try {
       let data;

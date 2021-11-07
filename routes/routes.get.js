@@ -1,22 +1,22 @@
-const { get } = require('../controllers/api/controller.api.get');
+const { getController } = require('../controllers/api/controller.api.get');
 
 exports.getRoutes = [
   {
     path: '/secondBase',
     method: 'get',
-    func: get.studio,
+    func: getController.studio,
     middleware: [],
   },
   {
     path: '/studio_gear',
     method: 'get',
-    func: get.studio_gear,
+    func: getController.studio_gear,
     middleware: [],
   },
   {
     path: '/artists',
     method: 'get',
-    func: get.artists,
+    func: getController.artists,
     middleware: [],
   },
 ];

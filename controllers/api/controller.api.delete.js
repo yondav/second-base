@@ -1,6 +1,6 @@
 const { remove } = require('../../utils/mongoFuncs/remove');
 
-exports.delete_ = {
+exports.deleteController = {
   gear: async (req, res, next) => {
     try {
       const data = await remove.gear(req.params.gear_id, req.params.gear_type);

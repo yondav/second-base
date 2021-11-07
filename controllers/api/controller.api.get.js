@@ -1,6 +1,6 @@
 const { find } = require('../../utils/mongoFuncs/find');
 
-exports.get = {
+exports.getController = {
   studio: async (req, res, next) => {
     try {
       const data = await find.studio();
