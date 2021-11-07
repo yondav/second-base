@@ -14,13 +14,13 @@ exports.postRoutes = [
     middleware: [],
   },
   {
-    path: '/artist',
+    path: '/artists',
     method: 'post',
     func: post.artist,
     middleware: [],
   },
   {
-    path: '/artist/:artistId/projects',
+    path: '/artists/:artist_id/projects',
     method: 'post',
     func: post.project,
     middleware: [],

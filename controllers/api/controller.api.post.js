@@ -59,7 +59,7 @@ exports.post = {
   },
   project: async (req, res, next) => {
     try {
-      const data = await create.project(req.body, req.params.artistId);
+      const data = await create.project(req.body, req.params.artist_id);
 
       res.status(201).json(data);
     } catch (err) {

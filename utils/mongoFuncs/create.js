@@ -33,7 +33,7 @@ exports.create = {
           { new: true, useFindAndModify: false }
         );
       case 'amps':
-        newGear = new gear.Amps(obj);
+        newGear = new gear.Amp(obj);
         await newGear.save();
         return StudioGear.findByIdAndUpdate(
           studioGear._id,
@@ -41,7 +41,7 @@ exports.create = {
           { new: true, useFindAndModify: false }
         );
       case 'drums':
-        newGear = new gear.Drums(obj);
+        newGear = new gear.Drum(obj);
         await newGear.save();
         return StudioGear.findByIdAndUpdate(
           studioGear._id,
@@ -49,7 +49,7 @@ exports.create = {
           { new: true, useFindAndModify: false }
         );
       case 'microphones':
-        newGear = new gear.Microphones(obj);
+        newGear = new gear.Microphone(obj);
         await newGear.save();
         return StudioGear.findByIdAndUpdate(
           studioGear._id,
@@ -57,7 +57,7 @@ exports.create = {
           { new: true, useFindAndModify: false }
         );
       case 'guitars':
-        newGear = new gear.Guitars(obj);
+        newGear = new gear.Guitar(obj);
         await newGear.save();
         return StudioGear.findByIdAndUpdate(
           studioGear._id,
@@ -65,7 +65,7 @@ exports.create = {
           { new: true, useFindAndModify: false }
         );
       case 'keys':
-        newGear = new gear.Keys(obj);
+        newGear = new gear.Key(obj);
         await newGear.save();
         return StudioGear.findByIdAndUpdate(
           studioGear._id,
