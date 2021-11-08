@@ -35,13 +35,14 @@ nav {
   background-color: var(--primary-black) !important;
 }
 
-nav a {
+.nav-link {
   font-size: 0.875em !important;
   color: var(--primary-white) !important;
+  white-space: nowrap;
 }
 
 .navbar-nav > * {
-  margin: 0 0.5rem;
+  /* margin: 0 0.5rem; */
 }
 
 .wrapper {

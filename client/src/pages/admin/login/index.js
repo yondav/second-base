@@ -1,19 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAdminContext from '../../../hooks/useAdminContext';
-import Card from 'react-bootstrap/Card';
-import Alert from 'react-bootstrap/Alert';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Card, Alert, Form, Button } from 'react-bootstrap';
+import { AdminContext } from '../../../context/context.auth';
 
 import './login.css';
 
-const Login = () => {
+const Login = ({ login }) => {
+  const admin = useContext(AdminContext);
   const emailRef = useRef();
   const passwordRef = useRef();
   const radioRef = useRef();
   let navigate = useNavigate();
-  const { login, isLoggedIn } = useAdminContext();
   const [statusMessage, setStatusMessage] = useState(false);
   const [invalid, setInvalid] = useState({
     email: { invalid: false, message: '' },
@@ -48,10 +45,15 @@ const Login = () => {
 
   // side effect sets statusMessage state for successful or unsuccessful login attempt
   useEffect(() => {
-    isLoggedIn
-      ? setStatusMessage({ variant: 'success', message: 'Welcome back Neil' })
-      : setStatusMessage({ variant: 'danger', message: 'Go home Crosby' });
-  }, [isLoggedIn, navigate]);
+    if (admin.state.admin) {
+      setStatusMessage({ variant: 'success', message: 'Welcome back Neil' });
+      setTimeout(() => {
+        navigate('/admin/portal');
+      }, 1500);
+    } else {
+      setStatusMessage({ variant: 'danger', message: 'Go home Crosby' });
+    }
+  }, [admin.state.admin, navigate]);
 
   return (
     <Card className='login-card'>

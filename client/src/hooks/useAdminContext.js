@@ -7,12 +7,12 @@ export default function useAdminContext() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const token = localStorage.getItem('authToken');
 
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // };
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const getAdmin = async () => {
     try {
@@ -24,18 +24,18 @@ export default function useAdminContext() {
     }
   };
 
-  // const verifyToken = async () => {
-  //   try {
-  //     const res = await axios.post('/admin/verify', { token }, config);
+  const verifyToken = async () => {
+    try {
+      const res = await axios.post('/api/v1/verify', { token }, config);
 
-  //     if (res) {
-  //       admin.dispatch({ type: 'ISADMIN' });
-  //     }
-  //   } catch (err) {
-  //     localStorage.removeItem('authToken');
-  //     admin.dispatch({ type: 'ISNOTADMIN' });
-  //   }
-  // };
+      if (res) {
+        admin.dispatch({ type: 'ISADMIN' });
+      }
+    } catch (err) {
+      localStorage.removeItem('authToken');
+      admin.dispatch({ type: 'ISNOTADMIN' });
+    }
+  };
 
   const login = async (email, password) => {
     try {
@@ -69,5 +69,5 @@ export default function useAdminContext() {
     admin.dispatch({ type: 'ISNOTADMIN' });
   };
 
-  return { login, logout, isLoggedIn };
+  return { login, logout, isLoggedIn, verifyToken };
 }
