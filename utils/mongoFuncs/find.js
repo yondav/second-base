@@ -1,4 +1,4 @@
-const { Artist, Project, Studio, StudioGear } = require('../../models');
+const { Artist, Studio, StudioGear, User } = require('../../models');
 
 exports.find = {
   studio: async () =>
@@ -18,4 +18,6 @@ exports.find = {
     ),
 
   artists: async () => await Artist.find().populate('projects'),
+
+  user: async () => await User.find(),
 };

@@ -12,9 +12,6 @@ app.use(cors());
 
 // connect to routes here
 app.use('/api/v1', require('./routes/index'));
-// app.use('/', require(''))
-
-console.log(process.env.MONGO_URI);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));

@@ -19,4 +19,10 @@ exports.getRoutes = [
     func: getController.artists,
     middleware: [],
   },
+  {
+    path: '/users',
+    method: 'get',
+    func: getController.user,
+    middleware: [],
+  },
 ];

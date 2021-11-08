@@ -52,7 +52,6 @@ exports.authController = {
 
       if (!isMatch) return next(new ErrorResponse('Invalid credentials', 401));
 
-      console.log(req.body);
       sendToken(user, 200, res);
     } catch (err) {
       next(err);

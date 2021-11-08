@@ -8,6 +8,7 @@
   /* COLORS */
   --primary-black: #2a2829;
   --primary-white: #eae8e9;
+  --failure: #b34f4c;
 
   /* FONTS */
   --ff: 'Oswalt', 'Poppins', 'Zen Kurenaido', sans-serif;
@@ -46,6 +47,10 @@ nav a {
 .wrapper {
   height: 100vh;
   width: 100vw;
+}
+
+.failure-text {
+  color: var(--failure);
 }
 
 /* BOOTSTRAP DEFAULTS */
