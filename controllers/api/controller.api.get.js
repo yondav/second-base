@@ -10,6 +10,7 @@ exports.getController = {
       next(err);
     }
   },
+
   studio_gear: async (req, res, next) => {
     try {
       const data = await find.studio_gear();
@@ -19,6 +20,7 @@ exports.getController = {
       next(err);
     }
   },
+
   artists: async (req, res, next) => {
     try {
       const data = await find.artists();

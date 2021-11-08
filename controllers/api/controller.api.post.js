@@ -39,6 +39,7 @@ exports.postController = {
       next(err);
     }
   },
+
   gear: async (req, res, next) => {
     try {
       const data = await create.gear(req.body, req.params.gear_type);
@@ -48,6 +49,7 @@ exports.postController = {
       next(err);
     }
   },
+
   artist: async (req, res, next) => {
     try {
       const data = await create.artist(req.body);
@@ -57,6 +59,7 @@ exports.postController = {
       next(err);
     }
   },
+
   project: async (req, res, next) => {
     try {
       const data = await create.project(req.body, req.params.artist_id);

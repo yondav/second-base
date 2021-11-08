@@ -21,6 +21,8 @@ exports.remove = {
         break;
     }
   },
+
   artist: async artistId => await Artist.findOneAndDelete(artistId),
+
   project: async projectId => await Project.findOneAndDelete(projectId),
 };

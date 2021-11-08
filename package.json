@@ -2,7 +2,7 @@
   "name": "second-base",
   "version": "1.0.0",
   "description": "secondBase is a recording and mixing studio in Sunset Park Brooklyn, owned and operated by producer/musician Adam Reich",
-  "main": "template.js",
+  "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",

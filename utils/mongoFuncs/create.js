@@ -3,14 +3,14 @@ const { Artist, Project, Studio, StudioGear, gear } = require('../../models');
 exports.create = {
   studio: (studio, studioGearId) => {
     const newStudio = new Studio({ ...studio, studio_gear: studioGearId });
-
     return newStudio.save();
   },
+
   studio_gear: name => {
     const newStudioGear = new StudioGear({ name });
-
     return newStudioGear.save();
   },
+
   gear: async (obj, type) => {
     const studioGear = await StudioGear.findOne({ name: 'studio_gear' });
     let newGear;
@@ -76,10 +76,9 @@ exports.create = {
         break;
     }
   },
+
   artist: async artist => {
     const studio = await Studio.findOne({ name: 'secondBase' });
-    console.log(studio);
-
     const newArtist = new Artist(artist);
     await newArtist.save();
 
@@ -89,6 +88,7 @@ exports.create = {
       { new: true, useFindAndModify: false }
     );
   },
+
   project: async (project, artistId) => {
     const newProject = new Project(project);
     await newProject.save();

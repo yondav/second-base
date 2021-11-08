@@ -5,8 +5,15 @@ const { getRoutes } = require('./routes.get');
 const { postRoutes } = require('./routes.post');
 const { putRoutes } = require('./routes.put');
 const { deleteRoutes } = require('./routes.delete');
+const { authRoutes } = require('./routes.auth');
 
-const api = [...getRoutes, ...postRoutes, ...putRoutes, ...deleteRoutes];
+const api = [
+  ...getRoutes,
+  ...postRoutes,
+  ...putRoutes,
+  ...deleteRoutes,
+  ...authRoutes,
+];
 
 api.map(route => {
   let { path, method, func, middleware } = route;

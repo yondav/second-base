@@ -5,6 +5,7 @@ exports.edit = {
     await Studio.findOneAndUpdate({ name: 'secondBase' }, update, {
       new: true,
     }),
+
   gear: async (update, gearId, type) => {
     switch (type) {
       case 'control_room':
@@ -46,11 +47,13 @@ exports.edit = {
         break;
     }
   },
+
   artist: async (update, artistId) =>
     await Artist.findByIdAndUpdate(artistId, update, {
       new: true,
       useFindAndModify: false,
     }),
+
   project: async (update, projectId) =>
     await Project.findByIdAndUpdate(projectId, update, {
       new: true,

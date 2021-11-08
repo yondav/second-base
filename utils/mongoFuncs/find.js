@@ -11,9 +11,11 @@ exports.find = {
         path: 'artists',
         populate: 'projects',
       }),
+
   studio_gear: async () =>
     await StudioGear.findOne({ name: 'studio_gear' }).populate(
       'control_room monitoring amps drums microphones guitars keys'
     ),
+
   artists: async () => await Artist.find().populate('projects'),
 };

@@ -12,6 +12,7 @@ exports.deleteController = {
       next(err);
     }
   },
+
   artist: async (req, res, next) => {
     try {
       const data = await remove.artist(req.params.artist_id);
@@ -23,6 +24,7 @@ exports.deleteController = {
       next(err);
     }
   },
+
   project: async (req, res, next) => {
     try {
       const data = await remove.project(req.params.project_id);

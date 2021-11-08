@@ -8,9 +8,9 @@ exports.putController = {
       res.status(202).json(data);
     } catch (err) {
       next(err);
-      console.log(err);
     }
   },
+
   gear: async (req, res, next) => {
     try {
       const data = await edit.gear(
@@ -24,6 +24,7 @@ exports.putController = {
       next(err);
     }
   },
+
   artist: async (req, res, next) => {
     try {
       const data = await edit.artist(req.body, req.params.artist_id);
@@ -33,6 +34,7 @@ exports.putController = {
       next(err);
     }
   },
+
   project: async (req, res, next) => {
     try {
       const data = await edit.project(req.body, req.params.project_id);

@@ -1,0 +1,94 @@
+/*CSS NORMALIZE IMPORT */
+@import-normalize;
+
+/* POPPINS GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Poppins:wght@100;200;300;400;500;600&family=Zen+Kurenaido&display=swap');
+
+:root {
+  /* COLORS */
+  --primary-black: #2a2829;
+  --primary-white: #eae8e9;
+
+  /* FONTS */
+  --ff: 'Oswalt', 'Poppins', 'Zen Kurenaido', sans-serif;
+
+  /* STYLES */
+  --shadow: rgba(42, 40, 41, 0.25) 0px 4px 16px;
+  --radius: 0.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ff);
+  font-size: 1em;
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0em;
+  text-transform: none;
+  color: var(--primary-black);
+  background-color: var(--primary-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+nav {
+  background-color: var(--primary-black) !important;
+}
+
+nav a {
+  font-size: 0.875em !important;
+  color: var(--primary-white) !important;
+}
+
+.navbar-nav > * {
+  margin: 0 0.5rem;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* BOOTSTRAP DEFAULTS */
+.card {
+  border: none;
+  border-radius: var(--radius);
+}
+
+.form-control {
+  padding: 1rem 0.75rem;
+}
+
+.form-control:focus,
+.form-control:focus-visible {
+  border-color: transparent;
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+.btn-outline-dark {
+  color: var(--primary-black);
+  border-color: var(--primary-black);
+}
+
+.form-check-input:focus-visible,
+.form-check-input:checked,
+.btn-outline-dark:hover,
+.btn-outline-dark:active {
+  color: var(--primary-white);
+  background-color: var(--primary-black);
+  border-color: var(--primary-black);
+  outline: none;
+}
+
+.form-check-input:focus,
+.btn-outline-dark:focus,
+.btn-outline-dark:focus-visible {
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+@media only screen and (max-width: 992px) {
+  html {
+    font-size: 14px;
+  }
+}
