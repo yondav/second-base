@@ -1,4 +1,4 @@
-const { find } = require('../../utils/mongoFuncs/find');
+const { find } = require('../../services/mongoFuncs/find');
 
 exports.getController = {
   studio: async (req, res, next) => {

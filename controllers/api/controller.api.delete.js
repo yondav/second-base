@@ -1,4 +1,4 @@
-const { remove } = require('../../utils/mongoFuncs/remove');
+const { remove } = require('../../services/mongoFuncs/remove');
 
 exports.deleteController = {
   gear: async (req, res, next) => {

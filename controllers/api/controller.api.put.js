@@ -1,4 +1,4 @@
-const { edit } = require('../../utils/mongoFuncs/edit');
+const { edit } = require('../../services/mongoFuncs/edit');
 
 exports.putController = {
   studio: async (req, res, next) => {

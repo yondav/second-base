@@ -12,7 +12,7 @@ import Gear from './pages/client/gear';
 import Home from './pages/client/home';
 
 const App = () => {
-  const { login, isLoggedIn } = useAdminContext();
+  const { login } = useAdminContext();
 
   useEffect(() => console.log('render'));
   return (

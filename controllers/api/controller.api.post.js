@@ -1,5 +1,5 @@
-const { create } = require('../../utils/mongoFuncs/create');
-const { find } = require('../../utils/mongoFuncs/find');
+const { create } = require('../../services/mongoFuncs/create');
+const { find } = require('../../services/mongoFuncs/find');
 
 exports.postController = {
   studio: async (req, res, next) => {

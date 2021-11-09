@@ -20,6 +20,7 @@ exports.authController = {
       next(err);
     }
   },
+
   verify: async (req, res, next) => {
     const { token } = req.body;
 
@@ -31,10 +32,12 @@ exports.authController = {
       if (!user) return next(new ErrorResponse('Not a valid user', 400));
 
       verifyToken(user, token, 200, res);
+      console.log(token);
     } catch (err) {
       next(err);
     }
   },
+
   login: async (req, res, next) => {
     const { email, password } = req.body;
 
