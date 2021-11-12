@@ -12,7 +12,8 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
     "watch": "nodemon server.js",
-    "seed": "node seeders"
+    "seed": "node seeders",
+    "test": "jest --runInBand ./test"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
