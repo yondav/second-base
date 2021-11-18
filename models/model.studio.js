@@ -19,7 +19,7 @@ const studioSchema = new Schema({
     ref: 'studio_gear',
   },
   artists: [{ type: ObjectId, ref: 'artist' }],
-  services: Array,
+  services: [{ type: ObjectId, ref: 'service' }],
 });
 
 const Studio = model('studio', studioSchema);

@@ -14,6 +14,12 @@ exports.getRoutes = [
     middleware: [],
   },
   {
+    path: '/services',
+    method: 'get',
+    func: getController.services,
+    middleware: [],
+  },
+  {
     path: '/artists',
     method: 'get',
     func: getController.artists,

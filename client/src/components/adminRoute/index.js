@@ -8,14 +8,13 @@ const AdminRoute = () => {
   const token = () => localStorage.getItem('authToken');
 
   const verifiedToken = useCallback(async () => {
-    const res = await verifyToken();
-    console.log(res);
+    const res = await verifyToken(token());
 
     return res;
   }, [verifyToken]);
 
   useEffect(() => {
-    console.log(verifiedToken());
+    verifiedToken();
   }, []);
 
   return <>{token() ? <Outlet /> : <Navigate to='/login' />}</>;

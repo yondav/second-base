@@ -22,7 +22,6 @@ const Navigation = () => {
     const nav = document.querySelector('nav');
     const navLink = document.querySelectorAll('.nav-link');
 
-    console.log(navLink);
     if (navExpand) {
       nav.classList.add('expanded-nav');
       navLink.forEach(link => link.classList.add('expanded-nav-link'));
@@ -71,11 +70,7 @@ const Navigation = () => {
                         <Nav.Link as={Link} to='/admin/portal'>
                           Portal
                         </Nav.Link>
-                        <span
-                          className='nav-link'
-                          style={{ cursor: 'pointer' }}
-                          onClick={logout}
-                        >
+                        <span className='nav-link pointer' onClick={logout}>
                           Log out
                         </span>
                       </>

@@ -15,23 +15,7 @@ exports.postController = {
 
         const studioGearId = newStudioGear._id.toString();
 
-        data = await create.studio(
-          {
-            name: 'secondBase',
-            logo: 'logo',
-            images: ['img1', 'img2'],
-            email: 'email',
-            address: {
-              address: '4301 3rd Ave',
-              neighborhood: 'Sunset Park',
-              city: 'Brooklyn',
-              state: 'New York',
-              zip_code: 12345,
-            },
-            services: ['serv1', 'serv2', 'serv3'],
-          },
-          studioGearId
-        );
+        data = await create.studio({ name: 'secondBase' }, studioGearId);
       }
 
       res.status(201).json(data);
@@ -63,6 +47,16 @@ exports.postController = {
   project: async (req, res, next) => {
     try {
       const data = await create.project(req.body, req.params.artist_id);
+
+      res.status(201).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  service: async (req, res, next) => {
+    try {
+      const data = await create.service(req.body);
 
       res.status(201).json(data);
     } catch (err) {

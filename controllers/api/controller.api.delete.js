@@ -36,4 +36,16 @@ exports.deleteController = {
       next(err);
     }
   },
+
+  service: async (req, res, next) => {
+    try {
+      const data = await remove.service(req.params.service_id);
+
+      res
+        .status(200)
+        .json({ success: true, message: `${data.name} has been removed` });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

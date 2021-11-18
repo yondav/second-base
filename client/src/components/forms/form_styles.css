@@ -1,0 +1,119 @@
+/* BOOTSTRAP MODS */
+.form-control,
+.form-select {
+  padding: 1rem 0.75rem !important;
+}
+
+.form-control:focus,
+.form-control:focus-visible,
+.form-select:focus,
+.form-select:focus-visible {
+  border-color: transparent !important;
+  box-shadow: var(--shadow) !important;
+  outline: none !important;
+}
+
+.btn-outline-dark {
+  padding: 1rem !important;
+  color: var(--primary-black) !important;
+  border-color: var(--primary-black) !important;
+}
+
+.form-check-input:focus-visible,
+.form-check-input:checked,
+.btn-outline-dark:hover,
+.btn-outline-dark:active {
+  color: var(--primary-white) !important;
+  background-color: var(--primary-black) !important;
+  border-color: var(--primary-black) !important;
+  outline: none !important;
+}
+
+.form-check-input:focus,
+.btn-outline-dark:focus,
+.btn-outline-dark:focus-visible {
+  box-shadow: var(--shadow) !important;
+  outline: none !important;
+}
+
+/* PHOTO UPLOAD */
+.upload-square {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  border: 5px dashed var(--primary-white);
+  border-radius: var(--radius);
+}
+
+.upload-square-content > * {
+  white-space: nowrap;
+}
+
+.preview-imgs div {
+  width: 18rem;
+  height: 18rem;
+  border: 1px solid var(--primary-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.preview-imgs div img {
+  height: 100%;
+  width: auto;
+}
+
+@media only screen and (min-width: 768px) {
+  .preview-imgs div {
+    width: 16rem;
+    height: 16rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .preview-imgs div {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+/* LOGIN */
+.login-card {
+  position: relative !important;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form {
+  width: 93%;
+}
+
+.login-status {
+  display: none;
+}
+
+@media only screen and (min-width: 576px) {
+  .login-card {
+    width: 65%;
+    height: 65%;
+    transform: translate(-50%, -57%);
+    box-shadow: var(--shadow);
+  }
+}
+@media only screen and (min-width: 768px) {
+  .login-card {
+    width: 45%;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .login-card {
+    width: 35%;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .login-card {
+    width: 30%;
+  }
+}

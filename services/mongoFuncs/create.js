@@ -1,4 +1,11 @@
-const { Artist, Project, Studio, StudioGear, gear } = require('../../models');
+const {
+  Artist,
+  Project,
+  Studio,
+  StudioGear,
+  Service,
+  gear,
+} = require('../../models');
 
 exports.create = {
   studio: (studio, studioGearId) => {
@@ -96,6 +103,18 @@ exports.create = {
     return Artist.findByIdAndUpdate(
       artistId,
       { $push: { projects: newProject._id } },
+      { new: true, useFindAndModify: false }
+    );
+  },
+
+  service: async service => {
+    const studio = await Studio.findOne({ name: 'secondBase' });
+    const newService = new Service(service);
+    await newService.save();
+
+    return Studio.findByIdAndUpdate(
+      studio._id,
+      { $push: { services: newService._id } },
       { new: true, useFindAndModify: false }
     );
   },

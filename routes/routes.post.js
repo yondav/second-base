@@ -25,4 +25,10 @@ exports.postRoutes = [
     func: postController.project,
     middleware: [],
   },
+  {
+    path: '/services',
+    method: 'post',
+    func: postController.service,
+    middleware: [],
+  },
 ];

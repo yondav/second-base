@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { AdminContext } from '../context/context.auth';
+import { consoleColors } from '../utils/console';
 
 export default function useAdminContext() {
   const admin = useContext(AdminContext);
@@ -20,7 +21,7 @@ export default function useAdminContext() {
 
       return { res };
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   };
 
@@ -28,12 +29,16 @@ export default function useAdminContext() {
     try {
       const res = await axios.post('/api/v1/verify', { token }, config);
 
-      if (res) {
+      if (res.data.success) {
         admin.dispatch({ type: 'ISADMIN' });
+        console.log('%cAuthorization verified', consoleColors.success);
+      } else {
+        localStorage.removeItem('authToken');
+        admin.dispatch({ type: 'ISNOTADMIN' });
+        console.log('%cAuthorization failed', consoleColors.fail);
       }
     } catch (err) {
-      localStorage.removeItem('authToken');
-      admin.dispatch({ type: 'ISNOTADMIN' });
+      console.error(err.message);
     }
   };
 
@@ -58,15 +63,16 @@ export default function useAdminContext() {
       }
 
       admin.dispatch({ type: 'ISADMIN' });
-      console.log(admin);
+      console.log('%cLogged in', consoleColors.success);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   };
 
   const logout = () => {
     localStorage.removeItem('authToken');
     admin.dispatch({ type: 'ISNOTADMIN' });
+    console.log('%cLogged out', consoleColors.fail);
   };
 
   return { login, logout, isLoggedIn, verifyToken };

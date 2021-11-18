@@ -1,4 +1,4 @@
-const { Artist, Project, gear } = require('../../models');
+const { Artist, Project, Service, gear } = require('../../models');
 
 exports.remove = {
   gear: async (gearId, type) => {
@@ -25,4 +25,6 @@ exports.remove = {
   artist: async artistId => await Artist.findOneAndDelete(artistId),
 
   project: async projectId => await Project.findOneAndDelete(projectId),
+
+  service: async serviceId => await Service.findOneAndDelete(serviceId),
 };

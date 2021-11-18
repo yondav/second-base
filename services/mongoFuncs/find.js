@@ -1,4 +1,4 @@
-const { Artist, Studio, StudioGear, User } = require('../../models');
+const { Artist, Studio, StudioGear, Service, User } = require('../../models');
 
 exports.find = {
   studio: async () =>
@@ -10,7 +10,8 @@ exports.find = {
       .populate({
         path: 'artists',
         populate: 'projects',
-      }),
+      })
+      .populate({ path: 'services' }),
 
   studio_gear: async () =>
     await StudioGear.findOne({ name: 'studio_gear' }).populate(
@@ -18,6 +19,8 @@ exports.find = {
     ),
 
   artists: async () => await Artist.find().populate('projects'),
+
+  services: async () => await Service.find(),
 
   user: async () => await User.find(),
 };

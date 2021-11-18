@@ -44,4 +44,14 @@ exports.putController = {
       next(err);
     }
   },
+
+  service: async (req, res, next) => {
+    try {
+      const data = await edit.service(req.body, req.params.service_id);
+
+      res.status(202).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

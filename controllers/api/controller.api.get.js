@@ -31,6 +31,16 @@ exports.getController = {
     }
   },
 
+  services: async (req, res, next) => {
+    try {
+      const data = await find.services();
+
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   user: async (req, res, next) => {
     try {
       const data = await find.user();

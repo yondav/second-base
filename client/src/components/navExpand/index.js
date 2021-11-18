@@ -35,11 +35,7 @@ const NavExpand = () => {
           <Nav.Link as={Link} to='/admin/portal'>
             Portal
           </Nav.Link>
-          <span
-            className='nav-link'
-            style={{ cursor: 'pointer' }}
-            onClick={logout}
-          >
+          <span className='nav-link pointer' onClick={logout}>
             Log out
           </span>
         </>

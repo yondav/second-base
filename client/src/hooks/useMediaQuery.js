@@ -14,6 +14,7 @@ export default function useMediaQuery() {
   };
 
   useEffect(() => {
+    updateMedia();
     window.addEventListener('resize', updateMedia);
     return () => window.removeEventListener('resize', updateMedia);
   }, []);

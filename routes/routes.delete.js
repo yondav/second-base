@@ -21,4 +21,10 @@ exports.deleteRoutes = [
     func: deleteController.project,
     middleware: [],
   },
+  {
+    path: '/services/:service_id',
+    method: 'delete',
+    func: deleteController.service,
+    middleware: [],
+  },
 ];

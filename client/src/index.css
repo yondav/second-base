@@ -8,6 +8,7 @@
   /* COLORS */
   --primary-black: #2a2829;
   --primary-white: #eae8e9;
+  --grey: #bbbbbb;
   --failure: #b34f4c;
 
   /* FONTS */
@@ -47,37 +48,8 @@ body {
   border-radius: var(--radius);
 }
 
-.form-control {
-  padding: 1rem 0.75rem;
-}
-
-.form-control:focus,
-.form-control:focus-visible {
-  border-color: transparent;
-  box-shadow: var(--shadow);
-  outline: none;
-}
-
-.btn-outline-dark {
-  color: var(--primary-black);
-  border-color: var(--primary-black);
-}
-
-.form-check-input:focus-visible,
-.form-check-input:checked,
-.btn-outline-dark:hover,
-.btn-outline-dark:active {
-  color: var(--primary-white);
-  background-color: var(--primary-black);
-  border-color: var(--primary-black);
-  outline: none;
-}
-
-.form-check-input:focus,
-.btn-outline-dark:focus,
-.btn-outline-dark:focus-visible {
-  box-shadow: var(--shadow);
-  outline: none;
+.pointer {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 992px) {

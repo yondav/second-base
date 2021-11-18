@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import useAdminContext from './hooks/useAdminContext';
+import { GlobalContext } from './context/context.data';
+
 import Navigation from './components/navigation';
 import AdminRoute from './components/adminRoute';
 import Login from './pages/admin/login';
@@ -12,9 +13,10 @@ import Gear from './pages/client/gear';
 import Home from './pages/client/home';
 
 const App = () => {
-  const { login } = useAdminContext();
+  const { loading, getStudio } = useContext(GlobalContext);
 
-  useEffect(() => console.log('render'));
+  useEffect(() => getStudio(), [loading]);
+
   return (
     <div className='wrapper'>
       <Navigation />
@@ -24,7 +26,7 @@ const App = () => {
         <Route exact path='/artists' element={<Artists />} />
         <Route exact path='/booking' element={<Booking />} />
         <Route exact path='/gear' element={<Gear />} />
-        <Route exact path='/login' element={<Login login={login} />} />
+        <Route exact path='/login' element={<Login />} />
         <Route exact path='/admin/portal' element={<AdminRoute />}>
           <Route exact path='/admin/portal' element={<Portal />} />
         </Route>

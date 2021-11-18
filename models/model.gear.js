@@ -5,6 +5,8 @@ const gearSchema = new Schema({
   brand: String,
   year: Number,
   image: Array,
+  description: String,
+  count: Number,
 });
 
 const gear = {
