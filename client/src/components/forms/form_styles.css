@@ -1,13 +1,49 @@
-/* BOOTSTRAP MODS */
+/* BOOTSTRAP/QUILL MODS */
 .form-control,
-.form-select {
+.form-select,
+.ql-toolbar,
+.ql-editor {
   padding: 1rem 0.75rem !important;
+}
+
+.ql-toolbar button,
+.ql-picker-label {
+  margin: 0 0.15rem;
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+
+.ql-toolbar button:hover,
+.ql-toolbar button:focus,
+.ql-toolbar button:focus-visible,
+.ql-picker-label:hover,
+.ql-picker-label:focus,
+.ql-picker-label:focus-visible {
+  border: none !important;
+  outline: none;
+  box-shadow: var(--shadow);
+}
+
+.ql-editor {
+  border-bottom: 1px solid #ced4da;
+  border-left: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.ql-container {
+  padding: 0;
+  height: 20rem !important;
+  border: none !important;
 }
 
 .form-control:focus,
 .form-control:focus-visible,
 .form-select:focus,
-.form-select:focus-visible {
+.form-select:focus-visible,
+.ql-editor:focus,
+.ql-editor:focus-visible {
   border-color: transparent !important;
   box-shadow: var(--shadow) !important;
   outline: none !important;
@@ -50,11 +86,30 @@
 }
 
 .preview-imgs div {
+  position: relative;
   width: 18rem;
   height: 18rem;
   border: 1px solid var(--primary-white);
   border-radius: var(--radius);
   overflow: hidden;
+  cursor: move;
+}
+
+.preview-imgs div .thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--primary-white);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.preview-imgs div .thumbnail-overlay .thumbnail-delete {
+  transition: var(--transition);
+}
+
+.preview-imgs div .thumbnail-overlay .thumbnail-delete:hover {
+  color: var(--failure);
 }
 
 .preview-imgs div img {

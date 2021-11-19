@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import update from 'immutability-helper';
 import { Card, Alert, Form, Spinner, Col } from 'react-bootstrap';
 import { IoIosCloudUpload } from 'react-icons/io';
 
+import { ImageUploaderThumbnail } from './index';
 import api from '../../../utils/api';
 
 const ImageUploader = ({ single }) => {
@@ -34,7 +38,7 @@ const ImageUploader = ({ single }) => {
     });
 
   const handleDrop = files => {
-    if (single && files.length > 1) {
+    if ((single && files.length > 1) || (single && images.length >= 1)) {
       setStatusMessage({
         message: 'Max number of files is 1 for this submission',
         variant: 'danger',
@@ -79,7 +83,37 @@ const ImageUploader = ({ single }) => {
     setTimeout(() => setStatusMessage(false), 3000);
   };
 
-  useEffect(() => console.log(loading), [loading]);
+  const moveThumbnail = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = images[dragIndex];
+      setImages(
+        update(images, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        })
+      );
+    },
+    [images]
+  );
+
+  const renderThumbnail = (img, i) => {
+    return (
+      <ImageUploaderThumbnail
+        key={img.asset_id}
+        index={i}
+        id={img.asset_id}
+        url={img.url}
+        moveThumbnail={moveThumbnail}
+        images={images}
+        setImages={setImages}
+      />
+    );
+  };
+
+  useEffect(() => console.log(images), [images]);
+
   return (
     <Col xs={12}>
       <Card className='mb-5'>
@@ -108,14 +142,9 @@ const ImageUploader = ({ single }) => {
         </Card.Header>
         {images.length > 0 && (
           <Card.Body className='d-flex justify-content-center flex-wrap preview-imgs'>
-            {images.map(img => (
-              <div
-                key={img.asset_id}
-                className='d-flex justify-content-center m-2'
-              >
-                <img src={img.url} alt={img.url} />
-              </div>
-            ))}
+            <DndProvider backend={HTML5Backend}>
+              {images.map((img, i) => renderThumbnail(img, i))}
+            </DndProvider>
           </Card.Body>
         )}
       </Card>

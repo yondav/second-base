@@ -13,7 +13,7 @@ const streams = [
   { val: 'tidal', display: 'Tidal' },
 ];
 
-const StreamLink = ({ linkList, setLinkList, idx }) => {
+const StreamLink = ({ linkList, setLinkList, index }) => {
   const handleInputChange = (e, i) => {
     const { name, value } = e.target;
     const list = [...linkList];
@@ -39,7 +39,7 @@ const StreamLink = ({ linkList, setLinkList, idx }) => {
           <Form.Select
             type='text'
             name='link_service'
-            onChange={e => handleInputChange(e, idx)}
+            onChange={e => handleInputChange(e, index)}
           >
             <option>Select</option>
             {streams.map((stream, i) => (
@@ -55,7 +55,7 @@ const StreamLink = ({ linkList, setLinkList, idx }) => {
         type='text'
         name='link'
         xs={6}
-        changehandler={e => handleInputChange(e, idx)}
+        changehandler={e => handleInputChange(e, index)}
       />
       <Col xs={2} className='d-flex'>
         {linkList.length !== 1 && (
@@ -64,13 +64,13 @@ const StreamLink = ({ linkList, setLinkList, idx }) => {
             <Button
               variant='outline-dark'
               type='button'
-              onClick={() => handleRemoveClick(idx)}
+              onClick={() => handleRemoveClick(index)}
             >
               <VscRemove />
             </Button>
           </div>
         )}
-        {linkList.length - 1 === idx && (
+        {linkList.length - 1 === index && (
           <div className='d-flex flex-column justify-content-end align-items-center mb-5'>
             <Form.Label style={{ color: 'transparent' }}>Add</Form.Label>
             <Button

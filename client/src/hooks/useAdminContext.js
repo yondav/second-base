@@ -75,5 +75,5 @@ export default function useAdminContext() {
     console.log('%cLogged out', consoleColors.fail);
   };
 
-  return { login, logout, isLoggedIn, verifyToken };
+  return { login, logout, isLoggedIn, verifyToken, getAdmin };
 }

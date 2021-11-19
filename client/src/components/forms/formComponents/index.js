@@ -5,3 +5,5 @@ export { default as TextArea } from './form.textArea.component';
 export { default as ButtonGroup } from './form.buttonGroup.component';
 export { default as ImageUploader } from './form.imageUploader.component';
 export { default as StreamLink } from './form.streamLink.component';
+export { default as ImageUploaderThumbnail } from './form.imageUploader.thumbnail.component';
+export { default as RichTextBio } from './form.richText.bio.component';

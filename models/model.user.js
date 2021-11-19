@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   bio: String,
+  image: String,
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

@@ -35,7 +35,7 @@ const PrjectForm = ({ method }) => {
                   key={i}
                   linkList={linkList}
                   setLinkList={setLinkList}
-                  idx={i}
+                  index={i}
                 />
               ))}
               <ImageUploader single={true} />
