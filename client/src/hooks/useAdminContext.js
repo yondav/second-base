@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import axios from 'axios';
 import { AdminContext } from '../context/context.auth';
 import { consoleColors } from '../utils/console';
+import api from '../utils/api';
 
 export default function useAdminContext() {
   const admin = useContext(AdminContext);
@@ -17,7 +17,7 @@ export default function useAdminContext() {
 
   const getAdmin = async () => {
     try {
-      const res = await axios.get('/api/v1/users');
+      const res = await api({ url: '/api/v1/users', method: 'get' });
 
       return { res };
     } catch (err) {
@@ -27,9 +27,14 @@ export default function useAdminContext() {
 
   const verifyToken = async () => {
     try {
-      const res = await axios.post('/api/v1/verify', { token }, config);
+      const { data } = await api({
+        url: '/api/v1/verify',
+        method: 'post',
+        config,
+        data: { token },
+      });
 
-      if (res.data.success) {
+      if (data.success) {
         admin.dispatch({ type: 'ISADMIN' });
         console.log('%cAuthorization verified', consoleColors.success);
       } else {
@@ -44,16 +49,15 @@ export default function useAdminContext() {
 
   const login = async (email, password) => {
     try {
-      const { data } = await axios.post(
-        '/api/v1/login',
-        {
+      const { data } = await api({
+        url: '/api/v1/login',
+        method: 'post',
+        config: { headers: { 'Content-Type': 'application/json' } },
+        data: {
           email: email,
           password: password,
         },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      });
 
       let { res } = await getAdmin();
 
@@ -75,5 +79,46 @@ export default function useAdminContext() {
     console.log('%cLogged out', consoleColors.fail);
   };
 
-  return { login, logout, isLoggedIn, verifyToken, getAdmin };
+  const getResetToken = async email => {
+    try {
+      const { data } = await api({
+        url: '/api/v1/passwordresetrequest',
+        method: 'post',
+        // config,
+        data: { email },
+      });
+
+      if (data) {
+        console.log('%cReset token request succeeded', consoleColors.success);
+        return data;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const passwordReset = async (token, password) => {
+    try {
+      const { data } = await api({
+        url: `/api/v1/passwordreset/${token}`,
+        method: 'put',
+        config,
+        data: { password },
+      });
+
+      return data.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return {
+    login,
+    logout,
+    isLoggedIn,
+    verifyToken,
+    getAdmin,
+    getResetToken,
+    passwordReset,
+  };
 }

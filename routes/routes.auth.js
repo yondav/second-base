@@ -19,4 +19,16 @@ exports.authRoutes = [
     func: authController.login,
     middleware: [],
   },
+  {
+    path: '/passwordresetrequest',
+    method: 'post',
+    func: authController.getResetToken,
+    middleware: [],
+  },
+  {
+    path: '/passwordreset/:resetToken',
+    method: 'put',
+    func: authController.resetPassword,
+    middleware: [],
+  },
 ];

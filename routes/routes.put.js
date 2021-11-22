@@ -31,4 +31,10 @@ exports.putRoutes = [
     func: putController.service,
     middleware: [],
   },
+  {
+    path: '/users/:user_id',
+    method: 'put',
+    func: putController.user,
+    middleware: [],
+  },
 ];

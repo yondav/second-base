@@ -1,14 +1,14 @@
 import React, { createContext, useReducer } from 'react';
 
 import api from '../utils/api';
-import dataReducer from './context.dataReducer';
+import dataReducer from './context.data.reducer';
 
 import { consoleColors } from '../utils/console';
 
 const initialState = {
   loading: true,
   error: '',
-  data: {},
+  data: { studio: {}, user: {} },
 };
 
 export const GlobalContext = createContext(initialState);
@@ -17,6 +17,8 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
   const getStudio = async () => {
+    initialState.loading = true;
+
     const res = await api({ url: '/api/v1/secondBase', method: 'get' });
 
     if (res.data) {
@@ -31,6 +33,58 @@ export const GlobalProvider = ({ children }) => {
     } else {
       dispatch({ type: 'GET_STUDIO', error: 'Something went wrong' });
       console.log('%cerror:', consoleColors.fail, 'data has not been fetched');
+    }
+  };
+
+  const getUser = async () => {
+    initialState.loading = true;
+
+    const res = await api({ url: '/api/v1/users', method: 'get' });
+
+    if (res.data) {
+      dispatch({ type: 'GET_USER', payload: res.data[0] });
+      console.log(
+        '%csuccess:',
+        consoleColors.success,
+        'user has been fetched',
+        '\n',
+        res.data
+      );
+    } else {
+      dispatch({ type: 'GET_STUDIO', error: 'Something went wrong' });
+      console.log('%cerror:', consoleColors.fail, 'user has not been fetched');
+    }
+  };
+
+  const updateUser = async (userId, update) => {
+    initialState.loading = true;
+
+    try {
+      const res = await api({
+        url: `/api/v1/users/${userId}`,
+        method: 'put',
+        data: update,
+      });
+
+      if (res.data) {
+        dispatch({ type: 'UPDATE_USER', payload: res.data });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          'user has been updated',
+          '\n',
+          res.data
+        );
+      }
+    } catch (err) {
+      dispatch({ type: 'UPDATE_USER', error: 'Something went wrong' });
+      console.log(
+        '%cerror:',
+        consoleColors.fail,
+        'user has not been fetched',
+        '\n',
+        err
+      );
     }
   };
 
@@ -50,10 +104,10 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        loading: state.loading,
-        error: state.error,
-        data: state.data,
+        state,
         getStudio,
+        getUser,
+        updateUser,
       }}
     >
       {children}

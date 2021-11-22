@@ -1,0 +1,70 @@
+.admin-tab {
+  width: fit-content;
+  margin-bottom: -1px !important;
+  background-color: #fff;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+.admin-tab li button {
+  font-size: 1.1em !important;
+  color: var(--grey) !important;
+}
+
+.admin-tab li button:hover,
+.admin-tab li button:active,
+.admin-tab li button:focus,
+.admin-tab li button:focus-visible {
+  color: var(--primar-black) !important;
+  border: none !important;
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+.nav-link.active {
+  color: var(--primar-black) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border: none !important;
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+/* PROFILE */
+.profile-img-container img {
+  width: 100%;
+}
+
+.profile-img-container,
+.profile-info,
+.profile-bio {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.edit-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--primary-white);
+  opacity: 0.7;
+}
+
+.edit-icon {
+  transition: var(--transition);
+}
+
+.edit-icon:hover {
+  color: var(--edit);
+}
+
+@media only screen and (min-width: 768px) {
+  .profile-img-container,
+  .profile-info {
+    width: 80%;
+  }
+}

@@ -1,4 +1,11 @@
-const { Artist, Project, Studio, Service, gear } = require('../../models');
+const {
+  Artist,
+  Project,
+  Studio,
+  Service,
+  gear,
+  User,
+} = require('../../models');
 
 exports.edit = {
   studio: async update =>
@@ -62,6 +69,12 @@ exports.edit = {
 
   service: async (update, serviceId) =>
     await Service.findByIdAndUpdate(serviceId, update, {
+      new: true,
+      useFindAndModify: false,
+    }),
+
+  user: async (update, userId) =>
+    await User.findByIdAndUpdate(userId, update, {
       new: true,
       useFindAndModify: false,
     }),

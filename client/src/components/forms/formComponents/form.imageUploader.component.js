@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -10,8 +10,8 @@ import { IoIosCloudUpload } from 'react-icons/io';
 import { ImageUploaderThumbnail } from './index';
 import api from '../../../utils/api';
 
-const ImageUploader = ({ single }) => {
-  const [images, setImages] = useState([]);
+const ImageUploader = ({ single, images, setImages }) => {
+  // const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
@@ -63,7 +63,7 @@ const ImageUploader = ({ single }) => {
       });
 
       if (res) setLoading(false);
-      setImages(prev => [...prev, res.data]);
+      setImages(prev => [...prev, res.data.url]);
 
       statusSetter(res.status);
     });
@@ -101,18 +101,16 @@ const ImageUploader = ({ single }) => {
   const renderThumbnail = (img, i) => {
     return (
       <ImageUploaderThumbnail
-        key={img.asset_id}
+        key={i}
         index={i}
-        id={img.asset_id}
-        url={img.url}
+        id={i}
+        url={img}
         moveThumbnail={moveThumbnail}
         images={images}
         setImages={setImages}
       />
     );
   };
-
-  useEffect(() => console.log(images), [images]);
 
   return (
     <Col xs={12}>

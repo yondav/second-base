@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
-  bio: String,
-  image: String,
+  bio: { type: String, default: '' },
+  image: { type: String, default: '' },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

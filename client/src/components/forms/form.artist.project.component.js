@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Alert, Form, Container, Row, Col } from 'react-bootstrap';
 import {
   FormHeader,
@@ -11,8 +11,6 @@ import {
 
 const PrjectForm = ({ method }) => {
   const [linkList, setLinkList] = useState([{ link_service: '', link: '' }]);
-
-  useEffect(() => console.log(linkList), [linkList]);
 
   return (
     <Card>

@@ -13,9 +13,12 @@ import Gear from './pages/client/gear';
 import Home from './pages/client/home';
 
 const App = () => {
-  const { loading, getStudio } = useContext(GlobalContext);
+  const { state, getStudio, getUser } = useContext(GlobalContext);
 
-  useEffect(() => getStudio(), [loading]);
+  useEffect(() => {
+    getStudio();
+    getUser();
+  }, [state.loading]);
 
   return (
     <div className='wrapper'>

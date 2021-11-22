@@ -54,4 +54,14 @@ exports.putController = {
       next(err);
     }
   },
+
+  user: async (req, res, next) => {
+    try {
+      const data = await edit.user(req.body, req.params.user_id);
+
+      res.status(202).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

@@ -9,7 +9,6 @@ nav {
 
 .nav-link {
   font-size: 0.875em !important;
-  color: var(--primary-white) !important;
   white-space: nowrap;
 }
 
