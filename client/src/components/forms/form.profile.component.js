@@ -19,6 +19,7 @@ const ProfileForm = ({ state, setEdit }) => {
     },
   } = state;
 
+  const [alert, setAlert] = useState();
   const [resetToken, setResetToken] = useState(null);
   const [resetPassword, setResetPassword] = useState({
     new_password: '',
@@ -30,10 +31,34 @@ const ProfileForm = ({ state, setEdit }) => {
     last_name,
     email,
     bio,
-    image,
   });
+  const [images, setImages] = useState(image || []);
 
-  const [images, setImages] = useState(formData.image ? [formData.image] : []);
+  const profileInputs = [
+    {
+      label: 'First Name',
+      type: 'text',
+      name: 'first_name',
+      value: formData.first_name,
+    },
+    {
+      label: 'Last Name',
+      type: 'text',
+      name: 'last_name',
+      value: formData.last_name,
+    },
+    {
+      label: 'Email',
+      type: 'email',
+      name: 'email',
+      value: formData.email,
+    },
+  ];
+
+  const passwordInputs = [
+    { label: 'New Password', name: 'new_password' },
+    { label: 'Confirm Password', name: 'confirm_password' },
+  ];
 
   const inputHandler = e => {
     let obj = formData;
@@ -41,10 +66,23 @@ const ProfileForm = ({ state, setEdit }) => {
     setFormData(obj);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    updateUser(_id, formData);
-    setTimeout(() => setEdit(false), 1500);
+
+    let img;
+    image === images ? (img = false) : (img = images[0]);
+
+    const res = await updateUser(_id, formData, img);
+
+    if (res) {
+      setAlert({ message: 'Profile updated', variant: 'success' });
+      setTimeout(() => setEdit(false), 1500);
+    } else {
+      setAlert({
+        message: 'Profile was not updated. Bad request.',
+        variant: 'danger',
+      });
+    }
   };
 
   const handleResetRequest = async e => {
@@ -89,11 +127,6 @@ const ProfileForm = ({ state, setEdit }) => {
     }, 1500);
   };
 
-  useEffect(
-    () => setFormData(prev => ({ ...prev, image: images[0].url })),
-    [images]
-  );
-
   return (
     <Card>
       <FormHeader method='put' edit='Update Profile' />
@@ -101,42 +134,27 @@ const ProfileForm = ({ state, setEdit }) => {
         <Container>
           <Form className='my-5' onSubmit={handleSubmit}>
             <Row>
-              <Input
-                label='First Name'
-                type='text'
-                name='first_name'
-                changehandler={inputHandler}
-                value={formData.first_name}
-                xs={12}
-                md={6}
-              />
-              <Input
-                label='Last Name'
-                type='text'
-                name='last_name'
-                changehandler={inputHandler}
-                value={formData.last_name}
-                xs={12}
-                md={6}
-              />
-              <Input
-                label='Email'
-                type='email'
-                name='email'
-                changehandler={inputHandler}
-                value={formData.email}
-                xs={12}
-                md={6}
-              />
+              {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
+              {profileInputs.map((input, i) => (
+                <Input
+                  key={i}
+                  label={input.label}
+                  type={input.type}
+                  name={input.name}
+                  changehandler={inputHandler}
+                  value={input.value}
+                  xs={12}
+                  md={6}
+                />
+              ))}
               <Col xs={12} md={6} className='d-flex align-items-center mb-5'>
                 {!resetToken ? (
                   <span
                     className='nav-link pointer'
                     onClick={handleResetRequest}
+                    style={{ textDecoration: 'underline', fontStyle: 'italic' }}
                   >
-                    <em>
-                      <u>Change Password</u>
-                    </em>
+                    Change Password
                   </span>
                 ) : (
                   <Container>
@@ -146,20 +164,16 @@ const ProfileForm = ({ state, setEdit }) => {
                           {resetPassword.response.message}
                         </Alert>
                       )}
-                      <Input
-                        label='New Password'
-                        type='password'
-                        name='new_password'
-                        changehandler={passwordInputHandler}
-                        xs={12}
-                      />
-                      <Input
-                        label='Confirm Password'
-                        type='password'
-                        name='confirm_password'
-                        changehandler={passwordInputHandler}
-                        xs={12}
-                      />
+                      {passwordInputs.map((input, i) => (
+                        <Input
+                          key={i}
+                          label={input.label}
+                          type='password'
+                          name={input.name}
+                          changehandler={passwordInputHandler}
+                          xs={12}
+                        />
+                      ))}
                     </Row>
                     <ButtonGroup
                       handleCancel={() => setResetToken(null)}
@@ -173,6 +187,7 @@ const ProfileForm = ({ state, setEdit }) => {
                 single={true}
                 images={images}
                 setImages={setImages}
+                label='Photo'
               />
               <ButtonGroup
                 handleCancel={() => setEdit(false)}

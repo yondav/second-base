@@ -12,10 +12,17 @@ exports.postController = {
       } else {
         const newStudioGear = await create.studio_gear('studio_gear');
         console.log('\n>>Studio Gear:\n', newStudioGear);
+        const newPageImages = await create.page_images('page_images');
+        console.log('\n>>Page Images:\n', newPageImages);
 
         const studioGearId = newStudioGear._id.toString();
+        const pageImageId = newPageImages._id.toString();
 
-        data = await create.studio({ name: 'secondBase' }, studioGearId);
+        data = await create.studio(
+          { name: 'secondBase' },
+          studioGearId,
+          pageImageId
+        );
       }
 
       res.status(201).json(data);
@@ -60,6 +67,31 @@ exports.postController = {
 
       res.status(201).json(data);
     } catch (err) {
+      next(err);
+    }
+  },
+
+  image: async (req, res, next) => {
+    try {
+      if (req.params.sub_collection) {
+        const data = await create.image(
+          req.body,
+          req.params.parent_collection,
+          req.params.sub_collection,
+          req.params.parent_id
+        );
+        res.status(201).json(data);
+      } else {
+        const data = await create.image({
+          obj: req.body,
+          parent: req.params.parent_collection,
+          parentId: req.params.parent_id,
+        });
+        console.log(data);
+        res.status(201).json(data);
+      }
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   },

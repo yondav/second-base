@@ -1,12 +1,14 @@
 const { Schema, model } = require('mongoose');
 
+const { ObjectId } = Schema.Types;
+
 const gearSchema = new Schema({
-  name: String,
-  brand: String,
-  year: Number,
-  image: Array,
-  description: String,
-  count: Number,
+  name: { type: String, default: '' },
+  brand: { type: String, default: '' },
+  year: { type: Number, default: 0 },
+  image: [{ type: ObjectId, ref: 'gear_img' }],
+  description: { type: String, default: '' },
+  count: { type: Number, default: 0 },
 });
 
 const gear = {

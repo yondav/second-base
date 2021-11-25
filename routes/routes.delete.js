@@ -1,30 +1,37 @@
 const {
   deleteController,
 } = require('../controllers/api/controller.api.delete');
+const { cacheMethods } = require('../middleware');
 
 exports.deleteRoutes = [
   {
     path: '/gear/:gear_type/:gear_id',
     method: 'delete',
     func: deleteController.gear,
-    middleware: [],
+    middleware: [cacheMethods.clear],
   },
   {
     path: '/artists/:artist_id/',
     method: 'delete',
     func: deleteController.artist,
-    middleware: [],
+    middleware: [cacheMethods.clear],
   },
   {
     path: '/artists/projects/:project_id',
     method: 'delete',
     func: deleteController.project,
-    middleware: [],
+    middleware: [cacheMethods.clear],
   },
   {
     path: '/services/:service_id',
     method: 'delete',
     func: deleteController.service,
-    middleware: [],
+    middleware: [cacheMethods.clear],
+  },
+  {
+    path: '/images/:collection/:img_id',
+    method: 'delete',
+    func: deleteController.image,
+    middleware: [cacheMethods.clear],
   },
 ];

@@ -5,6 +5,7 @@ const {
   Service,
   gear,
   User,
+  images,
 } = require('../../models');
 
 exports.edit = {
@@ -78,4 +79,31 @@ exports.edit = {
       new: true,
       useFindAndModify: false,
     }),
+
+  images: async (update, imageId, parent) => {
+    switch (parent) {
+      case 'project':
+        return await images.ProjectImg.findByIdAndUpdate(imageId, update, {
+          new: true,
+          useFindAndModify: false,
+        });
+      case 'gear':
+        return await images.GearImg.findByIdAndUpdate(imageId, update, {
+          new: true,
+          useFindAndModify: false,
+        });
+      case 'studio':
+        return await images.StudioImg.findByIdAndUpdate(imageId, update, {
+          new: true,
+          useFindAndModify: false,
+        });
+      case 'user':
+        return await images.UserImg.findByIdAndUpdate(imageId, update, {
+          new: true,
+          useFindAndModify: false,
+        });
+      default:
+        break;
+    }
+  },
 };

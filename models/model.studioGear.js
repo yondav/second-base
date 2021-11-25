@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const { ObjectId } = Schema.Types;
 
 const studioGearSchema = new Schema({
-  name: String,
+  name: { type: String, default: 'studio_gear' },
   control_room: [{ type: ObjectId, ref: 'control_room' }],
   monitoring: [{ type: ObjectId, ref: 'monitoring' }],
   amps: [{ type: ObjectId, ref: 'amp' }],

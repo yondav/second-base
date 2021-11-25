@@ -64,4 +64,18 @@ exports.putController = {
       next(err);
     }
   },
+
+  image: async (req, res, next) => {
+    try {
+      const data = await edit.images(
+        req.body,
+        req.params.img_id,
+        req.params.collection
+      );
+
+      res.status(202).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

@@ -73,6 +73,11 @@
 }
 
 /* PHOTO UPLOAD */
+.dropzone {
+  border: none !important;
+  border-radius: var(--radius);
+}
+
 .upload-square {
   position: relative;
   width: 10rem;
@@ -86,7 +91,7 @@
 }
 
 .preview-imgs div {
-  position: relative;
+  position: relative !important;
   width: 18rem;
   height: 18rem;
   border: 1px solid var(--primary-white);
@@ -96,7 +101,7 @@
 }
 
 .preview-imgs div .thumbnail-overlay {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   right: 0;
   background-color: var(--primary-white);

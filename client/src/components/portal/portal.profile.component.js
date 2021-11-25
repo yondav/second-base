@@ -8,7 +8,7 @@ const PortalProfile = ({ state, setEdit }) => {
   const {
     loading,
     data: {
-      user: { first_name, last_name, email, bio, image, id },
+      user: { first_name, last_name, email, bio, image },
     },
   } = state;
 
@@ -25,7 +25,7 @@ const PortalProfile = ({ state, setEdit }) => {
 
   return (
     <Card style={{ borderTopLeftRadius: 0 }}>
-      {first_name ? (
+      {!loading ? (
         <>
           <Card.Header className='d-flex justify-content-between align-items-center'>
             <h1>Welcome Back {toTitle(first_name)}</h1>
@@ -39,12 +39,14 @@ const PortalProfile = ({ state, setEdit }) => {
             <Container className='py-5'>
               <Row>
                 <Col xs={12} md={6}>
+                  <h4>Profile</h4>
                   <div name='img' className='profile-img-container'>
                     <img
                       name='img'
                       src={
-                        image ||
-                        'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
+                        image && image.length
+                          ? image[0].url
+                          : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
                       }
                       alt='profile'
                     />
@@ -58,6 +60,7 @@ const PortalProfile = ({ state, setEdit }) => {
                   </div>
                 </Col>
                 <Col xs={12} md={6}>
+                  <h4>Bio</h4>
                   <div name='bio' className='h-100 profile-bio' />
                 </Col>
               </Row>

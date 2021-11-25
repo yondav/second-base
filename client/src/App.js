@@ -1,16 +1,17 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { GlobalContext } from './context/context.data';
 
 import Navigation from './components/navigation';
 import AdminRoute from './components/adminRoute';
-import Login from './pages/admin/login';
-import Portal from './pages/admin/portal';
-import About from './pages/client/about';
-import Artists from './pages/client/artists';
-import Booking from './pages/client/booking';
-import Gear from './pages/client/gear';
-import Home from './pages/client/home';
+
+const Login = React.lazy(() => import('./pages/admin/login'));
+const Portal = React.lazy(() => import('./pages/admin/portal'));
+const About = React.lazy(() => import('./pages/client/about'));
+const Artists = React.lazy(() => import('./pages/client/artists'));
+const Booking = React.lazy(() => import('./pages/client/booking'));
+const Gear = React.lazy(() => import('./pages/client/gear'));
+const Home = React.lazy(() => import('./pages/client/home'));
 
 const App = () => {
   const { state, getStudio, getUser } = useContext(GlobalContext);
@@ -18,22 +19,29 @@ const App = () => {
   useEffect(() => {
     getStudio();
     getUser();
-  }, [state.loading]);
+  }, []);
+
+  useEffect(
+    () => console.log('***__STATE__***', '\n', state),
+    [state.loading, state.data]
+  );
 
   return (
     <div className='wrapper'>
       <Navigation />
-      <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route exact path='/about' element={<About />} />
-        <Route exact path='/artists' element={<Artists />} />
-        <Route exact path='/booking' element={<Booking />} />
-        <Route exact path='/gear' element={<Gear />} />
-        <Route exact path='/login' element={<Login />} />
-        <Route exact path='/admin/portal' element={<AdminRoute />}>
-          <Route exact path='/admin/portal' element={<Portal />} />
-        </Route>
-      </Routes>
+      <Suspense fallback=''>
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/about' element={<About />} />
+          <Route exact path='/artists' element={<Artists />} />
+          <Route exact path='/booking' element={<Booking />} />
+          <Route exact path='/gear' element={<Gear />} />
+          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/admin/portal' element={<AdminRoute />}>
+            <Route exact path='/admin/portal' element={<Portal />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </div>
   );
 };

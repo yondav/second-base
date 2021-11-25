@@ -7,11 +7,23 @@ import {
   Tab,
   Modal,
   Spinner,
+  Card,
 } from 'react-bootstrap';
-import { PortalProfile, ModalContent } from '../../../components/portal';
+import {
+  ModalContent,
+  PortalProfile,
+  PortalGeneral,
+} from '../../../components/portal';
 import { GlobalContext } from '../../../context/context.data';
 
 import './portal.css';
+
+const tabs = [
+  { eventKey: 'user', title: 'Profile', component: PortalProfile },
+  { eventKey: 'general_info', title: 'General', component: PortalGeneral },
+  { eventKey: 'studio_gear', title: 'Gear', component: PortalProfile },
+  { eventKey: 'artists', title: 'Artists', component: PortalProfile },
+];
 
 const Portal = () => {
   const [edit, setEdit] = useState(false);
@@ -34,21 +46,21 @@ const Portal = () => {
       <Container fluid>
         <Row>
           <Col>
-            <Tabs
-              defaultActiveKey='user'
-              id='uncontrolled-tab-example'
-              className='mt-5 admin-tab'
-            >
-              <Tab eventKey='user' title='Profile'>
-                {!state.loading ? (
-                  <PortalProfile state={state} setEdit={setEdit} />
-                ) : (
-                  <Spinner animation='border' />
-                )}
-              </Tab>
-              <Tab eventKey='general_info' title='General'></Tab>
-              <Tab eventKey='studio_gear' title='Gear'></Tab>
-              <Tab eventKey='artists' title='Artists'></Tab>
+            <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
+              {tabs.map((tab, i) => (
+                <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
+                  {!state.loading ? (
+                    React.createElement(tab.component, { state, setEdit })
+                  ) : (
+                    <Card
+                      style={{ borderTopLeftRadius: 0, height: '40rem' }}
+                      className='w-100 d-flex justify-content-center align-items-center'
+                    >
+                      <Spinner animation='border' />
+                    </Card>
+                  )}
+                </Tab>
+              ))}
             </Tabs>
           </Col>
         </Row>

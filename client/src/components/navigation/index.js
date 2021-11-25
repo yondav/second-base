@@ -2,17 +2,24 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { GlobalContext } from '../../context/context.data';
 import useAdminContext from '../../hooks/useAdminContext';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { AdminContext } from '../../context/context.auth';
 import { BsInstagram } from 'react-icons/bs';
-import logo from '../../assets/full-width-white.svg';
 import NavCollapse from '../navCollapse';
 import NavExpand from '../navExpand';
 
 import './navigation.css';
 
 const Navigation = () => {
+  const {
+    state: {
+      data: {
+        studio: { logo },
+      },
+    },
+  } = useContext(GlobalContext);
   const { isDesktop } = useMediaQuery();
   const { logout } = useAdminContext();
   const admin = useContext(AdminContext);

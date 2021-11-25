@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Alert, Container, Row, Form } from 'react-bootstrap';
+import { Card, Container, Row, Form } from 'react-bootstrap'; // Alert
 import { FormHeader, Input, ButtonGroup } from './formComponents';
 
 const ArtistForm = ({ method }) => {

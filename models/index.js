@@ -5,5 +5,7 @@ module.exports = {
   Studio: require('./model.studio'),
   StudioGear: require('./model.studioGear'),
   Service: require('./model.services'),
+  PageImages: require('./model.pageImages'),
   gear: require('./model.gear'),
+  images: require('./model.image'),
 };

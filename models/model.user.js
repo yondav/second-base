@@ -1,9 +1,11 @@
 const crypto = require('crypto');
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userSchema = new mongoose.Schema({
+const { ObjectId } = Schema.Types;
+
+const userSchema = new Schema({
   first_name: {
     type: String,
     required: [true, 'Please provide first name'],
@@ -28,7 +30,7 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   bio: { type: String, default: '' },
-  image: { type: String, default: '' },
+  image: [{ type: ObjectId, ref: 'user_img' }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -81,6 +83,6 @@ userSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

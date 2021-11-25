@@ -10,8 +10,7 @@ import { IoIosCloudUpload } from 'react-icons/io';
 import { ImageUploaderThumbnail } from './index';
 import api from '../../../utils/api';
 
-const ImageUploader = ({ single, images, setImages }) => {
-  // const [images, setImages] = useState([]);
+const ImageUploader = ({ single, images, setImages, label }) => {
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
@@ -63,7 +62,10 @@ const ImageUploader = ({ single, images, setImages }) => {
       });
 
       if (res) setLoading(false);
-      setImages(prev => [...prev, res.data.url]);
+      setImages(prev => [
+        ...prev,
+        { sequence: images.length + 0, photo_credit: '', url: res.data.url },
+      ]);
 
       statusSetter(res.status);
     });
@@ -103,8 +105,8 @@ const ImageUploader = ({ single, images, setImages }) => {
       <ImageUploaderThumbnail
         key={i}
         index={i}
-        id={i}
-        url={img}
+        id={img._id}
+        url={img.url}
         moveThumbnail={moveThumbnail}
         images={images}
         setImages={setImages}
@@ -120,6 +122,7 @@ const ImageUploader = ({ single, images, setImages }) => {
             {statusMessage.message}
           </Alert>
         )}
+        {label && <Form.Label>{label}</Form.Label>}
         <Card.Header
           {...getRootProps({ className: 'dropzone' })}
           className='d-flex justify-content-center p-5 pointer'

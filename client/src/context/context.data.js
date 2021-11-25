@@ -17,7 +17,7 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
   const getStudio = async () => {
-    initialState.loading = true;
+    state.loading = true;
 
     const res = await api({ url: '/api/v1/secondBase', method: 'get' });
 
@@ -37,7 +37,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const getUser = async () => {
-    initialState.loading = true;
+    state.loading = true;
 
     const res = await api({ url: '/api/v1/users', method: 'get' });
 
@@ -51,15 +51,41 @@ export const GlobalProvider = ({ children }) => {
         res.data
       );
     } else {
-      dispatch({ type: 'GET_STUDIO', error: 'Something went wrong' });
+      dispatch({ type: 'GET_USER', error: 'Something went wrong' });
       console.log('%cerror:', consoleColors.fail, 'user has not been fetched');
     }
   };
 
-  const updateUser = async (userId, update) => {
-    initialState.loading = true;
-
+  const updateUser = async (userId, update, img) => {
+    state.loading = true;
     try {
+      let image;
+      if (img) {
+        if (state.data.user.image.length > 0)
+          await api({
+            url: `/api/v1/images/user/${state.data.user.image[0]._id}`,
+            method: 'delete',
+          });
+
+        const newImage = await api({
+          url: `/api/v1/images/user/${userId}`,
+          method: 'post',
+          data: img,
+        });
+
+        if (newImage.data) {
+          image = newImage.data;
+          dispatch({ type: 'ADD_USER_IMAGE', payload: image });
+          console.log(
+            '%csuccess:',
+            consoleColors.success,
+            'user image has been updated',
+            '\n',
+            newImage.data
+          );
+        }
+      }
+
       const res = await api({
         url: `/api/v1/users/${userId}`,
         method: 'put',
@@ -67,7 +93,16 @@ export const GlobalProvider = ({ children }) => {
       });
 
       if (res.data) {
-        dispatch({ type: 'UPDATE_USER', payload: res.data });
+        const { first_name, last_name, email, bio } = res.data;
+        dispatch({
+          type: 'UPDATE_USER',
+          payload: {
+            first_name,
+            last_name,
+            email,
+            bio,
+          },
+        });
         console.log(
           '%csuccess:',
           consoleColors.success,
@@ -75,31 +110,56 @@ export const GlobalProvider = ({ children }) => {
           '\n',
           res.data
         );
+
+        return state.data.user;
       }
     } catch (err) {
       dispatch({ type: 'UPDATE_USER', error: 'Something went wrong' });
       console.log(
         '%cerror:',
         consoleColors.fail,
-        'user has not been fetched',
+        'user has not been updated',
         '\n',
         err
       );
     }
   };
 
-  const createGear = async (type, gear) => {
-    const res = await api({
-      url: `/api/v1/gear/${type}`,
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: gear,
-    });
+  const updateGeneral = async update => {
+    initialState.loading = true;
 
-    if (res) {
-      dispatch({ type: 'CREATE_GEAR', payload: res.data });
+    try {
+      const res = await api({
+        url: '/api/v1/secondBase',
+        method: 'put',
+        data: update,
+      });
+
+      if (res.data) {
+        dispatch({ type: 'UPDATE_GENERAL', payload: res.data });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          'general info has been updated',
+          '\n',
+          res.data
+        );
+
+        return res.data;
+      }
+    } catch (err) {
+      dispatch({ type: 'UPDATE_GENERAL', error: 'Something went wrong' });
+      console.log(
+        '%cerror:',
+        consoleColors.fail,
+        'general info has not been fetched',
+        '\n',
+        err
+      );
     }
   };
+
+  // const deleteImage =
 
   return (
     <GlobalContext.Provider
@@ -108,6 +168,7 @@ export const GlobalProvider = ({ children }) => {
         getStudio,
         getUser,
         updateUser,
+        updateGeneral,
       }}
     >
       {children}

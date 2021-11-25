@@ -5,7 +5,6 @@ const { ObjectId } = Schema.Types;
 const studioSchema = new Schema({
   name: String,
   logo: String,
-  images: Array,
   email: String,
   address: {
     address: String,
@@ -20,6 +19,10 @@ const studioSchema = new Schema({
   },
   artists: [{ type: ObjectId, ref: 'artist' }],
   services: [{ type: ObjectId, ref: 'service' }],
+  images: {
+    type: ObjectId,
+    ref: 'page_images',
+  },
 });
 
 const Studio = model('studio', studioSchema);

@@ -1,10 +1,8 @@
 const { Schema, model } = require('mongoose');
 
-const { ObjectId } = Schema.Types;
-
 const serviceSchema = new Schema({
   name: String,
-  description: String,
+  description: { type: String, default: '' },
 });
 
 const Service = model('service', serviceSchema);

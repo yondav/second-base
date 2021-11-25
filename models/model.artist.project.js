@@ -1,10 +1,12 @@
 const { Schema, model } = require('mongoose');
 
+const { ObjectId } = Schema.Types;
+
 const projectSchema = new Schema({
   name: String,
   year: Number,
   links: Array,
-  cover: String,
+  cover: [{ type: ObjectId, ref: 'project_img' }],
 });
 
 const Project = model('project', projectSchema);

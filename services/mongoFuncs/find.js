@@ -5,22 +5,31 @@ exports.find = {
     await Studio.findOne({ name: 'secondBase' })
       .populate({
         path: 'studio_gear',
-        populate: 'control_room monitoring amps drums microphones guitars keys',
+        populate: {
+          path: 'control_room monitoring amps drums microphones guitars keys',
+          populate: 'image',
+        },
       })
       .populate({
         path: 'artists',
-        populate: 'projects',
+        populate: { path: 'projects', populate: 'cover' },
       })
-      .populate({ path: 'services' }),
+      .populate({ path: 'services' })
+      .populate({
+        path: 'images',
+        populate: 'home about gear artists booking',
+      }),
 
   studio_gear: async () =>
-    await StudioGear.findOne({ name: 'studio_gear' }).populate(
-      'control_room monitoring amps drums microphones guitars keys'
-    ),
+    await StudioGear.findOne({ name: 'studio_gear' }).populate({
+      path: 'control_room monitoring amps drums microphones guitars keys',
+      populate: 'image',
+    }),
 
-  artists: async () => await Artist.find().populate('projects'),
+  artists: async () =>
+    await Artist.find().populate({ path: 'projects', populate: 'cover' }),
 
   services: async () => await Service.find(),
 
-  user: async () => await User.find(),
+  user: async () => await User.find().populate('image'),
 };
