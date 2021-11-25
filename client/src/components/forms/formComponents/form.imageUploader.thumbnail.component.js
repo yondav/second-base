@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { VscChromeClose } from 'react-icons/vsc';
+import { GlobalContext } from '../../../context/context.data';
 
 const ImageUploaderThumbnail = ({
+  type,
   index,
-  url,
   moveThumbnail,
   images,
-  setImages,
-  id,
+  img: { _id, url },
 }) => {
+  const { deleteImage } = useContext(GlobalContext);
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [{ handlerId }, drop] = useDrop({
@@ -55,7 +56,7 @@ const ImageUploaderThumbnail = ({
   const [{ isDragging }, drag] = useDrag({
     type: 'thumbnail',
     item: () => {
-      return { id, index };
+      return { _id, index };
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
@@ -63,23 +64,6 @@ const ImageUploaderThumbnail = ({
   });
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
-
-  const removeThumbnail = () => {
-    let list = images;
-    // list.splice(list[index], 1);
-    let targetImg = list.indexOf(
-      list.find(img => {
-        console.log('_id: ', img._id, 'id: ', id);
-        return img._id === id;
-      })
-    );
-    console.log('targetImg: ', targetImg);
-    if (index > -1) {
-      list.splice(targetImg, 1);
-    }
-
-    setImages(list);
-  };
 
   return (
     <>
@@ -99,7 +83,7 @@ const ImageUploaderThumbnail = ({
             <VscChromeClose
               className='pointer thumbnail-delete'
               size='2em'
-              onClick={removeThumbnail}
+              onClick={() => deleteImage(_id, type)}
             />
           </div>
           <img src={url} alt={url} />

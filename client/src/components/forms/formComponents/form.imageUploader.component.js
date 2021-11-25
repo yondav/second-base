@@ -10,7 +10,7 @@ import { IoIosCloudUpload } from 'react-icons/io';
 import { ImageUploaderThumbnail } from './index';
 import api from '../../../utils/api';
 
-const ImageUploader = ({ single, images, setImages, label }) => {
+const ImageUploader = ({ single, images, setImages, label, type }) => {
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
@@ -104,9 +104,9 @@ const ImageUploader = ({ single, images, setImages, label }) => {
     return (
       <ImageUploaderThumbnail
         key={i}
+        type={type}
+        img={img}
         index={i}
-        id={img._id}
-        url={img.url}
         moveThumbnail={moveThumbnail}
         images={images}
         setImages={setImages}

@@ -51,7 +51,6 @@ export const GlobalProvider = ({ children }) => {
         res.data
       );
     } else {
-      dispatch({ type: 'GET_USER', error: 'Something went wrong' });
       console.log('%cerror:', consoleColors.fail, 'user has not been fetched');
     }
   };
@@ -114,13 +113,12 @@ export const GlobalProvider = ({ children }) => {
         return state.data.user;
       }
     } catch (err) {
-      dispatch({ type: 'UPDATE_USER', error: 'Something went wrong' });
       console.log(
         '%cerror:',
         consoleColors.fail,
         'user has not been updated',
         '\n',
-        err
+        err.message
       );
     }
   };
@@ -159,7 +157,36 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  // const deleteImage =
+  const deleteImage = async (imgId, type) => {
+    state.loading = true;
+
+    try {
+      const { data } = await api({
+        url: `/api/v1/images/${type}/${imgId}`,
+        method: 'delete',
+      });
+
+      console.log(data);
+      if (data.success) {
+        dispatch({ type: 'DELETE_IMAGE', payload: { type, id: data._id } });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          'image has been deleted',
+          '\n',
+          data
+        );
+      }
+    } catch (err) {
+      console.log(
+        '%cerror:',
+        consoleColors.fail,
+        'image has not been deleted',
+        '\n',
+        err.message
+      );
+    }
+  };
 
   return (
     <GlobalContext.Provider
@@ -169,6 +196,7 @@ export const GlobalProvider = ({ children }) => {
         getUser,
         updateUser,
         updateGeneral,
+        deleteImage,
       }}
     >
       {children}

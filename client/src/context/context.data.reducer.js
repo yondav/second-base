@@ -39,6 +39,21 @@ export default function dataReducer(state, action) {
         data: { ...state.data, studio: action.payload },
       };
 
+    case 'DELETE_IMAGE':
+      if (action.payload.type === 'user') {
+        let list = state.data.user.image;
+        let targetImg = list.indexOf(
+          list.find(img => img._id === action.payload.id)
+        );
+        list.splice(targetImg, 1);
+
+        return {
+          ...state,
+          loading: false,
+          data: { ...state.data, user: { ...state.data.user, image: list } },
+        };
+      }
+
     default:
       return state;
   }

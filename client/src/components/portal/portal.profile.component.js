@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Card, Row, Col, Container, Spinner } from 'react-bootstrap';
 import { RiEditBoxLine } from 'react-icons/ri';
 
 import { toTitle } from '../../utils/helperFuncs';
+import { GlobalContext } from '../../context/context.data';
 
-const PortalProfile = ({ state, setEdit }) => {
+const PortalProfile = ({ setEdit }) => {
   const {
-    loading,
-    data: {
-      user: { first_name, last_name, email, bio, image },
+    state: {
+      loading,
+      data: {
+        user: { first_name, last_name, email, bio, image },
+      },
     },
-  } = state;
+  } = useContext(GlobalContext);
 
   const renderBio = () => {
     if (bio)

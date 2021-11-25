@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Card,
   Row,
@@ -12,13 +12,22 @@ import {
 import { RiEditBoxLine } from 'react-icons/ri';
 
 import { toTitle } from '../../utils/helperFuncs';
+import { GlobalContext } from '../../context/context.data';
 
-const PortalGeneral = ({ state, setEdit }) => {
+const PortalGeneral = ({ setEdit }) => {
   const {
-    data: {
-      studio: { logo, images, email, address, name },
+    state: {
+      loading,
+      data: {
+        studio: { logo, images, email, address, name },
+      },
     },
-  } = state;
+  } = useContext(GlobalContext);
+  // const {
+  //   data: {
+  //     studio: { logo, images, email, address, name },
+  //   },
+  // } = state;
 
   const handleClick = e => setEdit('general_info');
 

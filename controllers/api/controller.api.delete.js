@@ -58,7 +58,11 @@ exports.deleteController = {
 
       res
         .status(200)
-        .json({ success: true, message: `image ${data._id} has been removed` });
+        .json({
+          success: true,
+          message: `image ${data._id} has been removed`,
+          data,
+        });
     } catch (err) {
       next(err);
     }

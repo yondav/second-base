@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { GlobalContext } from './context/context.data';
+import { consoleColors } from './utils/console';
 
 import Navigation from './components/navigation';
 import AdminRoute from './components/adminRoute';
@@ -22,7 +23,7 @@ const App = () => {
   }, []);
 
   useEffect(
-    () => console.log('***__STATE__***', '\n', state),
+    () => console.log('%c** state **', consoleColors.state, '\n', state),
     [state.loading, state.data]
   );
 

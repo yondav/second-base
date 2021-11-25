@@ -1,11 +1,11 @@
 import React from 'react';
 import { ProfileForm, GeneralForm } from '../forms';
 
-const ModalContent = ({ edit, setEdit, state }) => {
+const ModalContent = ({ edit, setEdit }) => {
   const editContent = () => {
     switch (edit) {
       case 'profile':
-        return <ProfileForm state={state} setEdit={setEdit} />;
+        return <ProfileForm setEdit={setEdit} />;
       // case 'general_info':
       //   return <GeneralForm state={state} setEdit={setEdit} />;
       default:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Card, Alert, Form, Container, Row, Col } from 'react-bootstrap';
 import { GlobalContext } from '../../context/context.data';
 import useAdminContext from '../../hooks/useAdminContext';
@@ -10,29 +10,33 @@ import {
   RichTextBio,
 } from './formComponents';
 
-const ProfileForm = ({ state, setEdit }) => {
-  const { updateUser } = useContext(GlobalContext);
-  const { getResetToken, passwordReset } = useAdminContext();
+const ProfileForm = ({ setEdit }) => {
   const {
-    data: {
-      user: { first_name, last_name, email, bio, image, _id },
+    updateUser,
+    state: {
+      loading,
+      data: {
+        user: { first_name, last_name, email, bio, image, _id },
+      },
     },
-  } = state;
+  } = useContext(GlobalContext);
 
+  const { getResetToken, passwordReset } = useAdminContext();
   const [alert, setAlert] = useState();
   const [resetToken, setResetToken] = useState(null);
+  const [images, setImages] = useState(image || []);
   const [resetPassword, setResetPassword] = useState({
     new_password: '',
     confirm_password: '',
     response: null,
   });
+
   const [formData, setFormData] = useState({
     first_name,
     last_name,
     email,
     bio,
   });
-  const [images, setImages] = useState(image || []);
 
   const profileInputs = [
     {
@@ -184,6 +188,7 @@ const ProfileForm = ({ state, setEdit }) => {
               </Col>
               <RichTextBio setFormData={setFormData} value={bio} />
               <ImageUploader
+                type='user'
                 single={true}
                 images={images}
                 setImages={setImages}

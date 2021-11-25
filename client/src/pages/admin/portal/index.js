@@ -40,7 +40,7 @@ const Portal = () => {
           onHide={() => setEdit(false)}
         >
           <Modal.Header closeButton />
-          <ModalContent edit={edit} setEdit={setEdit} state={state} />
+          <ModalContent edit={edit} setEdit={setEdit} />
         </Modal>
       )}
       <Container fluid>
@@ -50,7 +50,7 @@ const Portal = () => {
               {tabs.map((tab, i) => (
                 <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
                   {!state.loading ? (
-                    React.createElement(tab.component, { state, setEdit })
+                    React.createElement(tab.component, { setEdit })
                   ) : (
                     <Card
                       style={{ borderTopLeftRadius: 0, height: '40rem' }}
