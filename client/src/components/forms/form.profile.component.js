@@ -190,6 +190,7 @@ const ProfileForm = ({ setEdit }) => {
               <ImageUploader
                 type='user'
                 single={true}
+                originalList={image}
                 images={images}
                 setImages={setImages}
                 label='Photo'

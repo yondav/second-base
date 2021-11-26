@@ -1,6 +1,12 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
+import { Form } from 'react-bootstrap';
 import { useDrag, useDrop } from 'react-dnd';
-import { VscChromeClose } from 'react-icons/vsc';
+import {
+  VscChromeClose,
+  RiEditBoxLine,
+  IoIosArrowRoundBack,
+} from 'react-icons/all';
+import { Input } from '.';
 import { GlobalContext } from '../../../context/context.data';
 
 const ImageUploaderThumbnail = ({
@@ -8,11 +14,16 @@ const ImageUploaderThumbnail = ({
   index,
   moveThumbnail,
   images,
-  img: { _id, url },
+  inputHandler,
+  switchHandler,
+  removeImage,
+  img: { _id, url, color, photo_credit },
 }) => {
   const { deleteImage } = useContext(GlobalContext);
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [opacityState, setOpacityState] = useState(0);
   const [{ handlerId }, drop] = useDrop({
     accept: 'thumbnail',
     collect(monitor) {
@@ -65,6 +76,12 @@ const ImageUploaderThumbnail = ({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
+  useEffect(() => {
+    if (edit) setOpacityState(1);
+    if (hovered && !edit) setOpacityState(0.7);
+    if (!hovered && !edit) setOpacityState(0);
+  }, [hovered, edit]);
+
   return (
     <>
       {images.length > 0 && (
@@ -74,20 +91,74 @@ const ImageUploaderThumbnail = ({
           data-handler-id={handlerId}
           className='d-flex flex-column justify-content-center align-items-center m-2'
         >
+          <img
+            src={url}
+            alt={url}
+            style={{ filter: !color && 'saturate(0)' }}
+          />
           <div
             className='thumbnail-overlay d-flex justify-content-center align-items-center'
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            style={{ opacity: hovered && 0.7 }}
+            style={{ opacity: opacityState, padding: edit && '.75rem' }}
           >
-            <VscChromeClose
-              className='pointer thumbnail-delete'
-              size='2em'
-              onClick={() => deleteImage(_id, type)}
-            />
+            {edit ? (
+              <div className='d-flex flex-column w-100 h-100'>
+                <div
+                  className='d-flex justify-content-end align-items-center h-25'
+                  style={{ width: 'auto' }}
+                >
+                  <IoIosArrowRoundBack
+                    size='2em'
+                    className='pointer mx-2'
+                    onClick={() => setEdit(false)}
+                  />
+                </div>
+                <div
+                  className='photo-form h-75 d-flex flex-column justify-content-around'
+                  style={{ width: 'auto' }}
+                >
+                  <div
+                    className='mb-3 d-flex justify-content-between align-items-start'
+                    style={{ height: 'fit-content', width: '40%' }}
+                  >
+                    <Form.Label>{color ? 'Color' : 'B&W'}</Form.Label>
+                    <Form.Check
+                      style={{ height: 'fit-content', width: 'fit-content' }}
+                      type='switch'
+                      id='custom-switch'
+                      defaultChecked={color}
+                      onClick={e => {
+                        switchHandler(e, _id);
+                        console.log(color);
+                      }}
+                    />
+                  </div>
+                  <Input
+                    style={{ height: 'fit-content' }}
+                    type='text'
+                    name='photo_credit'
+                    label='Photographer'
+                    value={photo_credit}
+                    changehandler={e => inputHandler(e, _id)}
+                  />
+                </div>
+              </div>
+            ) : (
+              <>
+                <VscChromeClose
+                  className='pointer thumbnail-delete'
+                  size='2em'
+                  onClick={e => removeImage(e, _id)}
+                />
+                <RiEditBoxLine
+                  size='2em'
+                  className='pointer edit-icon'
+                  onClick={() => setEdit(true)}
+                />
+              </>
+            )}
           </div>
-          <img src={url} alt={url} />
-          {/* {imageForm && <div>IMAGE FORM</div>} */}
         </div>
       )}
     </>

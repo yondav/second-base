@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -8,11 +8,21 @@ import { Card, Alert, Form, Spinner, Col } from 'react-bootstrap';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
+import { GlobalContext } from '../../../context/context.data';
 import api from '../../../utils/api';
 
-const ImageUploader = ({ single, images, setImages, label, type }) => {
+const ImageUploader = ({
+  single,
+  images,
+  setImages,
+  label,
+  type,
+  originalList,
+}) => {
+  const { deleteImage } = useContext(GlobalContext);
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
+  const [render, setRender] = useState(1);
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: files => handleDrop(files),
@@ -100,19 +110,55 @@ const ImageUploader = ({ single, images, setImages, label, type }) => {
     [images]
   );
 
-  const renderThumbnail = (img, i) => {
-    return (
-      <ImageUploaderThumbnail
-        key={i}
-        type={type}
-        img={img}
-        index={i}
-        moveThumbnail={moveThumbnail}
-        images={images}
-        setImages={setImages}
-      />
-    );
+  const inputHandler = (e, id) => {
+    let list = images;
+    let target = list.indexOf(list.find(img => img._id === id));
+    list[target] = { ...list[target], photo_credit: e.target.value };
+
+    setImages(list);
+    setRender(render + 1);
   };
+
+  const switchHandler = (e, id) => {
+    let list = images;
+    let target = list.indexOf(list.find(img => img._id === id));
+    list[target] = { ...list[target], color: e.target.checked };
+
+    setImages(list);
+    setRender(render + 1);
+    console.log(images, render);
+  };
+
+  const removeImage = (e, id) => {
+    let exists = originalList.find(img => img._id === id);
+
+    if (!exists) {
+      let list = images;
+      let target = list.indexOf(list.find(img => img._id === id));
+      list.splice(target, 1);
+    } else {
+      deleteImage(id, type);
+    }
+  };
+
+  const renderThumbnail = useCallback(
+    (img, i) => {
+      return (
+        <ImageUploaderThumbnail
+          key={i}
+          type={type}
+          img={img}
+          index={i}
+          moveThumbnail={moveThumbnail}
+          images={images}
+          inputHandler={inputHandler}
+          switchHandler={switchHandler}
+          removeImage={removeImage}
+        />
+      );
+    },
+    [images, inputHandler, switchHandler]
+  );
 
   return (
     <Col xs={12}>

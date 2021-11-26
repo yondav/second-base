@@ -4,6 +4,7 @@ const imageSchema = new Schema({
   sequence: { type: Number, default: 0 },
   photo_credit: String,
   url: String,
+  color: { type: Boolean, default: false },
 });
 
 const images = {

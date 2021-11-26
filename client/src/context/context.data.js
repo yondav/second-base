@@ -60,27 +60,30 @@ export const GlobalProvider = ({ children }) => {
     try {
       let image;
       if (img) {
-        if (state.data.user.image.length > 0)
-          await api({
-            url: `/api/v1/images/user/${state.data.user.image[0]._id}`,
-            method: 'delete',
-          });
+        let existingImg = state.data.user.image.find(im => im.url === img.url);
+        let newImg;
 
-        const newImage = await api({
-          url: `/api/v1/images/user/${userId}`,
-          method: 'post',
-          data: img,
-        });
+        newImg = existingImg
+          ? await api({
+              url: `/api/v1/images/user/${userId}`,
+              method: 'put',
+              data: img,
+            })
+          : await api({
+              url: `/api/v1/images/user/${userId}`,
+              method: 'post',
+              data: img,
+            });
 
-        if (newImage.data) {
-          image = newImage.data;
+        if (newImg.data) {
+          image = newImg.data;
           dispatch({ type: 'ADD_USER_IMAGE', payload: image });
           console.log(
             '%csuccess:',
             consoleColors.success,
             'user image has been updated',
             '\n',
-            newImage.data
+            newImg.data
           );
         }
       }

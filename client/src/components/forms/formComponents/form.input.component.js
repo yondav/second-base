@@ -1,14 +1,14 @@
 import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 
-const Input = ({ label, type, name, xs, md, changehandler, value }) => {
+const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
   const handleReturn = e => {
     if (e.key === 'Enter') return;
   };
 
   return (
     <Col xs={xs} md={md}>
-      <Form.Group className='mb-5'>
+      <Form.Group className='mb-5' style={style}>
         <Form.Label>{label}</Form.Label>
         <Form.Control
           type={type}
