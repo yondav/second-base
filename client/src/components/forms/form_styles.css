@@ -122,8 +122,11 @@
   width: auto;
 }
 
-.desaturate {
-  /* filter: saturate(0); */
+.image-form-overlay .back-container {
+  position: absolute !important;
+  top: -14px;
+  right: -11px;
+  width: auto;
 }
 
 @media only screen and (min-width: 768px) {

@@ -30,7 +30,7 @@ const userSchema = new Schema({
     select: false,
   },
   bio: { type: String, default: '' },
-  image: [{ type: ObjectId, ref: 'user_img' }],
+  images: [{ type: ObjectId, ref: 'user_img' }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

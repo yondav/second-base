@@ -67,7 +67,7 @@ exports.putController = {
 
   image: async (req, res, next) => {
     try {
-      const data = await edit.images(
+      const data = await edit.image(
         req.body,
         req.params.img_id,
         req.params.collection

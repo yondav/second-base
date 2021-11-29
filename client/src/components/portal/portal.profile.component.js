@@ -10,7 +10,7 @@ const PortalProfile = ({ setEdit }) => {
     state: {
       loading,
       data: {
-        user: { first_name, last_name, email, bio, image },
+        user: { first_name, last_name, email, bio, images },
       },
     },
   } = useContext(GlobalContext);
@@ -47,8 +47,8 @@ const PortalProfile = ({ setEdit }) => {
                     <img
                       name='img'
                       src={
-                        image && image.length
-                          ? image[0].url
+                        images && images.length
+                          ? images[0].url
                           : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
                       }
                       alt='profile'

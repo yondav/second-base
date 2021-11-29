@@ -23,7 +23,7 @@ const App = () => {
   }, []);
 
   useEffect(
-    () => console.log('%c** state **', consoleColors.state, '\n', state),
+    () => state && console.log('%cstate', consoleColors.state, '\n', state),
     [state.loading, state.data]
   );
 

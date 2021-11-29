@@ -15,6 +15,7 @@ const AdminRoute = () => {
 
   useEffect(() => {
     verifiedToken();
+    return () => console.log('verified');
   }, []);
 
   return <>{token() ? <Outlet /> : <Navigate to='/login' />}</>;

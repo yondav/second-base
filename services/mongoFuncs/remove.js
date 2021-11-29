@@ -28,7 +28,7 @@ exports.remove = {
 
   service: async serviceId => await Service.findOneAndDelete(serviceId),
 
-  images: async (imageId, parent) => {
+  image: async (imageId, parent) => {
     switch (parent) {
       case 'project':
         return await images.ProjectImg.findByIdAndDelete(imageId);

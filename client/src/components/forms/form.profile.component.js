@@ -13,10 +13,12 @@ import {
 const ProfileForm = ({ setEdit }) => {
   const {
     updateUser,
+    addImage,
+    updateImage,
     state: {
       loading,
       data: {
-        user: { first_name, last_name, email, bio, image, _id },
+        user: { first_name, last_name, email, bio, images, _id },
       },
     },
   } = useContext(GlobalContext);
@@ -24,7 +26,7 @@ const ProfileForm = ({ setEdit }) => {
   const { getResetToken, passwordReset } = useAdminContext();
   const [alert, setAlert] = useState();
   const [resetToken, setResetToken] = useState(null);
-  const [images, setImages] = useState(image || []);
+  const [imgs, setImgs] = useState([...images]);
   const [resetPassword, setResetPassword] = useState({
     new_password: '',
     confirm_password: '',
@@ -73,10 +75,23 @@ const ProfileForm = ({ setEdit }) => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    let img;
-    image === images ? (img = false) : (img = images[0]);
+    let newImgs = imgs.filter(img => !img._id);
+    let existingImgs = imgs.filter(img => img._id);
 
-    const res = await updateUser(_id, formData, img);
+    if (newImgs)
+      await addImage({
+        imgs: newImgs,
+        collection: 'user',
+        parentId: _id,
+      });
+
+    if (existingImgs)
+      await updateImage({
+        imgs: existingImgs,
+        collection: 'user',
+      });
+
+    const res = await updateUser(_id, formData);
 
     if (res) {
       setAlert({ message: 'Profile updated', variant: 'success' });
@@ -190,9 +205,9 @@ const ProfileForm = ({ setEdit }) => {
               <ImageUploader
                 type='user'
                 single={true}
-                originalList={image}
-                images={images}
-                setImages={setImages}
+                originalList={images}
+                images={imgs}
+                setImages={setImgs}
                 label='Photo'
               />
               <ButtonGroup

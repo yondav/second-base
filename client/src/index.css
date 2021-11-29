@@ -49,6 +49,19 @@ body {
   border-radius: var(--radius);
 }
 
+.carousel-control-prev {
+  left: -1.5rem;
+}
+
+.carousel-control-next {
+  right: -1.5rem;
+}
+
+.carousel-control.right .glyphicon {
+  right: 0;
+  margin-right: 0;
+}
+
 .pointer {
   cursor: pointer;
 }

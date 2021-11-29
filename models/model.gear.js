@@ -6,7 +6,7 @@ const gearSchema = new Schema({
   name: { type: String, default: '' },
   brand: { type: String, default: '' },
   year: { type: Number, default: 0 },
-  image: [{ type: ObjectId, ref: 'gear_img' }],
+  images: [{ type: ObjectId, ref: 'gear_img' }],
   description: { type: String, default: '' },
   count: { type: Number, default: 0 },
 });

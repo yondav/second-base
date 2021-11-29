@@ -45,7 +45,6 @@ exports.getController = {
     try {
       const data = await find.user();
 
-      console.log(data);
       res.status(200).json(data);
     } catch (err) {
       next(err);

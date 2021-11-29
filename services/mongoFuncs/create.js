@@ -146,12 +146,12 @@ exports.create = {
         const project = await Project.findById(parentId);
         newImg = new images.ProjectImg({
           ...obj,
-          sequence: project.cover.length,
+          sequence: project.images.length,
         });
         await newImg.save();
         return Project.findByIdAndUpdate(
           parentId,
-          { $push: { cover: newImg._id } },
+          { $push: { images: newImg._id } },
           { new: true, useFindAndModify: false }
         );
 
@@ -167,49 +167,49 @@ exports.create = {
           case 'control_room':
             return gear.ControlRoom.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'monitoring':
             return gear.Monitoring.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'amps':
             return gear.Amp.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'drums':
             return gear.Drum.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'microphones':
             return gear.Microphone.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'guitars':
             return gear.Guitar.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
           case 'keys':
             return gear.Key.findByIdAndUpdate(
               parentId,
-              { $push: { image: newImg._id } },
+              { $push: { images: newImg._id } },
               { new: true, useFindAndModify: false }
             );
 
@@ -218,54 +218,62 @@ exports.create = {
         }
 
       case 'studio':
-        const pageImages = await PageImages.find({ name: 'page_images' });
-        newImg = new images.StudioImg({
-          ...obj,
-          sequence: pageImages[subParent].length,
-        });
+        console.log('*****__OBJECT: ', obj);
+        newImg = new images.StudioImg(obj);
         await newImg.save();
+        console.log('*****__NEW IMAGE: ', newImg);
         switch (subParent) {
           case 'home':
-            return PageImages.findByIdAndUpdate(
+            await PageImages.findByIdAndUpdate(
               parentId,
               { $push: { home: newImg._id } },
               { new: true, useFindAndModify: false }
             );
+            return newImg;
+
           case 'about':
-            return PageImages.findByIdAndUpdate(
+            await PageImages.findByIdAndUpdate(
               parentId,
               { $push: { about: newImg._id } },
               { new: true, useFindAndModify: false }
             );
+            return newImg;
+
           case 'gear':
-            return PageImages.findByIdAndUpdate(
+            await PageImages.findByIdAndUpdate(
               parentId,
               { $push: { gear: newImg._id } },
               { new: true, useFindAndModify: false }
             );
+            return newImg;
+
           case 'artists':
-            return PageImages.findByIdAndUpdate(
+            await PageImages.findByIdAndUpdate(
               parentId,
               { $push: { artists: newImg._id } },
               { new: true, useFindAndModify: false }
             );
+            return newImg;
+
           case 'booking':
-            return PageImages.findByIdAndUpdate(
+            await PageImages.findByIdAndUpdate(
               parentId,
               { $push: { booking: newImg._id } },
               { new: true, useFindAndModify: false }
             );
+            return newImg;
 
           default:
             break;
         }
+        return newImg;
 
       case 'user':
         newImg = new images.UserImg(obj);
         await newImg.save();
         await User.findByIdAndUpdate(
           parentId,
-          { $push: { image: newImg._id } },
+          { $push: { images: newImg._id } },
           { new: true, useFindAndModify: false }
         );
         return newImg;

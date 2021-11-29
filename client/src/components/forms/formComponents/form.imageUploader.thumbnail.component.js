@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDrag, useDrop } from 'react-dnd';
 import {
@@ -7,7 +7,6 @@ import {
   IoIosArrowRoundBack,
 } from 'react-icons/all';
 import { Input } from '.';
-import { GlobalContext } from '../../../context/context.data';
 
 const ImageUploaderThumbnail = ({
   type,
@@ -19,7 +18,6 @@ const ImageUploaderThumbnail = ({
   removeImage,
   img: { _id, url, color, photo_credit },
 }) => {
-  const { deleteImage } = useContext(GlobalContext);
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -103,14 +101,11 @@ const ImageUploaderThumbnail = ({
             style={{ opacity: opacityState, padding: edit && '.75rem' }}
           >
             {edit ? (
-              <div className='d-flex flex-column w-100 h-100'>
-                <div
-                  className='d-flex justify-content-end align-items-center h-25'
-                  style={{ width: 'auto' }}
-                >
+              <div className='image-form-overlay d-flex flex-column justify-content-center w-100 h-100'>
+                <div className='back-container d-flex justify-content-end align-items-center h-25'>
                   <IoIosArrowRoundBack
                     size='2em'
-                    className='pointer mx-2'
+                    className='pointer back-icon mx-2'
                     onClick={() => setEdit(false)}
                   />
                 </div>
@@ -129,7 +124,7 @@ const ImageUploaderThumbnail = ({
                       id='custom-switch'
                       defaultChecked={color}
                       onClick={e => {
-                        switchHandler(e, _id);
+                        switchHandler(e, url);
                         console.log(color);
                       }}
                     />

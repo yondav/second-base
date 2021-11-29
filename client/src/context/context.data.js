@@ -7,7 +7,6 @@ import { consoleColors } from '../utils/console';
 
 const initialState = {
   loading: true,
-  error: '',
   data: { studio: {}, user: {} },
 };
 
@@ -18,76 +17,56 @@ export const GlobalProvider = ({ children }) => {
 
   const getStudio = async () => {
     state.loading = true;
+    try {
+      const res = await api({ url: '/api/v1/secondBase', method: 'get' });
 
-    const res = await api({ url: '/api/v1/secondBase', method: 'get' });
-
-    if (res.data) {
-      dispatch({ type: 'GET_STUDIO', payload: res.data });
+      if (res.data) {
+        dispatch({ type: 'GET_STUDIO', payload: res.data });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          'data has been fetched',
+          '\n'
+        );
+      }
+    } catch (err) {
       console.log(
-        '%csuccess:',
-        consoleColors.success,
-        'data has been fetched',
-        '\n',
-        res.data
+        '%cerror:',
+        consoleColors.fail,
+        'data has not been fetched',
+        err.message
       );
-    } else {
-      dispatch({ type: 'GET_STUDIO', error: 'Something went wrong' });
-      console.log('%cerror:', consoleColors.fail, 'data has not been fetched');
     }
   };
 
   const getUser = async () => {
     state.loading = true;
 
-    const res = await api({ url: '/api/v1/users', method: 'get' });
+    try {
+      const res = await api({ url: '/api/v1/users', method: 'get' });
 
-    if (res.data) {
-      dispatch({ type: 'GET_USER', payload: res.data[0] });
+      if (res.data) {
+        dispatch({ type: 'GET_USER', payload: res.data[0] });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          'user has been fetched',
+          '\n'
+        );
+      }
+    } catch (err) {
       console.log(
-        '%csuccess:',
-        consoleColors.success,
-        'user has been fetched',
-        '\n',
-        res.data
+        '%cerror:',
+        consoleColors.fail,
+        'user has not been fetched',
+        err.message
       );
-    } else {
-      console.log('%cerror:', consoleColors.fail, 'user has not been fetched');
     }
   };
 
-  const updateUser = async (userId, update, img) => {
+  const updateUser = async (userId, update) => {
     state.loading = true;
     try {
-      let image;
-      if (img) {
-        let existingImg = state.data.user.image.find(im => im.url === img.url);
-        let newImg;
-
-        newImg = existingImg
-          ? await api({
-              url: `/api/v1/images/user/${userId}`,
-              method: 'put',
-              data: img,
-            })
-          : await api({
-              url: `/api/v1/images/user/${userId}`,
-              method: 'post',
-              data: img,
-            });
-
-        if (newImg.data) {
-          image = newImg.data;
-          dispatch({ type: 'ADD_USER_IMAGE', payload: image });
-          console.log(
-            '%csuccess:',
-            consoleColors.success,
-            'user image has been updated',
-            '\n',
-            newImg.data
-          );
-        }
-      }
-
       const res = await api({
         url: `/api/v1/users/${userId}`,
         method: 'put',
@@ -109,8 +88,7 @@ export const GlobalProvider = ({ children }) => {
           '%csuccess:',
           consoleColors.success,
           'user has been updated',
-          '\n',
-          res.data
+          '\n'
         );
 
         return state.data.user;
@@ -126,8 +104,8 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const updateGeneral = async update => {
-    initialState.loading = true;
+  const updateGeneral = async (update, imgs) => {
+    state.loading = true;
 
     try {
       const res = await api({
@@ -137,6 +115,7 @@ export const GlobalProvider = ({ children }) => {
       });
 
       if (res.data) {
+        console.log(res.data);
         dispatch({ type: 'UPDATE_GENERAL', payload: res.data });
         console.log(
           '%csuccess:',
@@ -153,31 +132,124 @@ export const GlobalProvider = ({ children }) => {
       console.log(
         '%cerror:',
         consoleColors.fail,
-        'general info has not been fetched',
+        'general info has not been updated',
         '\n',
         err
       );
     }
   };
 
-  const deleteImage = async (imgId, type) => {
+  const addImage = async ({ imgs, collection, subCollection, parentId }) => {
+    state.loading = true;
+
+    console.log({ imgs, collection, subCollection, parentId });
+    try {
+      let post = async () => {
+        const promises = !subCollection
+          ? imgs.map(
+              async img =>
+                await api({
+                  url: `/api/v1/images/${collection}/${parentId}`,
+                  method: 'post',
+                  data: img,
+                })
+            )
+          : imgs.map(
+              async img =>
+                await api({
+                  url: `/api/v1/images/${collection}/${subCollection}/${parentId}`,
+                  method: 'post',
+                  data: img,
+                })
+            );
+
+        const values = await Promise.all(promises);
+
+        return values.map(val => val.data);
+      };
+
+      let images = await post();
+
+      console.log(images);
+      if (images.length) {
+        dispatch({
+          type: 'ADD_IMAGE',
+          payload: { collection, subCollection, data: images },
+        });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          `image has been added`,
+          '\n'
+        );
+      }
+    } catch (err) {
+      console.log(
+        '%cerror:',
+        consoleColors.fail,
+        'image has not been added',
+        '\n',
+        err.message
+      );
+    }
+  };
+
+  const updateImage = async ({ imgs, collection, subCollection }) => {
+    try {
+      let put = async () => {
+        const promises = imgs.map(
+          async img =>
+            await api({
+              url: `/api/v1/images/${collection}/${img._id}`,
+              method: 'put',
+              data: img,
+            })
+        );
+
+        const values = await Promise.all(promises);
+
+        console.log('VALUES::::', values);
+        return values.map(val => val.data);
+      };
+
+      let images = await put();
+
+      console.log(images);
+      if (images.length) {
+        dispatch({
+          type: 'UPDATE_IMAGE',
+          payload: { collection, subCollection, data: images },
+        });
+        console.log(
+          '%csuccess:',
+          consoleColors.success,
+          `image has been updated`,
+          '\n'
+        );
+      }
+    } catch (err) {}
+  };
+
+  const deleteImage = async ({ imgId, collection, subCollection }) => {
     state.loading = true;
 
     try {
       const { data } = await api({
-        url: `/api/v1/images/${type}/${imgId}`,
+        url: `/api/v1/images/${collection}/${imgId}`,
         method: 'delete',
       });
 
       console.log(data);
       if (data.success) {
-        dispatch({ type: 'DELETE_IMAGE', payload: { type, id: data._id } });
+        dispatch({
+          type: 'DELETE_IMAGE',
+          payload: { collection, subCollection, id: data._id },
+        });
         console.log(
           '%csuccess:',
           consoleColors.success,
           'image has been deleted',
-          '\n',
-          data
+          '\n'
         );
       }
     } catch (err) {
@@ -199,6 +271,8 @@ export const GlobalProvider = ({ children }) => {
         getUser,
         updateUser,
         updateGeneral,
+        addImage,
+        updateImage,
         deleteImage,
       }}
     >

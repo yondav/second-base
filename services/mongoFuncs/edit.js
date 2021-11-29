@@ -80,7 +80,7 @@ exports.edit = {
       useFindAndModify: false,
     }),
 
-  images: async (update, imageId, parent) => {
+  image: async (update, imageId, parent) => {
     switch (parent) {
       case 'project':
         return await images.ProjectImg.findByIdAndUpdate(imageId, update, {

@@ -51,18 +51,13 @@ exports.deleteController = {
 
   image: async (req, res, next) => {
     try {
-      const data = await remove.images(
-        req.params.img_id,
-        req.params.collection
-      );
+      const data = await remove.image(req.params.img_id, req.params.collection);
 
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: `image ${data._id} has been removed`,
-          data,
-        });
+      res.status(200).json({
+        success: true,
+        message: `image ${data._id} has been removed`,
+        data,
+      });
     } catch (err) {
       next(err);
     }

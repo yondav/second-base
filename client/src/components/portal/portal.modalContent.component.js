@@ -6,8 +6,8 @@ const ModalContent = ({ edit, setEdit }) => {
     switch (edit) {
       case 'profile':
         return <ProfileForm setEdit={setEdit} />;
-      // case 'general_info':
-      //   return <GeneralForm state={state} setEdit={setEdit} />;
+      case 'general_info':
+        return <GeneralForm setEdit={setEdit} />;
       default:
         break;
     }

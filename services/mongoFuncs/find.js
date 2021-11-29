@@ -7,12 +7,12 @@ exports.find = {
         path: 'studio_gear',
         populate: {
           path: 'control_room monitoring amps drums microphones guitars keys',
-          populate: 'image',
+          populate: 'images',
         },
       })
       .populate({
         path: 'artists',
-        populate: { path: 'projects', populate: 'cover' },
+        populate: { path: 'projects', populate: 'images' },
       })
       .populate({ path: 'services' })
       .populate({
@@ -23,13 +23,13 @@ exports.find = {
   studio_gear: async () =>
     await StudioGear.findOne({ name: 'studio_gear' }).populate({
       path: 'control_room monitoring amps drums microphones guitars keys',
-      populate: 'image',
+      populate: 'images',
     }),
 
   artists: async () =>
-    await Artist.find().populate({ path: 'projects', populate: 'cover' }),
+    await Artist.find().populate({ path: 'projects', populate: 'images' }),
 
   services: async () => await Service.find(),
 
-  user: async () => await User.find().populate('image'),
+  user: async () => await User.find().populate('images'),
 };

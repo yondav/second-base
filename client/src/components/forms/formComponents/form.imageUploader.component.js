@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -17,6 +17,7 @@ const ImageUploader = ({
   setImages,
   label,
   type,
+  subType,
   originalList,
 }) => {
   const { deleteImage } = useContext(GlobalContext);
@@ -98,14 +99,17 @@ const ImageUploader = ({
   const moveThumbnail = useCallback(
     (dragIndex, hoverIndex) => {
       const dragCard = images[dragIndex];
+      console.log('hoverIndex: ', hoverIndex, 'dragIndex: ', dragIndex);
       setImages(
         update(images, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragCard],
           ],
+          $apply: imgs => imgs.map((img, i) => ({ ...img, sequence: i })),
         })
       );
+      console.log(images);
     },
     [images]
   );
@@ -119,14 +123,14 @@ const ImageUploader = ({
     setRender(render + 1);
   };
 
-  const switchHandler = (e, id) => {
+  const switchHandler = (e, url) => {
     let list = images;
-    let target = list.indexOf(list.find(img => img._id === id));
+    let target = list.indexOf(list.find(img => img.url === url));
     list[target] = { ...list[target], color: e.target.checked };
 
     setImages(list);
     setRender(render + 1);
-    console.log(images, render);
+    console.log(originalList);
   };
 
   const removeImage = (e, id) => {
@@ -137,7 +141,7 @@ const ImageUploader = ({
       let target = list.indexOf(list.find(img => img._id === id));
       list.splice(target, 1);
     } else {
-      deleteImage(id, type);
+      deleteImage({ imgId: id, collection: type, subCollection: subType });
     }
   };
 
@@ -190,7 +194,9 @@ const ImageUploader = ({
         {images.length > 0 && (
           <Card.Body className='d-flex justify-content-center flex-wrap preview-imgs'>
             <DndProvider backend={HTML5Backend}>
-              {images.map((img, i) => renderThumbnail(img, i))}
+              {images
+                ? images.map((img, i) => renderThumbnail(img, i))
+                : console.log('images: ', images)}
             </DndProvider>
           </Card.Body>
         )}

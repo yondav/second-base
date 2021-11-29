@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Card,
   Alert,
@@ -18,60 +18,36 @@ import {
   Input,
 } from './formComponents';
 
-const GeneralForm = ({ state, setEdit }) => {
-  const { updateGeneral } = useContext(GlobalContext);
+const GeneralForm = ({ setEdit }) => {
   const {
-    data: {
-      studio: { logo, images, email, address, name },
+    state: {
+      data: {
+        studio: { images, email, address },
+      },
     },
-  } = state;
+    updateGeneral,
+    addImage,
+    updateImage,
+  } = useContext(GlobalContext);
 
   const [alert, setAlert] = useState();
   const [formData, setFormData] = useState({
-    name,
     email,
-    address: {
-      address: address.address,
-      neighborhood: address.neighborhood,
-      city: address.city,
-      state: address.state,
-      zip_code: address.zip_code,
-    },
-    logo,
-    images,
+    address: { ...address },
   });
-  const [logoState, setLogoState] = useState([logo]);
-  const [homeImages, setHomeImages] = useState(
-    images.find(obj => obj.page === 'home').images
-  );
-  const [aboutImages, setAboutImages] = useState(
-    images.find(obj => obj.page === 'about').images
-  );
-  const [gearImages, setGearImages] = useState(
-    images.find(obj => obj.page === 'gear').images
-  );
-  const [artistsImages, setArtistImages] = useState(
-    images.find(obj => obj.page === 'artists').images
-  );
-  const [bookingImages, setBookingImages] = useState(
-    images.find(obj => obj.page === 'booking').images
-  );
-  let imgArrTemp = images;
-  const [imageArr, setImageArr] = useState();
-  const addStateImgArr = (i, state, setter) => {
-    imgArrTemp[i] = { ...imgArrTemp[i], state, setter };
-    setImageArr(imgArrTemp);
-  };
+  const [homeImages, setHomeImages] = useState([...images.home]);
+  const [aboutImages, setAboutImages] = useState([...images.about]);
+  const [gearImages, setGearImages] = useState([...images.gear]);
+  const [artistsImages, setArtistsImages] = useState([...images.artists]);
+  const [bookingImages, setBookingImages] = useState([...images.booking]);
 
-  const setLogo = img => {
-    setFormData(prev => ({ ...prev, logo: img }));
-  };
-
-  const setImages = (i, arr) => {
-    let images = formData.images;
-    images[i] = { ...images[i], images: arr };
-    setFormData(prev => ({ ...prev, images }));
-  };
+  const tabs = [
+    { page: 'home', state: homeImages, setter: setHomeImages },
+    { page: 'about', state: aboutImages, setter: setAboutImages },
+    { page: 'gear', state: gearImages, setter: setGearImages },
+    { page: 'artists', state: artistsImages, setter: setArtistsImages },
+    { page: 'booking', state: bookingImages, setter: setBookingImages },
+  ];
 
   const generalInputs = [
     { label: 'Email', type: 'email', name: 'email', value: formData.email },
@@ -135,6 +111,41 @@ const GeneralForm = ({ state, setEdit }) => {
   const handleSubmit = async e => {
     e.preventDefault();
 
+    const imageHandler = async () =>
+      tabs.forEach(async tab => {
+        let newImgs = tab.state.filter(img => !img._id);
+        let existingImgs = tab.state
+          .filter(img => img._id)
+          .filter(image =>
+            images[tab.page].find(
+              img =>
+                img.color !== image.color ||
+                img.photo_credit !== image.photo_credit ||
+                img.sequence !== image.sequence
+            )
+          );
+
+        if (newImgs.length) {
+          console.log('THERE ARE NEW IMAGES: ', newImgs);
+          await addImage({
+            imgs: newImgs,
+            collection: 'studio',
+            subCollection: tab.page,
+            parentId: images._id,
+          });
+        }
+
+        console.log('THERE ARE EXISTING IMAGES: ', existingImgs);
+        if (existingImgs.length) {
+          await updateImage({
+            imgs: existingImgs,
+            collection: 'studio',
+            subCollection: tab.page,
+          });
+        }
+      });
+
+    await imageHandler();
     const res = await updateGeneral(formData);
 
     if (res) {
@@ -148,30 +159,6 @@ const GeneralForm = ({ state, setEdit }) => {
     }
   };
 
-  useEffect(() => {
-    setLogo(logoState[0]);
-    setImages(0, homeImages);
-    setImages(1, aboutImages);
-    setImages(2, gearImages);
-    setImages(3, artistsImages);
-    setImages(4, bookingImages);
-  }, [
-    logoState,
-    homeImages,
-    aboutImages,
-    gearImages,
-    artistsImages,
-    bookingImages,
-  ]);
-
-  useEffect(() => {
-    addStateImgArr(0, homeImages, setHomeImages);
-    addStateImgArr(1, aboutImages, setAboutImages);
-    addStateImgArr(2, gearImages, setGearImages);
-    addStateImgArr(3, artistsImages, setArtistImages);
-    addStateImgArr(4, bookingImages, setBookingImages);
-  }, [imgArrTemp]);
-
   return (
     <Card>
       <FormHeader method='put' edit='Update General Info' />
@@ -180,12 +167,6 @@ const GeneralForm = ({ state, setEdit }) => {
           <Form className='my-5' onSubmit={handleSubmit}>
             <Row>
               {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              <ImageUploader
-                single={true}
-                images={logoState}
-                setImages={setLogoState}
-                label='Logo'
-              />
               {generalInputs.map((input, i) => (
                 <Input
                   key={i}
@@ -214,22 +195,28 @@ const GeneralForm = ({ state, setEdit }) => {
               <Col>
                 <Form.Label>Images</Form.Label>
                 <Form.Text> (select a page)</Form.Text>
-                <Tabs defaultActiveKey='home' className='my-2 admin-tab'>
-                  {imageArr &&
-                    imageArr.map(arr => (
+                <div className='img-tab-container'>
+                  <Tabs
+                    defaultActiveKey='home'
+                    className='my-2 admin-tab img-tab'
+                  >
+                    {tabs.map(tab => (
                       <Tab
-                        eventKey={arr.page}
-                        title={toTitle(arr.page)}
-                        key={arr.page}
+                        eventKey={tab.page}
+                        title={toTitle(tab.page)}
+                        key={tab.page}
                       >
                         <ImageUploader
-                          images={arr.state}
-                          setImages={arr.setter}
-                          imageForm={true}
+                          type='studio'
+                          subType={tab.page}
+                          originalList={images[tab.page]}
+                          images={tab.state}
+                          setImages={tab.setter}
                         />
                       </Tab>
                     ))}
-                </Tabs>
+                  </Tabs>
+                </div>
               </Col>
             </Row>
             <ButtonGroup
