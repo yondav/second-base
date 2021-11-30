@@ -3,7 +3,7 @@ import { Card, Row, Col, Container, Spinner } from 'react-bootstrap';
 import { RiEditBoxLine } from 'react-icons/ri';
 
 import { toTitle } from '../../utils/helperFuncs';
-import { GlobalContext } from '../../context/context.data';
+import { DataContext } from '../../context/context.data';
 
 const PortalProfile = ({ setEdit }) => {
   const {
@@ -13,7 +13,7 @@ const PortalProfile = ({ setEdit }) => {
         user: { first_name, last_name, email, bio, images },
       },
     },
-  } = useContext(GlobalContext);
+  } = useContext(DataContext);
 
   const renderBio = () => {
     if (bio)

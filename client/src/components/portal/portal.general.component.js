@@ -12,7 +12,7 @@ import {
 import { RiEditBoxLine } from 'react-icons/ri';
 
 import { toTitle } from '../../utils/helperFuncs';
-import { GlobalContext } from '../../context/context.data';
+import { DataContext } from '../../context/context.data';
 
 const PortalGeneral = ({ setEdit }) => {
   const {
@@ -22,7 +22,7 @@ const PortalGeneral = ({ setEdit }) => {
         studio: { logo, images, email, address, name },
       },
     },
-  } = useContext(GlobalContext);
+  } = useContext(DataContext);
 
   const handleClick = e => setEdit('general_info');
 
