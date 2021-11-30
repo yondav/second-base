@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -29,6 +29,7 @@ const Portal = () => {
   const [edit, setEdit] = useState(false);
   const { state } = useContext(DataContext);
 
+  useEffect(() => console.log(state), []);
   return (
     <>
       {edit && (

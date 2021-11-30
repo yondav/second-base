@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -8,7 +8,7 @@ import { Card, Alert, Form, Spinner, Col } from 'react-bootstrap';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
-import { DataContext } from '../../../context/context.data';
+import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
 
 const ImageUploader = ({
@@ -20,7 +20,7 @@ const ImageUploader = ({
   subType,
   originalList,
 }) => {
-  const { deleteImage } = useContext(DataContext);
+  const { deleteImage } = useDataContext();
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [render, setRender] = useState(1);

@@ -42,6 +42,7 @@ export default function dataReducer(state, action) {
           case 'user':
             return {
               ...state,
+              loading: false,
               data: {
                 ...state.data,
                 user: {
@@ -88,6 +89,7 @@ export default function dataReducer(state, action) {
             }
             return {
               ...state,
+              loading: false,
               data: {
                 ...state.data,
                 studio: {
@@ -122,6 +124,7 @@ export default function dataReducer(state, action) {
 
             return {
               ...state,
+              loading: false,
               data: {
                 ...state.data,
                 user: { ...state.data.user, images: list },
@@ -154,6 +157,7 @@ export default function dataReducer(state, action) {
             }
             return {
               ...state,
+              loading: false,
               data: {
                 ...state.data,
                 studio: {
@@ -222,6 +226,7 @@ export default function dataReducer(state, action) {
             }
             return {
               ...state,
+              loading: false,
               data: {
                 ...state.data,
                 studio: {

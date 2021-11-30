@@ -3,12 +3,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 import useAdminContext from '../../hooks/useAdminContext';
 
 const AdminRoute = () => {
-  const { verifyToken } = useAdminContext();
-
-  const token = () => localStorage.getItem('authToken');
+  const { verifyToken, token } = useAdminContext();
 
   const verifiedToken = useCallback(async () => {
-    const res = await verifyToken(token());
+    const res = await verifyToken(token);
 
     return res;
   }, [verifyToken]);
@@ -16,9 +14,9 @@ const AdminRoute = () => {
   useEffect(() => {
     verifiedToken();
     return () => console.log('verified');
-  }, []);
+  }, [token]);
 
-  return <>{token() ? <Outlet /> : <Navigate to='/login' />}</>;
+  return <>{token ? <Outlet /> : <Navigate to='/login' />}</>;
 };
 
 export default AdminRoute;

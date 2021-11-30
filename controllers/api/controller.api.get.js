@@ -2,6 +2,7 @@ const { find } = require('../../utils/crud/crud.read');
 
 exports.getController = {
   studio: async (req, res, next) => {
+    console.log('**** \n\n studio get hit \n\n ****');
     try {
       const data = await find.studio();
 
@@ -42,6 +43,8 @@ exports.getController = {
   },
 
   user: async (req, res, next) => {
+    console.log('**** \n\n user get hit \n\n ****');
+
     try {
       const data = await find.user();
 

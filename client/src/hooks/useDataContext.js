@@ -1,14 +1,15 @@
 import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/context.data';
+import useAdminContext from './useAdminContext';
 import { consoleColors } from '../utils/console';
 import api from '../utils/api';
 
 export default function useDataContext() {
   const { state, dispatch } = useContext(DataContext);
+  const { verifyToken } = useAdminContext();
 
   // actions for general studio info
   const getStudio = async () => {
-    state.loading = true;
     try {
       const res = await api({ url: '/api/v1/secondBase', method: 'get' });
 
@@ -32,8 +33,6 @@ export default function useDataContext() {
   };
 
   const updateGeneral = async update => {
-    state.loading = true;
-
     try {
       const res = await api({
         url: '/api/v1/secondBase',
@@ -68,8 +67,6 @@ export default function useDataContext() {
 
   // actions for user/about - not auth
   const getUser = async () => {
-    state.loading = true;
-
     try {
       const res = await api({ url: '/api/v1/users', method: 'get' });
 
@@ -93,7 +90,8 @@ export default function useDataContext() {
   };
 
   const updateUser = async (userId, update) => {
-    state.loading = true;
+    await verifyToken();
+
     try {
       const res = await api({
         url: `/api/v1/users/${userId}`,
@@ -134,8 +132,6 @@ export default function useDataContext() {
 
   // actions for images
   const addImage = async ({ imgs, collection, subCollection, parentId }) => {
-    state.loading = true;
-
     console.log({ imgs, collection, subCollection, parentId });
     try {
       let post = async () => {
@@ -225,8 +221,6 @@ export default function useDataContext() {
   };
 
   const deleteImage = async ({ imgId, collection, subCollection }) => {
-    state.loading = true;
-
     try {
       const { data } = await api({
         url: `/api/v1/images/${collection}/${imgId}`,
