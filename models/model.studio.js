@@ -13,11 +13,6 @@ const studioSchema = new Schema({
     state: String,
     zip_code: Number,
   },
-  studio_gear: {
-    type: ObjectId,
-    ref: 'studio_gear',
-  },
-  artists: [{ type: ObjectId, ref: 'artist' }],
   services: [{ type: ObjectId, ref: 'service' }],
   images: {
     type: ObjectId,

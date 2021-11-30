@@ -1,6 +1,6 @@
 const {
   create: { gear },
-} = require('../services/mongoFuncs/create');
+} = require('../utils/crud/crud.create');
 
 const controlRoomSeed = [
   {

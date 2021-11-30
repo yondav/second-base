@@ -3,17 +3,6 @@ const { Artist, Studio, StudioGear, Service, User } = require('../../models');
 exports.find = {
   studio: async () =>
     await Studio.findOne({ name: 'secondBase' })
-      .populate({
-        path: 'studio_gear',
-        populate: {
-          path: 'control_room monitoring amps drums microphones guitars keys',
-          populate: 'images',
-        },
-      })
-      .populate({
-        path: 'artists',
-        populate: { path: 'projects', populate: 'images' },
-      })
       .populate({ path: 'services' })
       .populate({
         path: 'images',
