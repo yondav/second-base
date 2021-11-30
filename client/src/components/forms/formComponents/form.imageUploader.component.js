@@ -35,7 +35,7 @@ const ImageUploader = ({
         file,
         2000,
         2000,
-        'JPEG',
+        'WEBP',
         70,
         0,
         uri => {
