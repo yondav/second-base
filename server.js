@@ -10,7 +10,6 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-// connect to routes here
 app.use('/api/v1', require('./routes/index'));
 
 if (process.env.NODE_ENV === 'production') {
