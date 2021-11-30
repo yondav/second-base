@@ -1,6 +1,6 @@
 const {
   create: { service },
-} = require('../services/mongoFuncs/create');
+} = require('../utils/crud/crud.create');
 
 const serviceSeed = [
   {

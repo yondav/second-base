@@ -1,5 +1,5 @@
-const { create } = require('../../services/mongoFuncs/create');
-const { find } = require('../../services/mongoFuncs/find');
+const { create } = require('../../utils/crud/crud.create');
+const { find } = require('../../utils/crud/crud.read');
 
 exports.postController = {
   studio: async (req, res, next) => {
@@ -15,14 +15,9 @@ exports.postController = {
         const newPageImages = await create.page_images('page_images');
         console.log('\n>>Page Images:\n', newPageImages);
 
-        const studioGearId = newStudioGear._id.toString();
         const pageImageId = newPageImages._id.toString();
 
-        data = await create.studio(
-          { name: 'secondBase' },
-          studioGearId,
-          pageImageId
-        );
+        data = await create.studio({ name: 'secondBase' }, pageImageId);
       }
 
       res.status(201).json(data);

@@ -1,6 +1,6 @@
 const {
   create: { artist },
-} = require('../services/mongoFuncs/create');
+} = require('../utils/crud/crud.create');
 
 const artistSeed = [
   {

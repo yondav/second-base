@@ -1,6 +1,6 @@
 const {
   create: { studio, studio_gear, page_images },
-} = require('../services/mongoFuncs/create');
+} = require('../utils/crud/crud.create');
 
 const studioSeed = {
   name: 'secondBase',
@@ -18,7 +18,7 @@ const studioSeed = {
 const seedStudio = async () => {
   const newStudioGear = await studio_gear('studio_gear');
   const newPageImages = await page_images('page_images');
-  await studio(studioSeed, newStudioGear._id, newPageImages._id);
+  await studio(studioSeed, newPageImages._id);
 };
 
 module.exports = seedStudio;

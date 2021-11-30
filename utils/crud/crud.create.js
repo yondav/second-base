@@ -11,12 +11,8 @@ const {
 } = require('../../models');
 
 exports.create = {
-  studio: (studio, studioGearId, pageImagesId) => {
-    const newStudio = new Studio({
-      ...studio,
-      studio_gear: studioGearId,
-      images: pageImagesId,
-    });
+  studio: (studio, pageImagesId) => {
+    const newStudio = new Studio({ ...studio, images: pageImagesId });
     return newStudio.save();
   },
 
@@ -26,7 +22,8 @@ exports.create = {
   },
 
   gear: async (obj, type) => {
-    const studioGear = await StudioGear.findOne({ name: 'studio_gear' });
+    let studioGear = await StudioGear.findOne({ name: 'studio_gear' });
+
     let newGear;
 
     switch (type) {
