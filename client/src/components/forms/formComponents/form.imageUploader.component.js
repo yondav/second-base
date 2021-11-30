@@ -8,7 +8,7 @@ import { Card, Alert, Form, Spinner, Col } from 'react-bootstrap';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
-import { GlobalContext } from '../../../context/context.data';
+import { DataContext } from '../../../context/context.data';
 import api from '../../../utils/api';
 
 const ImageUploader = ({
@@ -20,7 +20,7 @@ const ImageUploader = ({
   subType,
   originalList,
 }) => {
-  const { deleteImage } = useContext(GlobalContext);
+  const { deleteImage } = useContext(DataContext);
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [render, setRender] = useState(1);

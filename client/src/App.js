@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { GlobalContext } from './context/context.data';
+import { DataContext } from './context/context.data';
+import useDataContext from './hooks/useDataContext';
 import { consoleColors } from './utils/console';
 
 import Navigation from './components/navigation';
@@ -15,7 +16,8 @@ const Gear = React.lazy(() => import('./pages/client/gear'));
 const Home = React.lazy(() => import('./pages/client/home'));
 
 const App = () => {
-  const { state, getStudio, getUser } = useContext(GlobalContext);
+  const { state } = useContext(DataContext);
+  const { getStudio, getUser } = useDataContext();
 
   useEffect(() => {
     getStudio();

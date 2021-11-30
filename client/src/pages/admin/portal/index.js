@@ -14,7 +14,7 @@ import {
   PortalProfile,
   PortalGeneral,
 } from '../../../components/portal';
-import { GlobalContext } from '../../../context/context.data';
+import { DataContext } from '../../../context/context.data';
 
 import './portal.css';
 
@@ -27,7 +27,7 @@ const tabs = [
 
 const Portal = () => {
   const [edit, setEdit] = useState(false);
-  const { state } = useContext(GlobalContext);
+  const { state } = useContext(DataContext);
 
   return (
     <>

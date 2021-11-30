@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Card, Alert, Form, Container, Row, Col } from 'react-bootstrap';
-import { GlobalContext } from '../../context/context.data';
+import { DataContext } from '../../context/context.data';
+import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 import {
   FormHeader,
@@ -12,16 +13,14 @@ import {
 
 const ProfileForm = ({ setEdit }) => {
   const {
-    updateUser,
-    addImage,
-    updateImage,
     state: {
       loading,
       data: {
         user: { first_name, last_name, email, bio, images, _id },
       },
     },
-  } = useContext(GlobalContext);
+  } = useContext(DataContext);
+  const { updateUser, addImage, updateImage } = useDataContext();
 
   const { getResetToken, passwordReset } = useAdminContext();
   const [alert, setAlert] = useState();

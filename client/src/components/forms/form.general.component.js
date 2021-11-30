@@ -9,7 +9,8 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap';
-import { GlobalContext } from '../../context/context.data';
+import { DataContext } from '../../context/context.data';
+import useDataContext from '../../hooks/useDataContext';
 import { toTitle } from '../../utils/helperFuncs';
 import {
   FormHeader,
@@ -25,10 +26,8 @@ const GeneralForm = ({ setEdit }) => {
         studio: { images, email, address },
       },
     },
-    updateGeneral,
-    addImage,
-    updateImage,
-  } = useContext(GlobalContext);
+  } = useContext(DataContext);
+  const { updateGeneral, addImage, updateImage } = useDataContext();
 
   const [alert, setAlert] = useState();
   const [formData, setFormData] = useState({
