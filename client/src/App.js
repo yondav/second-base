@@ -1,8 +1,6 @@
-import React, { useEffect, useContext, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { DataContext } from './context/context.data';
 import useDataContext from './hooks/useDataContext';
-import { consoleColors } from './utils/console';
 
 import Navigation from './components/navigation';
 import AdminRoute from './components/adminRoute';
@@ -16,18 +14,12 @@ const Gear = React.lazy(() => import('./pages/client/gear'));
 const Home = React.lazy(() => import('./pages/client/home'));
 
 const App = () => {
-  const { state } = useContext(DataContext);
   const { getStudio, getUser } = useDataContext();
 
   useEffect(() => {
     getStudio();
     getUser();
   }, []);
-
-  useEffect(
-    () => state && console.log('%cstate', consoleColors.state, '\n', state),
-    [state.loading, state.data]
-  );
 
   return (
     <div className='wrapper'>
