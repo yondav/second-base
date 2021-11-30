@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
+import Cookies from 'js-cookie';
 import { AdminContext } from '../context/context.auth';
 import { consoleColors } from '../utils/console';
 import api from '../utils/api';
 
 export default function useAdminContext() {
   const admin = useContext(AdminContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const token = localStorage.getItem('authToken');
+  const token = Cookies.get('token_secondBase');
 
   const config = {
     headers: {
@@ -34,13 +34,16 @@ export default function useAdminContext() {
         data: { token },
       });
 
-      if (data.success) {
+      console.log(data);
+      if (data && data.success) {
         admin.dispatch({ type: 'ISADMIN' });
         console.log('%cAuthorization verified', consoleColors.success);
+        return true;
       } else {
-        localStorage.removeItem('authToken');
+        Cookies.remove('token_secondBase');
         admin.dispatch({ type: 'ISNOTADMIN' });
         console.log('%cAuthorization failed', consoleColors.fail);
+        return false;
       }
     } catch (err) {
       console.error(err.message);
@@ -59,11 +62,8 @@ export default function useAdminContext() {
         },
       });
 
-      let { res } = await getAdmin();
-
-      if (data._id === res.data[0]._id) {
-        localStorage.setItem('authToken', data.token);
-        setIsLoggedIn(true);
+      if (token) {
+        await verifyToken();
       }
 
       admin.dispatch({ type: 'ISADMIN' });
@@ -74,7 +74,7 @@ export default function useAdminContext() {
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    Cookies.remove('token_secondBase');
     admin.dispatch({ type: 'ISNOTADMIN' });
     console.log('%cLogged out', consoleColors.fail);
   };
@@ -84,7 +84,6 @@ export default function useAdminContext() {
       const { data } = await api({
         url: '/api/v1/passwordresetrequest',
         method: 'post',
-        // config,
         data: { email },
       });
 
@@ -113,9 +112,9 @@ export default function useAdminContext() {
   };
 
   return {
+    token,
     login,
     logout,
-    isLoggedIn,
     verifyToken,
     getAdmin,
     getResetToken,

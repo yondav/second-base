@@ -1,35 +1,32 @@
-const NodeCache = require('node-cache');
+const cache = require('memory-cache');
 
-// stdTTL: time to live in seconds for every generated cache element.
-const cache = new NodeCache({ stdTTL: 5 * 60 });
-
-const getUrlFromRequest = req =>
-  req.protocol + '://' + req.headers.host + req.originalUrl;
-
-const cacheMethods = {
-  set: (req, res, next) => {
-    const url = getUrlFromRequest(req);
-    cache.set(url, res.locals.data);
-    return next();
-  },
-
+let memCache = new cache.Cache();
+let cacheMethods = {
   get: (req, res, next) => {
-    const url = getUrlFromRequest(req);
-    const content = cache.get(url);
-    if (content) return res.status(200).send(content);
+    let key = '__express__' + req.originalUrl || req.url;
+    console.log('KEY *** \n', key);
+    let cacheContent = memCache.get(key);
+    console.log(cacheContent);
 
-    return next();
+    if (cacheContent) {
+      res.send(cacheContent);
+      return;
+    } else {
+      res.sendResponse = res.send;
+      res.send = body => {
+        memCache.put(key, body, 3000 * 1000);
+        res.sendResponse(body);
+      };
+      next();
+    }
   },
+  clear: param => (req, res, next) => {
+    let key = '__express__' + '/api/v1/' + param;
+    console.log('KEY *** \n', key);
+    let cacheContent = memCache.clear(key);
+    console.log('CLEARED?', cacheContent);
 
-  clear: (req, res, next) => {
-    cache.keys(function (err, keys) {
-      if (!err) {
-        let resourceUrl = req.baseUrl;
-        const resourceKeys = keys.filter(k => k.includes(resourceUrl));
-        cache.del(resourceKeys);
-      }
-    });
-    return next();
+    next();
   },
 };
 

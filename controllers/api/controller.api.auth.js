@@ -122,5 +122,6 @@ const verifyToken = (user, token, statusCode, res) => {
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
   const { _id } = user;
+  res.cookie('token_secondBase', token);
   res.status(statusCode).json({ success: true, token, _id });
 };

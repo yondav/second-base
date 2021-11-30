@@ -49,7 +49,7 @@ const LoginForm = () => {
       setStatusMessage({ variant: 'success', message: 'Welcome back Neil' });
       setTimeout(() => {
         navigate('/admin/portal');
-      }, 1500);
+      }, 1000);
     } else {
       setStatusMessage({ variant: 'danger', message: 'Go home Crosby' });
     }
