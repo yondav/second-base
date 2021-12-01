@@ -18,8 +18,25 @@ let cacheMethods = {
       next();
     }
   },
-  clear: param => (req, res, next) => {
-    let key = '__express__' + '/api/v1/' + param;
+  clear: () => (req, res, next) => {
+    let collection = () => {
+      if (url.includes('user')) {
+        return 'users';
+      } else if (url.includes('secondBase') || url.includes('services')) {
+        return 'secondBase';
+      } else if (url.includes('gear')) {
+        return 'studio_gear';
+      } else if (url.includes('artists')) {
+        return 'artists';
+      } else {
+        return next();
+      }
+    };
+    let url = req.url;
+
+    console.log('COLLECTION***\n', collection());
+
+    let key = '__express__' + '/api/v1/' + collection();
     let cacheContent = memCache.clear(key);
 
     next();

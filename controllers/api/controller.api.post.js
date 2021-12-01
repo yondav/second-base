@@ -67,6 +67,7 @@ exports.postController = {
   },
 
   image: async (req, res, next) => {
+    console.log('route hit');
     try {
       if (req.params.sub_collection) {
         const data = await create.image({

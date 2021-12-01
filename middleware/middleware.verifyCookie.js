@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../utils/errorResponse');
 
 const verifyCookie = (req, res, next) => {
+  console.log('****\nverify middleware hit\n****');
   const token = req.cookies.token_secondBase;
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);

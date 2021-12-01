@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -38,9 +38,7 @@ const ImageUploader = ({
         'WEBP',
         70,
         0,
-        uri => {
-          resolve(uri);
-        },
+        uri => resolve(uri),
         'base64',
         1200,
         1200
@@ -134,31 +132,28 @@ const ImageUploader = ({
   const removeImage = (e, id) => {
     let exists = originalList.find(img => img._id === id);
 
-    if (!exists) {
-      let list = images;
-      let target = list.indexOf(list.find(img => img._id === id));
-      list.splice(target, 1);
-    } else {
+    if (exists)
       deleteImage({ imgId: id, collection: type, subCollection: subType });
-    }
+
+    let list = images;
+    let target = list.indexOf(list.find(img => img._id === id));
+    list.splice(target, 1);
   };
 
   const renderThumbnail = useCallback(
-    (img, i) => {
-      return (
-        <ImageUploaderThumbnail
-          key={i}
-          type={type}
-          img={img}
-          index={i}
-          moveThumbnail={moveThumbnail}
-          images={images}
-          inputHandler={inputHandler}
-          switchHandler={switchHandler}
-          removeImage={removeImage}
-        />
-      );
-    },
+    (img, i) => (
+      <ImageUploaderThumbnail
+        key={i}
+        type={type}
+        img={img}
+        index={i}
+        moveThumbnail={moveThumbnail}
+        images={images}
+        inputHandler={inputHandler}
+        switchHandler={switchHandler}
+        removeImage={removeImage}
+      />
+    ),
     [images, inputHandler, switchHandler]
   );
 

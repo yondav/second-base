@@ -90,7 +90,7 @@ export default function useDataContext() {
   };
 
   const updateUser = async (userId, update) => {
-    await verifyToken();
+    // await verifyToken();
 
     try {
       const res = await api({
