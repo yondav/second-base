@@ -38,12 +38,12 @@ export default function useAdminContext() {
       if (data && data.success) {
         admin.dispatch({ type: 'ISADMIN' });
         console.log('%cAuthorization verified', consoleColors.success);
-        return true;
+        return { verified: true };
       } else {
         Cookies.remove('token_secondBase');
         admin.dispatch({ type: 'ISNOTADMIN' });
         console.log('%cAuthorization failed', consoleColors.fail);
-        return false;
+        return { verified: false };
       }
     } catch (err) {
       console.error(err.message);

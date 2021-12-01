@@ -22,13 +22,13 @@ const PortalProfile = ({ setEdit }) => {
       );
   };
 
-  const handleClick = e => setEdit('profile');
+  const handleClick = () => setEdit('profile');
 
   useEffect(() => renderBio(), [bio]);
 
   return (
     <Card style={{ borderTopLeftRadius: 0 }}>
-      {!loading ? (
+      {first_name ? (
         <>
           <Card.Header className='d-flex justify-content-between align-items-center'>
             <h1>Welcome Back {toTitle(first_name)}</h1>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   Row,
@@ -15,7 +15,6 @@ import {
   PortalGeneral,
 } from '../../../components/portal';
 import { DataContext } from '../../../context/context.data';
-
 import './portal.css';
 
 const tabs = [
@@ -29,43 +28,48 @@ const Portal = () => {
   const [edit, setEdit] = useState(false);
   const { state } = useContext(DataContext);
 
-  useEffect(() => console.log(state), []);
   return (
     <>
-      {edit && (
-        <Modal
-          centered
-          show={true}
-          size='xl'
-          fullscreen={'lg-down'}
-          onHide={() => setEdit(false)}
-        >
-          <Modal.Header closeButton />
-          <ModalContent edit={edit} setEdit={setEdit} />
-        </Modal>
+      {!state.loading ? (
+        <>
+          {edit && (
+            <Modal
+              centered
+              show={true}
+              size='xl'
+              fullscreen={'lg-down'}
+              onHide={() => setEdit(false)}
+            >
+              <Modal.Header closeButton />
+              <ModalContent edit={edit} setEdit={setEdit} />
+            </Modal>
+          )}
+          <Container fluid>
+            <Row>
+              <Col>
+                <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
+                  {tabs.map((tab, i) => (
+                    <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
+                      {!state.loading ? (
+                        React.createElement(tab.component, { setEdit })
+                      ) : (
+                        <Card
+                          style={{ borderTopLeftRadius: 0, height: '40rem' }}
+                          className='w-100 d-flex justify-content-center align-items-center'
+                        >
+                          <Spinner animation='border' />
+                        </Card>
+                      )}
+                    </Tab>
+                  ))}
+                </Tabs>
+              </Col>
+            </Row>
+          </Container>
+        </>
+      ) : (
+        <Spinner animation='border' />
       )}
-      <Container fluid>
-        <Row>
-          <Col>
-            <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
-              {tabs.map((tab, i) => (
-                <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
-                  {!state.loading ? (
-                    React.createElement(tab.component, { setEdit })
-                  ) : (
-                    <Card
-                      style={{ borderTopLeftRadius: 0, height: '40rem' }}
-                      className='w-100 d-flex justify-content-center align-items-center'
-                    >
-                      <Spinner animation='border' />
-                    </Card>
-                  )}
-                </Tab>
-              ))}
-            </Tabs>
-          </Col>
-        </Row>
-      </Container>
     </>
   );
 };
