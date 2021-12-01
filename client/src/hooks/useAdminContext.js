@@ -34,7 +34,6 @@ export default function useAdminContext() {
         data: { token },
       });
 
-      console.log(data);
       if (data && data.success) {
         admin.dispatch({ type: 'ISADMIN' });
         console.log('%cAuthorization verified', consoleColors.success);

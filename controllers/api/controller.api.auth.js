@@ -32,7 +32,6 @@ exports.authController = {
       if (!user) return next(new ErrorResponse('Not a valid user', 400));
 
       verifyToken(user, token, 200, res);
-      console.log(token);
     } catch (err) {
       next(err);
     }
@@ -77,7 +76,6 @@ exports.authController = {
 
       res.status(200).json(resetToken);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   },
@@ -108,7 +106,6 @@ exports.authController = {
         .status(201)
         .json({ success: true, data: 'Password Reset Success' });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   },

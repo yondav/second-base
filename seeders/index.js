@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const connectDB = require('../config/db.config');
+const seedUser = require('./seeders.user');
 const seedStudio = require('./seeders.studio');
 const seedGear = require('./seeders.gear');
 const seedArtists = require('./seeders.artists');
@@ -9,6 +10,9 @@ connectDB();
 
 const seedDB = async () => {
   try {
+    await seedUser();
+    console.log('______________ User Seeded ______________');
+
     await seedStudio();
     console.log('______________ Studio Seeded ______________');
 

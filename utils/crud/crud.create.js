@@ -215,10 +215,8 @@ exports.create = {
         }
 
       case 'studio':
-        console.log('*****__OBJECT: ', obj);
         newImg = new images.StudioImg(obj);
         await newImg.save();
-        console.log('*****__NEW IMAGE: ', newImg);
         switch (subParent) {
           case 'home':
             await PageImages.findByIdAndUpdate(

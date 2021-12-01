@@ -132,7 +132,6 @@ export default function useDataContext() {
 
   // actions for images
   const addImage = async ({ imgs, collection, subCollection, parentId }) => {
-    console.log({ imgs, collection, subCollection, parentId });
     try {
       let post = async () => {
         const promises = !subCollection
@@ -160,7 +159,6 @@ export default function useDataContext() {
 
       let images = await post();
 
-      console.log(images);
       if (images.length) {
         dispatch({
           type: 'ADD_IMAGE',
@@ -198,13 +196,11 @@ export default function useDataContext() {
 
         const values = await Promise.all(promises);
 
-        console.log('VALUES::::', values);
         return values.map(val => val.data);
       };
 
       let images = await put();
 
-      console.log(images);
       if (images.length) {
         dispatch({
           type: 'UPDATE_IMAGE',
@@ -227,7 +223,6 @@ export default function useDataContext() {
         method: 'delete',
       });
 
-      console.log(data);
       if (data.success) {
         dispatch({
           type: 'DELETE_IMAGE',

@@ -1,4 +1,5 @@
 require('dotenv').config({ path: './config.env' });
+const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -14,9 +15,6 @@ app.use(cors());
 
 app.use('/api/v1', require('./routes/index'));
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, 'client/build')));
-// }
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {

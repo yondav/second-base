@@ -99,7 +99,6 @@ const ImageUploader = ({
   const moveThumbnail = useCallback(
     (dragIndex, hoverIndex) => {
       const dragCard = images[dragIndex];
-      console.log('hoverIndex: ', hoverIndex, 'dragIndex: ', dragIndex);
       setImages(
         update(images, {
           $splice: [
@@ -130,7 +129,6 @@ const ImageUploader = ({
 
     setImages(list);
     setRender(render + 1);
-    console.log(originalList);
   };
 
   const removeImage = (e, id) => {
@@ -194,9 +192,7 @@ const ImageUploader = ({
         {images.length > 0 && (
           <Card.Body className='d-flex justify-content-center flex-wrap preview-imgs'>
             <DndProvider backend={HTML5Backend}>
-              {images
-                ? images.map((img, i) => renderThumbnail(img, i))
-                : console.log('images: ', images)}
+              {images && images.map((img, i) => renderThumbnail(img, i))}
             </DndProvider>
           </Card.Body>
         )}

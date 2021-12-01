@@ -57,7 +57,6 @@ userSchema.methods.getSignedToken = function () {
 
 userSchema.methods.verifyToken = function (token) {
   return jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
-    console.log('verification hit');
     if (err) {
       err = {
         name: 'TokenExpiredError',

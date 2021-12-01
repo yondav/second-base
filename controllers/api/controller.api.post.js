@@ -69,20 +69,12 @@ exports.postController = {
   image: async (req, res, next) => {
     try {
       if (req.params.sub_collection) {
-        console.log(
-          'REQ.BODY****_____: ',
-          req.body,
-          '\n',
-          'REQ.PARAMS****_____: ',
-          req.params
-        );
         const data = await create.image({
           obj: req.body,
           parent: req.params.parent_collection,
           subParent: req.params.sub_collection,
           parentId: req.params.parent_id,
         });
-        console.log('*************************************', '\n', data);
         res.status(201).json(data);
       } else {
         const data = await create.image({
@@ -90,7 +82,6 @@ exports.postController = {
           parent: req.params.parent_collection,
           parentId: req.params.parent_id,
         });
-        console.log('*************************************', '\n', data);
         res.status(201).json(data);
       }
     } catch (err) {

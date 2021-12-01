@@ -179,7 +179,6 @@ export default function dataReducer(state, action) {
         // let target = list => list.indeOf(list.find(img => img._id === id));
 
         const removeImg = arr => {
-          console.log(arr);
           let list = arr;
           let target = list.indexOf(list.find(img => img._id === id));
           list.splice(target, 1);

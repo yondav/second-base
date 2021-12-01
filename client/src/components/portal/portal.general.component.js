@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
   Card,
   Row,
@@ -26,7 +26,6 @@ const PortalGeneral = ({ setEdit }) => {
 
   const handleClick = e => setEdit('general_info');
 
-  useEffect(() => console.log(images), [images]);
   return (
     <Card style={{ borderTopLeftRadius: 0 }}>
       {!loading ? (

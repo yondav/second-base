@@ -125,7 +125,6 @@ const GeneralForm = ({ setEdit }) => {
           );
 
         if (newImgs.length) {
-          console.log('THERE ARE NEW IMAGES: ', newImgs);
           await addImage({
             imgs: newImgs,
             collection: 'studio',
@@ -134,7 +133,6 @@ const GeneralForm = ({ setEdit }) => {
           });
         }
 
-        console.log('THERE ARE EXISTING IMAGES: ', existingImgs);
         if (existingImgs.length) {
           await updateImage({
             imgs: existingImgs,
