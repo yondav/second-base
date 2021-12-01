@@ -7,14 +7,17 @@ import {
   FormHeader,
   ButtonGroup,
   ImageUploader,
-  Input,
   RichTextBio,
+  inputHandler,
+  passwordInputHandler,
+  profileInputs,
+  passwordInputs,
+  renderInputs,
 } from './formComponents';
 
 const ProfileForm = ({ setEdit }) => {
   const {
     state: {
-      loading,
       data: {
         user: { first_name, last_name, email, bio, images, _id },
       },
@@ -38,38 +41,6 @@ const ProfileForm = ({ setEdit }) => {
     email,
     bio,
   });
-
-  const profileInputs = [
-    {
-      label: 'First Name',
-      type: 'text',
-      name: 'first_name',
-      value: formData.first_name,
-    },
-    {
-      label: 'Last Name',
-      type: 'text',
-      name: 'last_name',
-      value: formData.last_name,
-    },
-    {
-      label: 'Email',
-      type: 'email',
-      name: 'email',
-      value: formData.email,
-    },
-  ];
-
-  const passwordInputs = [
-    { label: 'New Password', name: 'new_password' },
-    { label: 'Confirm Password', name: 'confirm_password' },
-  ];
-
-  const inputHandler = e => {
-    let obj = formData;
-    obj[e.target.getAttribute('name')] = e.target.value;
-    setFormData(obj);
-  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -106,12 +77,6 @@ const ProfileForm = ({ setEdit }) => {
   const handleResetRequest = async e => {
     let resetToken = await getResetToken(email);
     setResetToken(resetToken);
-  };
-
-  const passwordInputHandler = e => {
-    let obj = resetPassword;
-    obj[e.target.getAttribute('name')] = e.target.value;
-    setResetPassword(obj);
   };
 
   const handlePasswordSubmission = async e => {
@@ -153,18 +118,9 @@ const ProfileForm = ({ setEdit }) => {
           <Form className='my-5' onSubmit={handleSubmit}>
             <Row>
               {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              {profileInputs.map((input, i) => (
-                <Input
-                  key={i}
-                  label={input.label}
-                  type={input.type}
-                  name={input.name}
-                  changehandler={inputHandler}
-                  value={input.value}
-                  xs={12}
-                  md={6}
-                />
-              ))}
+              {renderInputs(profileInputs(formData), e =>
+                inputHandler(e, formData, setFormData)
+              )}
               <Col xs={12} md={6} className='d-flex align-items-center mb-5'>
                 {!resetToken ? (
                   <span
@@ -182,16 +138,17 @@ const ProfileForm = ({ setEdit }) => {
                           {resetPassword.response.message}
                         </Alert>
                       )}
-                      {passwordInputs.map((input, i) => (
-                        <Input
-                          key={i}
-                          label={input.label}
-                          type='password'
-                          name={input.name}
-                          changehandler={passwordInputHandler}
-                          xs={12}
-                        />
-                      ))}
+                      {renderInputs(
+                        passwordInputs(),
+                        e =>
+                          passwordInputHandler(
+                            e,
+                            resetPassword,
+                            setResetPassword
+                          ),
+                        12,
+                        12
+                      )}
                     </Row>
                     <ButtonGroup
                       handleCancel={() => setResetToken(null)}

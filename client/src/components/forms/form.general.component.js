@@ -9,15 +9,18 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap';
-import { DataContext } from '../../context/context.data';
-import useDataContext from '../../hooks/useDataContext';
-import { toTitle } from '../../utils/helperFuncs';
 import {
   FormHeader,
   ButtonGroup,
   ImageUploader,
-  Input,
+  inputHandler,
+  generalInputs,
+  addressInputs,
+  renderInputs,
 } from './formComponents';
+import { DataContext } from '../../context/context.data';
+import useDataContext from '../../hooks/useDataContext';
+import { toTitle } from '../../utils/helperFuncs';
 
 const GeneralForm = ({ setEdit }) => {
   const {
@@ -47,65 +50,6 @@ const GeneralForm = ({ setEdit }) => {
     { page: 'artists', state: artistsImages, setter: setArtistsImages },
     { page: 'booking', state: bookingImages, setter: setBookingImages },
   ];
-
-  const generalInputs = [
-    { label: 'Email', type: 'email', name: 'email', value: formData.email },
-  ];
-
-  const addressInputs = [
-    {
-      label: 'Street Address',
-      type: 'text',
-      name: 'address-address',
-      value: formData.address.address,
-    },
-    {
-      label: 'Neighborhood',
-      type: 'text',
-      name: 'address-neighborhood',
-      value: formData.address.neighborhood,
-      xs: 6,
-      md: 3,
-    },
-    {
-      label: 'City',
-      type: 'text',
-      name: 'address-city',
-      value: formData.address.city,
-      xs: 6,
-      md: 3,
-    },
-    {
-      label: 'State',
-      type: 'text',
-      name: 'address-state',
-      value: formData.address.state,
-      xs: 6,
-      md: 3,
-    },
-    {
-      label: 'Zip Code',
-      type: 'number',
-      name: 'address-zip_code',
-      value: formData.address.zip_code,
-      xs: 6,
-      md: 3,
-    },
-  ];
-
-  const inputHandler = e => {
-    let obj = formData;
-    let name = e.target.getAttribute('name');
-
-    if (name.includes('-')) {
-      let arr = name.split('-');
-      obj[arr[0]][arr[1]] = e.target.value;
-    } else {
-      obj[name] = e.target.value;
-    }
-
-    setFormData(obj);
-  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -164,31 +108,13 @@ const GeneralForm = ({ setEdit }) => {
           <Form className='my-5' onSubmit={handleSubmit}>
             <Row>
               {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              {generalInputs.map((input, i) => (
-                <Input
-                  key={i}
-                  label={input.label}
-                  type={input.type}
-                  name={input.name}
-                  changehandler={inputHandler}
-                  value={input.value}
-                  xs={12}
-                  md={6}
-                />
-              ))}
+              {renderInputs(generalInputs(formData), e =>
+                inputHandler(e, formData, setFormData)
+              )}
               <Form.Label>Address</Form.Label>
-              {addressInputs.map((input, i) => (
-                <Input
-                  key={i}
-                  label={input.label}
-                  type={input.type}
-                  name={input.name}
-                  changehandler={inputHandler}
-                  value={input.value}
-                  xs={input.xs || 12}
-                  md={input.md || 12}
-                />
-              ))}
+              {renderInputs(addressInputs(formData), e =>
+                inputHandler(e, formData, setFormData)
+              )}
               <Col>
                 <Form.Label>Images</Form.Label>
                 <Form.Text> (select a page)</Form.Text>

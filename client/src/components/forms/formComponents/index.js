@@ -7,3 +7,11 @@ export { default as ImageUploader } from './form.imageUploader.component';
 export { default as StreamLink } from './form.streamLink.component';
 export { default as ImageUploaderThumbnail } from './form.imageUploader.thumbnail.component';
 export { default as RichTextBio } from './form.richText.bio.component';
+export { inputHandler, passwordInputHandler } from './input/handler';
+export { renderInputs } from './input/render';
+export {
+  profileInputs,
+  passwordInputs,
+  generalInputs,
+  addressInputs,
+} from './input/data';
