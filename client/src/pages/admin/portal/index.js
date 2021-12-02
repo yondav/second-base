@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -14,6 +15,8 @@ import {
   PortalProfile,
   PortalGeneral,
 } from '../../../components/portal';
+import { AdminContext } from '../../../context/context.auth';
+import useAdminContext from '../../../hooks/useAdminContext';
 import { DataContext } from '../../../context/context.data';
 import './portal.css';
 
@@ -25,8 +28,18 @@ const tabs = [
 ];
 
 const Portal = () => {
+  const admin = useContext(AdminContext);
+  const { verifyToken } = useAdminContext();
+  const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const { state } = useContext(DataContext);
+
+  useEffect(() => {
+    console.log('portal');
+    verifyToken();
+    if (!admin.state.admin) navigate('/login');
+    console.log(admin.state);
+  }, [admin.state.admin, navigate, edit]);
 
   return (
     <>

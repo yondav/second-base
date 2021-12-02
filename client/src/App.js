@@ -37,9 +37,9 @@ const App = () => {
           <Route exact path='/booking' element={<Booking />} />
           <Route exact path='/gear' element={<Gear />} />
           <Route exact path='/login' element={<Login />} />
-          <Route exact path='/admin/portal' element={<AdminRoute />}>
-            <Route exact path='/admin/portal' element={<Portal />} />
-          </Route>
+          {/* <Route exact path='/admin/portal' element={<AdminRoute />}> */}
+          <Route exact path='/admin/portal' element={<Portal />} />
+          {/* </Route> */}
         </Routes>
       </Suspense>
     </div>

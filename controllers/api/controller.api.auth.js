@@ -23,6 +23,7 @@ exports.authController = {
 
   verify: async (req, res, next) => {
     const { token } = req.body;
+    console.log('TOKEN***\n', token);
 
     if (!token) return next(new ErrorResponse('No token', 400));
 
@@ -31,7 +32,16 @@ exports.authController = {
 
       if (!user) return next(new ErrorResponse('Not a valid user', 400));
 
-      verifyToken(user, token, 200, res);
+      const verifyToken = () => {
+        const message = user.verifyToken(token);
+        if (message.id === user._id.toString().split('"')[0]) {
+          return res.status(200).json({ success: true, message });
+        } else {
+          return next(new ErrorResponse('Invalid token'));
+        }
+      };
+
+      verifyToken();
     } catch (err) {
       next(err);
     }
@@ -109,11 +119,6 @@ exports.authController = {
       next(err);
     }
   },
-};
-
-const verifyToken = (user, token, statusCode, res) => {
-  const message = user.verifyToken(token);
-  res.status(statusCode).json({ success: true, message });
 };
 
 const sendToken = (user, statusCode, res) => {

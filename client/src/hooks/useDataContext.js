@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { DataContext } from '../context/context.data';
 import { consoleMessages } from '../utils/console';
 import api from '../utils/api';
@@ -128,8 +128,6 @@ export default function useDataContext() {
   };
 
   const updateUser = async (userId, update) => {
-    // await verifyToken();
-
     try {
       const res = await api({
         url: `/api/v1/users/${userId}`,

@@ -50,21 +50,25 @@ userSchema.methods.matchPasswords = async function (password) {
 };
 
 userSchema.methods.getSignedToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: '30min',
-  });
+  return jwt.sign(
+    {
+      id: this._id,
+      name: `${this.first_name} ${this.last_name}`,
+      email: this.email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '30min',
+    }
+  );
 };
 
 userSchema.methods.verifyToken = function (token) {
   return jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
     if (err) {
-      err = {
-        name: 'TokenExpiredError',
-        message: 'jwt expired',
-        expiredAt: 1408621000,
-      };
+      return err;
     } else {
-      console.log(decoded);
+      return decoded;
     }
   });
 };

@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 import { Card, Alert, Form, Button } from 'react-bootstrap';
-import { AdminContext } from '../../context/context.auth';
 import useAdminContext from '../../hooks/useAdminContext';
 
-const LoginForm = () => {
-  const admin = useContext(AdminContext);
+const LoginForm = ({ statusMessage, setStatusMessage }) => {
   const { login } = useAdminContext();
   const emailRef = useRef();
   const passwordRef = useRef();
   const radioRef = useRef();
-  let navigate = useNavigate();
-  const [statusMessage, setStatusMessage] = useState(false);
   const [invalid, setInvalid] = useState({
     email: { invalid: false, message: '' },
     password: { invalid: false, message: '' },
@@ -42,18 +37,6 @@ const LoginForm = () => {
   };
 
   const checkIfRemembered = key => localStorage.getItem(key);
-
-  // side effect sets statusMessage state for successful or unsuccessful login attempt
-  useEffect(() => {
-    if (admin.state.admin) {
-      setStatusMessage({ variant: 'success', message: 'Welcome back Neil' });
-      setTimeout(() => {
-        navigate('/admin/portal');
-      }, 1000);
-    } else {
-      setStatusMessage({ variant: 'danger', message: 'Go home Crosby' });
-    }
-  }, [admin.state.admin, navigate]);
 
   return (
     <Card className='login-card'>

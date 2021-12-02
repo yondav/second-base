@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { AdminContext } from '../context/context.auth';
-import { consoleColors } from '../utils/console';
+import { consoleColors, consoleMessages } from '../utils/console';
 import api from '../utils/api';
 
 export default function useAdminContext() {
-  const admin = useContext(AdminContext);
+  const { dispatch } = useContext(AdminContext);
   const token = Cookies.get('token_secondBase');
 
   const config = {
@@ -35,12 +35,12 @@ export default function useAdminContext() {
       });
 
       if (data && data.success) {
-        admin.dispatch({ type: 'ISADMIN' });
+        dispatch({ type: 'ADMIN' });
         console.log('%cAuthorization verified', consoleColors.greenBlock);
         return { verified: true };
       } else {
         Cookies.remove('token_secondBase');
-        admin.dispatch({ type: 'ISNOTADMIN' });
+        dispatch({ type: 'NOT_ADMIN' });
         console.log('%cAuthorization failed', consoleColors.redBlock);
         return { verified: false };
       }
@@ -65,7 +65,7 @@ export default function useAdminContext() {
         await verifyToken();
       }
 
-      admin.dispatch({ type: 'ISADMIN' });
+      dispatch({ type: 'ADMIN' });
       console.log('%cLogged in', consoleColors.greenBlock);
     } catch (err) {
       console.error(err.message);
@@ -74,7 +74,7 @@ export default function useAdminContext() {
 
   const logout = () => {
     Cookies.remove('token_secondBase');
-    admin.dispatch({ type: 'ISNOTADMIN' });
+    dispatch({ type: 'NOT_ADMIN' });
     console.log('%cLogged out', consoleColors.redBlock);
   };
 
@@ -112,6 +112,10 @@ export default function useAdminContext() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (!token) dispatch({ type: 'NOT_ADMIN' });
+  }, [token]);
 
   return {
     token,

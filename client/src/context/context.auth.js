@@ -2,25 +2,27 @@ import React, { createContext, useReducer } from 'react';
 
 export const AdminContext = createContext();
 
-const adminState = { loggedIn: false };
+const initialState = {
+  admin: false,
+};
 
 const adminReducer = (state, action) => {
   switch (action.type) {
-    case 'ISNOTADMIN':
+    case 'NOT_ADMIN':
       return { admin: false };
-    case 'ISADMIN':
+    case 'ADMIN':
       return { admin: true };
     default:
       return state;
   }
 };
 
-export function AdminProvider(props) {
-  const [state, dispatch] = useReducer(adminReducer, adminState);
+export function AdminProvider({ children }) {
+  const [state, dispatch] = useReducer(adminReducer, initialState);
 
   return (
     <AdminContext.Provider value={{ state, dispatch }}>
-      {props.children}
+      {children}
     </AdminContext.Provider>
   );
 }
