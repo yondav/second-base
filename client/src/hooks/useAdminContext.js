@@ -36,12 +36,12 @@ export default function useAdminContext() {
 
       if (data && data.success) {
         admin.dispatch({ type: 'ISADMIN' });
-        console.log('%cAuthorization verified', consoleColors.success);
+        console.log('%cAuthorization verified', consoleColors.greenBlock);
         return { verified: true };
       } else {
         Cookies.remove('token_secondBase');
         admin.dispatch({ type: 'ISNOTADMIN' });
-        console.log('%cAuthorization failed', consoleColors.fail);
+        console.log('%cAuthorization failed', consoleColors.redBlock);
         return { verified: false };
       }
     } catch (err) {
@@ -51,7 +51,7 @@ export default function useAdminContext() {
 
   const login = async (email, password) => {
     try {
-      const { data } = await api({
+      await api({
         url: '/api/v1/login',
         method: 'post',
         config: { headers: { 'Content-Type': 'application/json' } },
@@ -66,7 +66,7 @@ export default function useAdminContext() {
       }
 
       admin.dispatch({ type: 'ISADMIN' });
-      console.log('%cLogged in', consoleColors.success);
+      console.log('%cLogged in', consoleColors.greenBlock);
     } catch (err) {
       console.error(err.message);
     }
@@ -75,7 +75,7 @@ export default function useAdminContext() {
   const logout = () => {
     Cookies.remove('token_secondBase');
     admin.dispatch({ type: 'ISNOTADMIN' });
-    console.log('%cLogged out', consoleColors.fail);
+    console.log('%cLogged out', consoleColors.redBlock);
   };
 
   const getResetToken = async email => {
@@ -87,7 +87,10 @@ export default function useAdminContext() {
       });
 
       if (data) {
-        console.log('%cReset token request succeeded', consoleColors.success);
+        console.log(
+          '%cReset token request succeeded',
+          consoleColors.greenBlock
+        );
         return data;
       }
     } catch (err) {

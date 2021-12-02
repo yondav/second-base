@@ -123,11 +123,13 @@ exports.create = {
     const newService = new Service(service);
     await newService.save();
 
-    return Studio.findByIdAndUpdate(
+    await Studio.findByIdAndUpdate(
       studio._id,
       { $push: { services: newService._id } },
       { new: true, useFindAndModify: false }
     );
+
+    return newService;
   },
 
   page_images: async name => {

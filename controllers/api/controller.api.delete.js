@@ -43,7 +43,11 @@ exports.deleteController = {
 
       res
         .status(200)
-        .json({ success: true, message: `${data.name} has been removed` });
+        .json({
+          success: true,
+          message: `${data.name} has been removed`,
+          data,
+        });
     } catch (err) {
       next(err);
     }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Card,
   Row,
@@ -9,7 +9,7 @@ import {
   Tab,
   Carousel,
 } from 'react-bootstrap';
-import { RiEditBoxLine } from 'react-icons/ri';
+import { RiEditBoxLine, RiArrowDropDownFill } from 'react-icons/ri';
 
 import { toTitle } from '../../utils/helperFuncs';
 import { DataContext } from '../../context/context.data';
@@ -19,13 +19,18 @@ const PortalGeneral = ({ setEdit }) => {
     state: {
       loading,
       data: {
-        studio: { logo, images, email, address, name },
+        studio: { logo, images, email, address, name, services },
       },
     },
   } = useContext(DataContext);
+  const [showServices, setShowServices] = useState(false);
+
+  const handleServices = e =>
+    !showServices ? setShowServices(true) : setShowServices(false);
 
   const handleClick = e => setEdit('general_info');
 
+  useEffect(() => console.log(services), []);
   return (
     <Card style={{ borderTopLeftRadius: 0 }}>
       {!loading ? (
@@ -59,6 +64,34 @@ const PortalGeneral = ({ setEdit }) => {
                       }`}</span>
                     </div>
                   </div>
+                  <div
+                    className='d-flex align-items-center my-3 pointer'
+                    onClick={handleServices}
+                  >
+                    <h4 className='m-0'>Services</h4>
+                    <RiArrowDropDownFill size='2em' />
+                  </div>
+                  {showServices && (
+                    <ul>
+                      {services.map(serv => (
+                        <li key={serv._id}>
+                          <div className='my-2 d-flex flex-column'>
+                            <span>{serv.name}</span>
+                            {serv.description && (
+                              <span
+                                style={{
+                                  fontSize: '.95em',
+                                  marginLeft: '.8rem',
+                                }}
+                              >
+                                <em>{serv.description}</em>
+                              </span>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </Col>
                 <Col xs={12} md={7} lg={6}>
                   <h4>Page Images</h4>

@@ -35,6 +35,34 @@ export default function dataReducer(state, action) {
         },
       };
 
+    case 'ADD_SERVICE':
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          studio: {
+            ...state.data.studio,
+            services: [...state.data.studio.services, ...action.payload],
+          },
+        },
+      };
+
+    case 'DELETE_SERVICE':
+      let list = [...state.data.studio.services];
+      let target = list.indexOf(
+        list.find(service => service._id === action.payload)
+      );
+      list.splice(target, 1);
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          studio: { ...state.data.studio, services: list },
+        },
+      };
+
     case 'ADD_IMAGE':
       const addImage = () => {
         let { collection, subCollection, data } = action.payload;
@@ -176,7 +204,6 @@ export default function dataReducer(state, action) {
       const deleteImage = () => {
         let { collection, subCollection, id } = action.payload;
         let list;
-        // let target = list => list.indeOf(list.find(img => img._id === id));
 
         const removeImg = arr => {
           let list = arr;

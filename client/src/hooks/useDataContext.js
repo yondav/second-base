@@ -1,12 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/context.data';
-import useAdminContext from './useAdminContext';
-import { consoleColors } from '../utils/console';
+import { consoleMessages } from '../utils/console';
 import api from '../utils/api';
 
 export default function useDataContext() {
   const { state, dispatch } = useContext(DataContext);
-  const { verifyToken } = useAdminContext();
 
   // actions for general studio info
   const getStudio = async () => {
@@ -15,20 +13,10 @@ export default function useDataContext() {
 
       if (res.data) {
         dispatch({ type: 'GET_STUDIO', payload: res.data });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          'data has been fetched',
-          '\n'
-        );
+        consoleMessages.success('data has been fetched');
       }
     } catch (err) {
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'data has not been fetched',
-        err.message
-      );
+      consoleMessages.fail('data has not been fetched');
     }
   };
 
@@ -43,25 +31,85 @@ export default function useDataContext() {
       if (res.data) {
         console.log(res.data);
         dispatch({ type: 'UPDATE_GENERAL', payload: res.data });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          'general info has been updated',
-          '\n',
-          res.data
-        );
+        consoleMessages.success('general info has been updated');
 
         return res.data;
       }
     } catch (err) {
       dispatch({ type: 'UPDATE_GENERAL', error: 'Something went wrong' });
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'general info has not been updated',
-        '\n',
-        err
-      );
+      consoleMessages.fail('general info has not been updated');
+    }
+  };
+
+  const addService = async services => {
+    try {
+      let post = async () => {
+        const promises = services.map(
+          async serv =>
+            await api({ url: '/api/v1/services', method: 'post', data: serv })
+        );
+
+        const values = await Promise.all(promises);
+
+        return values.map(val => val.data);
+      };
+
+      let data = await post();
+
+      if (services.length) {
+        dispatch({ type: 'ADD_SERVICE', payload: data });
+        consoleMessages.success(`service has been added`);
+      }
+    } catch (err) {
+      consoleMessages.fail('service has not been added');
+    }
+  };
+
+  const updateService = async services => {
+    try {
+      let put = async () => {
+        const promises = services.map(
+          async serv =>
+            await api({
+              url: `/api/v1/services/${serv._id}`,
+              method: 'put',
+              data: serv,
+            })
+        );
+
+        const values = await Promise.all(promises);
+
+        return values.map(val => val.data);
+      };
+
+      let data = await put();
+
+      if (data.length) {
+        dispatch({ type: 'UPDATE_SERVICE', payload: data });
+        consoleMessages.success(`service has been updated`);
+      }
+    } catch (err) {
+      consoleMessages.fail('service has not been updated');
+    }
+  };
+
+  const deleteService = async serviceId => {
+    console.log('SERVICE ID***\n', serviceId);
+    try {
+      const { data } = await api({
+        url: `/api/v1/services/${serviceId}`,
+        method: 'delete',
+      });
+
+      if (data.success) {
+        dispatch({
+          type: 'DELETE_SERVICE',
+          payload: data.data._id,
+        });
+        consoleMessages.success('service has been deleted');
+      }
+    } catch (err) {
+      consoleMessages.fail('service has not been deleted');
     }
   };
 
@@ -72,20 +120,10 @@ export default function useDataContext() {
 
       if (res.data) {
         dispatch({ type: 'GET_USER', payload: res.data[0] });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          'user has been fetched',
-          '\n'
-        );
+        consoleMessages.success('user has been fetched');
       }
     } catch (err) {
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'user has not been fetched',
-        err.message
-      );
+      consoleMessages.fail('user has not been fetched');
     }
   };
 
@@ -110,23 +148,12 @@ export default function useDataContext() {
             bio,
           },
         });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          'user has been updated',
-          '\n'
-        );
+        consoleMessages.success('user has been updated');
 
         return state.data.user;
       }
     } catch (err) {
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'user has not been updated',
-        '\n',
-        err.message
-      );
+      consoleMessages.fail('user has not been updated');
     }
   };
 
@@ -164,21 +191,10 @@ export default function useDataContext() {
           type: 'ADD_IMAGE',
           payload: { collection, subCollection, data: images },
         });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          `image has been added`,
-          '\n'
-        );
+        consoleMessages.success('image has been added');
       }
     } catch (err) {
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'image has not been added',
-        '\n',
-        err.message
-      );
+      consoleMessages.fail('image has not been added');
     }
   };
 
@@ -206,12 +222,7 @@ export default function useDataContext() {
           type: 'UPDATE_IMAGE',
           payload: { collection, subCollection, data: images },
         });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          `image has been updated`,
-          '\n'
-        );
+        consoleMessages.success('image has been updated');
       }
     } catch (err) {}
   };
@@ -226,30 +237,14 @@ export default function useDataContext() {
       if (data.success) {
         dispatch({
           type: 'DELETE_IMAGE',
-          payload: { collection, subCollection, id: data._id },
+          payload: { collection, subCollection, id: data.data._id },
         });
-        console.log(
-          '%csuccess:',
-          consoleColors.success,
-          'image has been deleted',
-          '\n'
-        );
+        consoleMessages.success('image has been deleted');
       }
     } catch (err) {
-      console.log(
-        '%cerror:',
-        consoleColors.fail,
-        'image has not been deleted',
-        '\n',
-        err.message
-      );
+      consoleMessages.fail('image has not been deleted');
     }
   };
-
-  useEffect(
-    () => state && console.log('%cstate', consoleColors.state, '\n', state),
-    [state]
-  );
 
   return {
     getStudio,
@@ -259,5 +254,8 @@ export default function useDataContext() {
     addImage,
     updateImage,
     deleteImage,
+    addService,
+    updateService,
+    deleteService,
   };
 }

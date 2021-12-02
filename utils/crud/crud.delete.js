@@ -26,7 +26,7 @@ exports.remove = {
 
   project: async projectId => await Project.findOneAndDelete(projectId),
 
-  service: async serviceId => await Service.findOneAndDelete(serviceId),
+  service: async serviceId => await Service.findByIdAndDelete(serviceId),
 
   image: async (imageId, parent) => {
     switch (parent) {
