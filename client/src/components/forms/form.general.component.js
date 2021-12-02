@@ -1,18 +1,7 @@
 import React, { useState, useContext } from 'react';
-import {
-  Card,
-  Alert,
-  Form,
-  Container,
-  Row,
-  Col,
-  Tabs,
-  Tab,
-} from 'react-bootstrap';
+import { Form, Col, Tabs, Tab } from 'react-bootstrap';
 import {
   FormWrapper,
-  FormHeader,
-  ButtonGroup,
   ImageUploader,
   inputHandler,
   generalInputs,
