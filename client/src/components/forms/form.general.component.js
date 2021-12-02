@@ -10,6 +10,7 @@ import {
   Tab,
 } from 'react-bootstrap';
 import {
+  FormWrapper,
   FormHeader,
   ButtonGroup,
   ImageUploader,
@@ -127,66 +128,50 @@ const GeneralForm = ({ setEdit }) => {
   };
 
   return (
-    <Card>
-      <FormHeader method='put' edit='Update General Info' />
-      <Card.Body>
-        <Container>
-          <Form className='my-5' onSubmit={handleSubmit}>
-            <Row>
-              {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              {renderInputs(generalInputs(formData), e =>
-                inputHandler(e, formData, setFormData)
-              )}
-              <h4 className='mb-4'>Address</h4>
-              {renderInputs(addressInputs(formData), e =>
-                inputHandler(e, formData, setFormData)
-              )}
-              <Col>
-                <Form.Label>Images</Form.Label>
-                <Form.Text> (select a page)</Form.Text>
-                <div className='img-tab-container'>
-                  <Tabs
-                    defaultActiveKey='home'
-                    className='my-2 admin-tab img-tab'
-                  >
-                    {tabs.map(tab => (
-                      <Tab
-                        eventKey={tab.page}
-                        title={toTitle(tab.page)}
-                        key={tab.page}
-                      >
-                        <ImageUploader
-                          type='studio'
-                          subType={tab.page}
-                          originalList={images[tab.page]}
-                          images={tab.state}
-                          setImages={tab.setter}
-                        />
-                      </Tab>
-                    ))}
-                  </Tabs>
-                </div>
-              </Col>
-              <h4 className='mb-4'>Services</h4>
-              {serviceList.map((serv, i) => (
-                <ServiceGroup
-                  key={i}
-                  service={serv}
-                  serviceList={serviceList}
-                  setServiceList={setServiceList}
-                  index={i}
-                  deleteService={deleteService}
+    <FormWrapper
+      handleSubmit={handleSubmit}
+      setEdit={setEdit}
+      headerEdit='Update General Info'
+      alert={alert}
+    >
+      {renderInputs(generalInputs(formData), e =>
+        inputHandler(e, formData, setFormData)
+      )}
+      <h4 className='mb-4'>Address</h4>
+      {renderInputs(addressInputs(formData), e =>
+        inputHandler(e, formData, setFormData)
+      )}
+      <Col>
+        <Form.Label>Images</Form.Label>
+        <Form.Text> (select a page)</Form.Text>
+        <div className='img-tab-container'>
+          <Tabs defaultActiveKey='home' className='my-2 admin-tab img-tab'>
+            {tabs.map(tab => (
+              <Tab eventKey={tab.page} title={toTitle(tab.page)} key={tab.page}>
+                <ImageUploader
+                  type='studio'
+                  subType={tab.page}
+                  originalList={images[tab.page]}
+                  images={tab.state}
+                  setImages={tab.setter}
                 />
-              ))}
-            </Row>
-            <ButtonGroup
-              handleCancel={() => setEdit(false)}
-              handleSubmit={handleSubmit}
-            />
-          </Form>
-        </Container>
-      </Card.Body>
-    </Card>
+              </Tab>
+            ))}
+          </Tabs>
+        </div>
+      </Col>
+      <h4 className='mb-4'>Services</h4>
+      {serviceList.map((serv, i) => (
+        <ServiceGroup
+          key={i}
+          service={serv}
+          serviceList={serviceList}
+          setServiceList={setServiceList}
+          index={i}
+          deleteService={deleteService}
+        />
+      ))}
+    </FormWrapper>
   );
 };
 

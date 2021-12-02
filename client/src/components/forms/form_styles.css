@@ -1,27 +1,12 @@
 /* BOOTSTRAP/QUILL MODS */
-.form-control,
-.form-select,
-.ql-toolbar,
+.ql-container {
+  padding: 0;
+  height: 20rem !important;
+  border: none !important;
+}
+
 .ql-editor {
   padding: 1rem 0.75rem !important;
-}
-
-.ql-toolbar button,
-.ql-picker-label {
-  margin: 0 0.15rem;
-  border-radius: var(--radius);
-  transition: var(--transition);
-}
-
-.ql-toolbar button:hover,
-.ql-toolbar button:focus,
-.ql-toolbar button:focus-visible,
-.ql-picker-label:hover,
-.ql-picker-label:focus,
-.ql-picker-label:focus-visible {
-  border: none !important;
-  outline: none;
-  box-shadow: var(--shadow);
 }
 
 .ql-editor {
@@ -32,42 +17,9 @@
   border-bottom-right-radius: 0.25rem;
 }
 
-.ql-container {
-  padding: 0;
-  height: 20rem !important;
-  border: none !important;
-}
-
-.form-control:focus,
-.form-control:focus-visible,
-.form-select:focus,
-.form-select:focus-visible,
 .ql-editor:focus,
 .ql-editor:focus-visible {
   border-color: transparent !important;
-  box-shadow: var(--shadow) !important;
-  outline: none !important;
-}
-
-.btn-outline-dark {
-  padding: 1rem !important;
-  color: var(--primary-black) !important;
-  border-color: var(--primary-black) !important;
-}
-
-.form-check-input:focus-visible,
-.form-check-input:checked,
-.btn-outline-dark:hover,
-.btn-outline-dark:active {
-  color: var(--primary-white) !important;
-  background-color: var(--primary-black) !important;
-  border-color: var(--primary-black) !important;
-  outline: none !important;
-}
-
-.form-check-input:focus,
-.btn-outline-dark:focus,
-.btn-outline-dark:focus-visible {
   box-shadow: var(--shadow) !important;
   outline: none !important;
 }

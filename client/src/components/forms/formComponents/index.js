@@ -1,3 +1,4 @@
+export { default as FormWrapper } from './form.formWrapper.component';
 export { default as FormHeader } from './form.header.component';
 export { default as YearSelect } from './form.yearSelect.component';
 export { default as Input } from './form.input.component';

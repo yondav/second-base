@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-// import { ProfileForm, GeneralForm } from '../forms';
+
 const ProfileForm = React.lazy(() => import('../forms/form.profile.component'));
 const GeneralForm = React.lazy(() => import('../forms/form.general.component'));
 

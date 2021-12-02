@@ -6,6 +6,7 @@ import {
   RiEditBoxLine,
   IoIosArrowRoundBack,
 } from 'react-icons/all';
+import { FormCheck } from '../../styled/form';
 import { Input } from '.';
 
 const ImageUploaderThumbnail = ({
@@ -118,8 +119,7 @@ const ImageUploaderThumbnail = ({
                     style={{ height: 'fit-content', width: '40%' }}
                   >
                     <Form.Label>{color ? 'Color' : 'B&W'}</Form.Label>
-                    <Form.Check
-                      style={{ height: 'fit-content', width: 'fit-content' }}
+                    <FormCheck
                       type='switch'
                       id='custom-switch'
                       defaultChecked={color}
@@ -130,7 +130,7 @@ const ImageUploaderThumbnail = ({
                     />
                   </div>
                   <Input
-                    style={{ height: 'fit-content' }}
+                    // style={{ height: 'fit-content' }}
                     type='text'
                     name='photo_credit'
                     label='Photographer'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Col } from 'react-bootstrap';
+import { FormInput } from '../../styled/form/styled.form.input.component';
 
 const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
   const handleReturn = e => {
@@ -10,7 +11,7 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
     <Col xs={xs} md={md}>
       <Form.Group className='mb-5' style={style}>
         <Form.Label>{label}</Form.Label>
-        <Form.Control
+        <FormInput
           type={type}
           name={name}
           onChange={changehandler}

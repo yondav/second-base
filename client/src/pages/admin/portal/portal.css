@@ -32,17 +32,6 @@
 }
 
 /* PROFILE */
-.profile-img-container img {
-  width: 100%;
-}
-
-.profile-img-container,
-.profile-info,
-.profile-bio {
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
 .back-icon,
 .edit-icon {
   transition: var(--transition);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { Form, Col } from 'react-bootstrap';
+import { RichTextToolbar, RichTextButton } from '../../styled/form';
 import 'react-quill/dist/quill.snow.css';
 
 const modules = {
@@ -44,26 +45,23 @@ const RichTextBio = ({ setFormData, value }) => {
     <Col xs={12}>
       <Form.Group className='text-editor px-0 mb-5'>
         <Form.Label>Bio</Form.Label>
-        <div id='toolbar'>
+        <RichTextToolbar id='toolbar'>
           <span className='ql-formats'>
-            <button className='ql-bold' />
-            <button className='ql-italic' />
-            <button className='ql-underline' />
-            <button className='ql-strike' />
+            <RichTextButton className='ql-bold' />
+            <RichTextButton className='ql-italic' />
+            <RichTextButton className='ql-underline' />
+            <RichTextButton className='ql-strike' />
           </span>
           <span className='ql-formats'>
-            <button className='ql-list' value='ordered' />
-            <button className='ql-list' value='bullet' />
-            <button className='ql-indent' value='-1' />
-            <button className='ql-indent' value='+1' />
+            <RichTextButton className='ql-list' value='ordered' />
+            <RichTextButton className='ql-list' value='bullet' />
+            <RichTextButton className='ql-indent' value='-1' />
+            <RichTextButton className='ql-indent' value='+1' />
           </span>
           <span className='ql-formats'>
-            <select className='ql-align' />
+            <RichTextButton className='ql-link' />
           </span>
-          <span className='ql-formats'>
-            <button className='ql-link' />
-          </span>
-        </div>
+        </RichTextToolbar>
         <ReactQuill
           theme='snow'
           value={textValue.value}

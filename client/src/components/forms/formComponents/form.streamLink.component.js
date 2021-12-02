@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
 import { VscAdd, VscRemove } from 'react-icons/all';
+import { FormSelect } from 'react-bootstrap';
 import { Input } from './index';
 
 const streams = [
@@ -36,7 +37,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
       <Col xs={4}>
         <Form.Group className='mb-5'>
           <Form.Label>Service</Form.Label>
-          <Form.Select
+          <FormSelect
             type='text'
             name='link_service'
             onChange={e => handleInputChange(e, index)}
@@ -47,7 +48,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
                 {stream.display}
               </option>
             ))}
-          </Form.Select>
+          </FormSelect>
         </Form.Group>
       </Col>
       <Input

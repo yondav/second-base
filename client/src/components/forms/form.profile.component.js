@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { Card, Alert, Form, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Container, Row, Col } from 'react-bootstrap';
 import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 import {
-  FormHeader,
+  FormWrapper,
   ButtonGroup,
   ImageUploader,
   RichTextBio,
@@ -111,70 +111,56 @@ const ProfileForm = ({ setEdit }) => {
   };
 
   return (
-    <Card>
-      <FormHeader method='put' edit='Update Profile' />
-      <Card.Body>
-        <Container>
-          <Form className='my-5' onSubmit={handleSubmit}>
+    <FormWrapper
+      handleSubmit={handleSubmit}
+      setEdit={setEdit}
+      headerEdit='Update Profile'
+      alert={alert}
+    >
+      {renderInputs(profileInputs(formData), e =>
+        inputHandler(e, formData, setFormData)
+      )}
+      <Col xs={12} md={6} className='d-flex align-items-center mb-5'>
+        {!resetToken ? (
+          <span
+            className='nav-link pointer'
+            onClick={handleResetRequest}
+            style={{ textDecoration: 'underline', fontStyle: 'italic' }}
+          >
+            Change Password
+          </span>
+        ) : (
+          <Container>
             <Row>
-              {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              {renderInputs(profileInputs(formData), e =>
-                inputHandler(e, formData, setFormData)
+              {resetPassword.response && (
+                <Alert variant={resetPassword.response.variant}>
+                  {resetPassword.response.message}
+                </Alert>
               )}
-              <Col xs={12} md={6} className='d-flex align-items-center mb-5'>
-                {!resetToken ? (
-                  <span
-                    className='nav-link pointer'
-                    onClick={handleResetRequest}
-                    style={{ textDecoration: 'underline', fontStyle: 'italic' }}
-                  >
-                    Change Password
-                  </span>
-                ) : (
-                  <Container>
-                    <Row>
-                      {resetPassword.response && (
-                        <Alert variant={resetPassword.response.variant}>
-                          {resetPassword.response.message}
-                        </Alert>
-                      )}
-                      {renderInputs(
-                        passwordInputs(),
-                        e =>
-                          passwordInputHandler(
-                            e,
-                            resetPassword,
-                            setResetPassword
-                          ),
-                        12,
-                        12
-                      )}
-                    </Row>
-                    <ButtonGroup
-                      handleCancel={() => setResetToken(null)}
-                      handleSubmit={handlePasswordSubmission}
-                    />
-                  </Container>
-                )}
-              </Col>
-              <RichTextBio setFormData={setFormData} value={bio} />
-              <ImageUploader
-                type='user'
-                single={true}
-                originalList={images}
-                images={imgs}
-                setImages={setImgs}
-                label='Photo'
-              />
-              <ButtonGroup
-                handleCancel={() => setEdit(false)}
-                handleSubmit={handleSubmit}
-              />
+              {renderInputs(
+                passwordInputs(),
+                e => passwordInputHandler(e, resetPassword, setResetPassword),
+                12,
+                12
+              )}
             </Row>
-          </Form>
-        </Container>
-      </Card.Body>
-    </Card>
+            <ButtonGroup
+              handleCancel={() => setResetToken(null)}
+              handleSubmit={handlePasswordSubmission}
+            />
+          </Container>
+        )}
+      </Col>
+      <RichTextBio setFormData={setFormData} value={bio} />
+      <ImageUploader
+        type='user'
+        single={true}
+        originalList={images}
+        images={imgs}
+        setImages={setImgs}
+        label='Photo'
+      />
+    </FormWrapper>
   );
 };
 
