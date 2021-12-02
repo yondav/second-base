@@ -1,4 +1,5 @@
 require('dotenv').config({ path: './config.env' });
+const compression = require('compression');
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -8,6 +9,8 @@ const app = express();
 const connectDB = require('./config/db.config');
 
 connectDB();
+
+app.use(compression());
 
 app.use(express.json());
 app.use(cookieParser());
