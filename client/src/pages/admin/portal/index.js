@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -10,15 +10,16 @@ import {
   Spinner,
   Card,
 } from 'react-bootstrap';
-import {
-  ModalContent,
-  PortalProfile,
-  PortalGeneral,
-} from '../../../components/portal';
+import { ModalContent, PortalGeneral } from '../../../components/portal';
 import { AdminContext } from '../../../context/context.auth';
 import useAdminContext from '../../../hooks/useAdminContext';
 import { DataContext } from '../../../context/context.data';
+
 import './portal.css';
+
+const PortalProfile = React.lazy(() =>
+  import('../../../components/portal/portal.profile.component')
+);
 
 const tabs = [
   { eventKey: 'user', title: 'Profile', component: PortalProfile },
@@ -63,16 +64,18 @@ const Portal = () => {
                 <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
                   {tabs.map((tab, i) => (
                     <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
-                      {!state.loading ? (
-                        React.createElement(tab.component, { setEdit })
-                      ) : (
-                        <Card
-                          style={{ borderTopLeftRadius: 0, height: '40rem' }}
-                          className='w-100 d-flex justify-content-center align-items-center'
-                        >
-                          <Spinner animation='border' />
-                        </Card>
-                      )}
+                      <Suspense
+                        fallback={
+                          <Card
+                            style={{ borderTopLeftRadius: 0, height: '40rem' }}
+                            className='w-100 d-flex justify-content-center align-items-center'
+                          >
+                            <Spinner animation='border' />
+                          </Card>
+                        }
+                      >
+                        {React.createElement(tab.component, { setEdit })}
+                      </Suspense>
                     </Tab>
                   ))}
                 </Tabs>
