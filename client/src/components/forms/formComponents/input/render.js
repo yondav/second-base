@@ -9,7 +9,7 @@ export const renderInputs = (inputs, changeHandler, xs, md) =>
       name={input?.name}
       changehandler={changeHandler}
       value={input?.value}
-      xs={xs || 12}
-      md={md || 6}
+      xs={input.xs || 12}
+      md={input.md || 6}
     />
   ));

@@ -16,4 +16,5 @@ export {
   passwordInputs,
   generalInputs,
   addressInputs,
+  loginInputs,
 } from './input/data';

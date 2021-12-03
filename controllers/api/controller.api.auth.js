@@ -49,6 +49,7 @@ exports.authController = {
 
   login: async (req, res, next) => {
     const { email, password } = req.body;
+    console.log('REQ.BODY:::', req.body);
 
     if (!email || !password)
       return next(

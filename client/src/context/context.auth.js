@@ -3,15 +3,16 @@ import React, { createContext, useReducer } from 'react';
 export const AdminContext = createContext();
 
 const initialState = {
+  loading: false,
   admin: false,
 };
 
 const adminReducer = (state, action) => {
   switch (action.type) {
     case 'NOT_ADMIN':
-      return { admin: false };
+      return { loading: false, admin: false };
     case 'ADMIN':
-      return { admin: true };
+      return { loading: false, admin: true };
     default:
       return state;
   }

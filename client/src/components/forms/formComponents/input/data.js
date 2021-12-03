@@ -70,3 +70,21 @@ export const addressInputs = state => [
     md: 3,
   },
 ];
+
+// login
+export const loginInputs = state => [
+  {
+    label: 'Email Address',
+    type: 'email',
+    name: 'email',
+    value: state.email,
+    md: 12,
+  },
+  {
+    label: 'Password',
+    type: 'password',
+    name: 'password',
+    value: state.password,
+    md: 12,
+  },
+];

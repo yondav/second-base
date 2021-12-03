@@ -1,17 +1,17 @@
 import { useContext, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { AdminContext } from '../context/context.auth';
-import { consoleColors, consoleMessages } from '../utils/console';
+import { consoleColors } from '../utils/console';
 import api from '../utils/api';
 
 export default function useAdminContext() {
-  const { dispatch } = useContext(AdminContext);
-  const token = Cookies.get('token_secondBase');
+  const { state, dispatch } = useContext(AdminContext);
+  const token = () => Cookies.get('token_secondBase');
 
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token()}`,
     },
   };
 
@@ -26,12 +26,13 @@ export default function useAdminContext() {
   };
 
   const verifyToken = async () => {
+    state.loading = true;
     try {
       const { data } = await api({
         url: '/api/v1/verify',
         method: 'post',
         config,
-        data: { token },
+        data: { token: token() },
       });
 
       if (data && data.success) {
@@ -49,24 +50,26 @@ export default function useAdminContext() {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async data => {
+    console.log('DATA:::', data);
+    state.loading = true;
     try {
-      await api({
-        url: '/api/v1/login',
-        method: 'post',
-        config: { headers: { 'Content-Type': 'application/json' } },
-        data: {
-          email: email,
-          password: password,
-        },
-      });
+      let loginAttempt = async () => {
+        const attempt = await api({
+          url: '/api/v1/login',
+          method: 'post',
+          config: { headers: { 'Content-Type': 'application/json' } },
+          data,
+        });
 
-      if (token) {
-        await verifyToken();
-      }
+        if (attempt.data) {
+          return attempt.data;
+        }
+        return;
+      };
 
-      dispatch({ type: 'ADMIN' });
-      console.log('%cLogged in', consoleColors.greenBlock);
+      await loginAttempt();
+      return await verifyToken();
     } catch (err) {
       console.error(err.message);
     }
@@ -113,9 +116,9 @@ export default function useAdminContext() {
     }
   };
 
-  useEffect(() => {
-    if (!token) dispatch({ type: 'NOT_ADMIN' });
-  }, [token]);
+  // useEffect(() => {
+  //   if (!token()) dispatch({ type: 'NOT_ADMIN' });
+  // }, [token]);
 
   return {
     token,
