@@ -10,16 +10,20 @@ import {
   Spinner,
   Card,
 } from 'react-bootstrap';
-import { ModalContent, PortalGeneral } from '../../../components/portal';
-import { AdminContext } from '../../../context/context.auth';
+import {
+  ModalContent,
+  PortalGeneral,
+  PortalProfile,
+} from '../../../components/portal';
 import useAdminContext from '../../../hooks/useAdminContext';
 import { DataContext } from '../../../context/context.data';
 
 import './portal.css';
 
-const PortalProfile = React.lazy(() =>
-  import('../../../components/portal/portal.profile.component')
-);
+// const PortalProfile = React.lazy(() =>
+//   import('../../../components/portal/portal.profile.component')
+// );
+// const PortalGeneral = React.lazy(() => import('../../../components/portal/portal.general.component'))
 
 const tabs = [
   { eventKey: 'user', title: 'Profile', component: PortalProfile },
@@ -29,18 +33,16 @@ const tabs = [
 ];
 
 const Portal = () => {
-  const admin = useContext(AdminContext);
   const { verifyToken } = useAdminContext();
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const { state } = useContext(DataContext);
 
   useEffect(() => {
-    console.log('portal');
-    verifyToken();
-    if (!admin.state.admin) navigate('/login');
-    console.log(admin.state);
-  }, [admin.state.admin, navigate, edit]);
+    verifyToken().then(res => {
+      if (!res.verified) navigate('/login');
+    });
+  }, [edit]);
 
   return (
     <>

@@ -1,4 +1,5 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { AdminContext } from '../context/context.auth';
 import { consoleColors } from '../utils/console';
@@ -7,6 +8,7 @@ import api from '../utils/api';
 export default function useAdminContext() {
   const { state, dispatch } = useContext(AdminContext);
   const token = () => Cookies.get('token_secondBase');
+  const navigate = useNavigate();
 
   const config = {
     headers: {
@@ -79,6 +81,7 @@ export default function useAdminContext() {
     Cookies.remove('token_secondBase');
     dispatch({ type: 'NOT_ADMIN' });
     console.log('%cLogged out', consoleColors.redBlock);
+    navigate('/login');
   };
 
   const getResetToken = async email => {
