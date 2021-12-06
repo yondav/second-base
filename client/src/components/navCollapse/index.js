@@ -1,38 +1,34 @@
 import React from 'react';
 
 const NavCollapse = ({ navExpand, setNavExpand }) => {
+  const animation = (translate, rotate) => ({
+    transform: `${
+      navExpand ? `translatex(3.5px)` : `translatey(${translate})`
+    } rotate(${navExpand ? rotate : '0'})`,
+    transition: '300ms all ease-in-out',
+  });
   const clickHandler = e => {
-    const top = document.querySelector('.top-bun');
-    const bottom = document.querySelector('.bottom-bun');
-
-    !top.classList.contains('top-bun-active')
-      ? top.classList.add('top-bun-active')
-      : top.classList.remove('top-bun-active');
-
-    !bottom.classList.contains('bottom-bun-active')
-      ? bottom.classList.add('bottom-bun-active')
-      : bottom.classList.remove('bottom-bun-active');
-
-    setTimeout(
-      () => (!navExpand ? setNavExpand(true) : setNavExpand(false)),
-      100
-    );
+    !navExpand ? setNavExpand(true) : setNavExpand(false);
   };
 
   return (
     <div
-      className='burger-container'
+      className='relative z-10 flex items-center justify-center w-8 h-8'
       aria-controls='basic-navbar-nav'
       onClick={clickHandler}
     >
-      <div className='burger-inner'>
+      <div className='h-full w-full cursor-pointer'>
         <div
-          className='top-bun'
-          style={{ backgroundColor: navExpand && 'var(--primary-black)' }}
+          className={`absolute block w-full h-px top-0 left-0 bottom-0 m-auto bg-gray-200 ${
+            navExpand && 'bg-gray-900'
+          }`}
+          style={animation('-5.5px', '-135deg')}
         />
         <div
-          className='bottom-bun'
-          style={{ backgroundColor: navExpand && 'var(--primary-black)' }}
+          className={`absolute block w-full h-px top-0 left-0 bottom-0 m-auto bg-gray-200 transition-all ${
+            navExpand && 'bg-gray-900'
+          }`}
+          style={animation('5.5px', '135deg')}
         />
       </div>
     </div>

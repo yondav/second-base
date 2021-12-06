@@ -5,6 +5,7 @@ import useDataContext from './hooks/useDataContext';
 
 import Nav from './components/nav';
 import { consoleMessages } from './utils/console';
+import { AppWrapper } from './components/styled';
 
 const Login = React.lazy(() => import('./pages/admin/login'));
 const Portal = React.lazy(() => import('./pages/admin/portal'));
@@ -31,20 +32,22 @@ const App = () => {
   useEffect(() => state && consoleMessages.state(state), [state]);
 
   return (
-    <div className='wrapper'>
+    <>
       <Nav />
-      <Suspense fallback=''>
-        <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route exact path='/about' element={<About />} />
-          <Route exact path='/artists' element={<Artists />} />
-          <Route exact path='/booking' element={<Booking />} />
-          <Route exact path='/gear' element={<Gear />} />
-          <Route exact path='/login' element={<Login />} />
-          <Route exact path='/admin/portal' element={<Portal />} />
-        </Routes>
-      </Suspense>
-    </div>
+      <AppWrapper>
+        <Suspense fallback=''>
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/about' element={<About />} />
+            <Route exact path='/artists' element={<Artists />} />
+            <Route exact path='/booking' element={<Booking />} />
+            <Route exact path='/gear' element={<Gear />} />
+            <Route exact path='/login' element={<Login />} />
+            <Route exact path='/admin/portal' element={<Portal />} />
+          </Routes>
+        </Suspense>
+      </AppWrapper>
+    </>
   );
 };
 

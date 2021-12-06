@@ -11,10 +11,11 @@ export {
 } from './form';
 
 export {
+  AppWrapper,
   ImgContainer,
   Column,
   AccordionItem,
   AccordionHeader,
 } from './general';
 
-export { NavLink } from './nav';
+export { NavBar } from './nav';

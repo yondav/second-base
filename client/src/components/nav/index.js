@@ -10,7 +10,7 @@ import NavCollapse from '../navCollapse';
 import NavExpand from '../navExpand';
 
 import './navigation.css';
-import { ImgContainer, NavLink } from '../styled';
+import { ImgContainer, NavBar } from '../styled';
 
 const Nav = () => {
   const {
@@ -48,54 +48,47 @@ const Nav = () => {
   }, [isDesktop, isTablet, isMobile]);
 
   return (
-    <nav className='d-flex justify-content-between align-items-center py-4 px-5'>
+    <NavBar>
       <ImgContainer as={Link} to='/' style={{ flexBasis: logoSize }}>
-        <img src={logo} alt='secondBase' className='w-100' />
+        <img src={logo} alt='secondBase' className='w-full' />
       </ImgContainer>
       {!isDesktop ? (
-        <div className='d-flex flex-column align-items-center justify-content-center'>
+        <>
           <NavCollapse navExpand={navExpand} setNavExpand={setNavExpand} />
-          <AnimatePresence>{navExpand && <NavExpand />}</AnimatePresence>
-        </div>
+          {navExpand && (
+            <div className='exp-links'>
+              <AnimatePresence>
+                {navExpand && <NavExpand setNavExpand={setNavExpand} />}
+              </AnimatePresence>
+            </div>
+          )}
+        </>
       ) : (
-        <div
-          className='d-flex justify-content-around align-items-center'
-          style={{ flexBasis: '50%' }}
-        >
-          <NavLink as={Link} to='/about'>
-            About
-          </NavLink>
-          <NavLink as={Link} to='/gear'>
-            Gear
-          </NavLink>
-          <NavLink as={Link} to='/artists'>
-            Artists
-          </NavLink>
-          <NavLink as={Link} to='/booking'>
-            Booking
-          </NavLink>
+        <div className='dt-links' style={{ flexBasis: '50%' }}>
+          <Link to='/about'>About</Link>
+          <Link to='/gear'>Gear</Link>
+          <Link to='/artists'>Artists</Link>
+          <Link to='/booking'>Booking</Link>
 
           {admin.state.admin && (
             <>
-              <NavLink as={Link} to='/admin/portal'>
-                Portal
-              </NavLink>
-              <NavLink as={Link} to='/login' onClick={logout}>
+              <Link to='/admin/portal'>Portal</Link>
+              <Link to='/login' onClick={logout}>
                 Log out
-              </NavLink>
+              </Link>
             </>
           )}
-          <NavLink
+          <a
             href='https://www.instagram.com/secondbasebk/'
-            style={{ marginLeft: '2rem' }}
+            className='ml-8'
             target='_blank'
             rel='noopener noreferrer'
           >
             <BsInstagram size={'1.5em'} />
-          </NavLink>
+          </a>
         </div>
       )}
-    </nav>
+    </NavBar>
   );
 };
 

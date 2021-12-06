@@ -14,7 +14,7 @@ const Login = () => {
         {alert.message}
       </Alert>
       <Card.Body className='d-flex justify-content-center align-items-center'>
-        <LoginForm setAlert={setAlert} />
+        {/* <LoginForm setAlert={setAlert} /> */}
       </Card.Body>
     </Card>
   );

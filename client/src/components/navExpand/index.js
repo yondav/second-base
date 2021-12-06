@@ -1,51 +1,53 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { BsInstagram } from 'react-icons/bs';
 import { AdminContext } from '../../context/context.auth';
 import useAdminContext from '../../hooks/useAdminContext';
 
-const NavExpand = () => {
+const NavExpand = ({ setNavExpand }) => {
   const admin = useContext(AdminContext);
   const { logout } = useAdminContext();
 
+  const navigate = (e, logout) => {
+    setNavExpand(false);
+
+    if (logout) logout();
+  };
+
   return (
     <motion.div
-      className='expanded-nav-menu'
-      initial={{ height: 0, opacity: 0, rotateY: -180 }}
-      animate={{ height: '100vh', opacity: 1, rotateY: 0 }}
-      exit={{ height: 0, opacity: 0, rotateY: -180 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
+      className='w-full relative flex flex-col items-center'
+      initial={{ opacity: 0, rotateY: -180 }}
+      animate={{ opacity: 1, rotateY: 0 }}
+      exit={{ opacity: 0, rotateY: -180 }}
+      transition={{ duration: 1, ease: 'easeInOut' }}
     >
-      <Nav.Link as={Link} to='/about'>
+      <Link to='/about' onClick={navigate}>
         About
-      </Nav.Link>
-      <Nav.Link as={Link} to='/gear'>
+      </Link>
+      <Link to='/gear' onClick={navigate}>
         Gear
-      </Nav.Link>
-      <Nav.Link as={Link} to='/artists'>
+      </Link>
+      <Link to='/artists' onClick={navigate}>
         Artists
-      </Nav.Link>
-      <Nav.Link as={Link} to='/booking'>
+      </Link>
+      <Link to='/booking' onClick={navigate}>
         Booking
-      </Nav.Link>
+      </Link>
       {admin.state.admin ? (
         <>
-          <Nav.Link as={Link} to='/admin/portal'>
+          <Link to='/admin/portal' onClick={navigate}>
             Portal
-          </Nav.Link>
-          <span className='nav-link pointer' onClick={logout}>
+          </Link>
+          <Link to='/login' onClick={() => navigate('logout')}>
             Log out
-          </span>
+          </Link>
         </>
       ) : (
-        <Nav.Link
-          href='https://www.instagram.com/secondbasebk/'
-          style={{ marginLeft: '4rem' }}
-        >
+        <a href='https://www.instagram.com/secondbasebk/' onClick={navigate}>
           <BsInstagram size={'1.5em'} />
-        </Nav.Link>
+        </a>
       )}
     </motion.div>
   );

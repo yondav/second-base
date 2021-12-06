@@ -5,8 +5,9 @@ import { AdminProvider } from './context/context.auth';
 import { DataProvider } from './context/context.data';
 import App from './App';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import './index.css';
+import './assets/styles.css';
 
 ReactDOM.render(
   <BrowserRouter>
