@@ -13,7 +13,10 @@ const NavCollapse = ({ navExpand, setNavExpand }) => {
       ? bottom.classList.add('bottom-bun-active')
       : bottom.classList.remove('bottom-bun-active');
 
-    !navExpand ? setNavExpand(true) : setNavExpand(false);
+    setTimeout(
+      () => (!navExpand ? setNavExpand(true) : setNavExpand(false)),
+      100
+    );
   };
 
   return (
@@ -23,8 +26,14 @@ const NavCollapse = ({ navExpand, setNavExpand }) => {
       onClick={clickHandler}
     >
       <div className='burger-inner'>
-        <div className='top-bun' />
-        <div className='bottom-bun' />
+        <div
+          className='top-bun'
+          style={{ backgroundColor: navExpand && 'var(--primary-black)' }}
+        />
+        <div
+          className='bottom-bun'
+          style={{ backgroundColor: navExpand && 'var(--primary-black)' }}
+        />
       </div>
     </div>
   );

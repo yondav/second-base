@@ -1,34 +1,23 @@
 import React, { useState, useEffect, useContext, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Tabs,
-  Tab,
-  Modal,
-  Spinner,
-  Card,
-} from 'react-bootstrap';
+import { Container, Row, Tabs, Tab, Modal, Card } from 'react-bootstrap';
+import { DataContext } from '../../../context/context.data';
+import useAdminContext from '../../../hooks/useAdminContext';
 import {
   ModalContent,
-  PortalGeneral,
   PortalProfile,
+  PortalGeneral,
+  PortalGear,
 } from '../../../components/portal';
-import useAdminContext from '../../../hooks/useAdminContext';
-import { DataContext } from '../../../context/context.data';
+import Loading from '../../../components/loading';
+import { Column } from '../../../components/styled/general';
 
 import './portal.css';
-
-// const PortalProfile = React.lazy(() =>
-//   import('../../../components/portal/portal.profile.component')
-// );
-// const PortalGeneral = React.lazy(() => import('../../../components/portal/portal.general.component'))
 
 const tabs = [
   { eventKey: 'user', title: 'Profile', component: PortalProfile },
   { eventKey: 'general_info', title: 'General', component: PortalGeneral },
-  { eventKey: 'studio_gear', title: 'Gear', component: PortalProfile },
+  { eventKey: 'gear', title: 'Gear', component: PortalGear },
   { eventKey: 'artists', title: 'Artists', component: PortalProfile },
 ];
 
@@ -46,7 +35,7 @@ const Portal = () => {
 
   return (
     <>
-      {!state.loading ? (
+      {state.data.user.first_name ? (
         <>
           {edit && (
             <Modal
@@ -62,31 +51,20 @@ const Portal = () => {
           )}
           <Container fluid>
             <Row>
-              <Col>
+              <Column>
                 <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
                   {tabs.map((tab, i) => (
                     <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
-                      <Suspense
-                        fallback={
-                          <Card
-                            style={{ borderTopLeftRadius: 0, height: '40rem' }}
-                            className='w-100 d-flex justify-content-center align-items-center'
-                          >
-                            <Spinner animation='border' />
-                          </Card>
-                        }
-                      >
-                        {React.createElement(tab.component, { setEdit })}
-                      </Suspense>
+                      {React.createElement(tab.component, { setEdit })}
                     </Tab>
                   ))}
                 </Tabs>
-              </Col>
+              </Column>
             </Row>
           </Container>
         </>
       ) : (
-        <Spinner animation='border' />
+        <Loading />
       )}
     </>
   );

@@ -4,7 +4,7 @@ import dataReducer from './context.data.reducer';
 
 const initialState = {
   loading: true,
-  data: { studio: {}, user: {} },
+  data: { studio: {}, user: {}, gear: {}, artists: {} },
 };
 
 export const DataContext = createContext(initialState);

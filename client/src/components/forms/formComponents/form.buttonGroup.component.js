@@ -1,11 +1,11 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { FormButton } from '../../styled/form';
+import { Row } from 'react-bootstrap';
+import { Column, FormButton } from '../../styled';
 
 const ButtonGroup = ({ handleCancel, handleSubmit }) => {
   return (
     <Row>
-      <Col className='d-flex justify-content-end'>
+      <Column className='d-flex justify-content-end'>
         <FormButton
           variant='outline-dark'
           type='button'
@@ -22,7 +22,7 @@ const ButtonGroup = ({ handleCancel, handleSubmit }) => {
         >
           submit
         </FormButton>
-      </Col>
+      </Column>
     </Row>
   );
 };

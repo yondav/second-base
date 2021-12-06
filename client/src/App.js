@@ -3,8 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { DataContext } from './context/context.data';
 import useDataContext from './hooks/useDataContext';
 
-import Navigation from './components/navigation';
-import AdminRoute from './components/adminRoute';
+import Nav from './components/nav';
 import { consoleMessages } from './utils/console';
 
 const Login = React.lazy(() => import('./pages/admin/login'));
@@ -17,18 +16,23 @@ const Home = React.lazy(() => import('./pages/client/home'));
 
 const App = () => {
   const { state } = useContext(DataContext);
-  const { getStudio, getUser } = useDataContext();
+  const { getStudio, getUser, getGear } = useDataContext();
+
+  const fetch = async () => {
+    await getStudio();
+    await getUser();
+    await getGear();
+  };
 
   useEffect(() => {
-    getStudio();
-    getUser();
+    fetch();
   }, []);
 
   useEffect(() => state && consoleMessages.state(state), [state]);
 
   return (
     <div className='wrapper'>
-      <Navigation />
+      <Nav />
       <Suspense fallback=''>
         <Routes>
           <Route exact path='/' element={<Home />} />
@@ -37,9 +41,7 @@ const App = () => {
           <Route exact path='/booking' element={<Booking />} />
           <Route exact path='/gear' element={<Gear />} />
           <Route exact path='/login' element={<Login />} />
-          {/* <Route exact path='/admin/portal' element={<AdminRoute />}> */}
           <Route exact path='/admin/portal' element={<Portal />} />
-          {/* </Route> */}
         </Routes>
       </Suspense>
     </div>

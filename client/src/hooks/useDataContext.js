@@ -113,13 +113,27 @@ export default function useDataContext() {
     }
   };
 
+  // actions for gear
+  const getGear = async () => {
+    try {
+      const { data } = await api({ url: '/api/v1/studio_gear', method: 'get' });
+
+      if (data) {
+        dispatch({ type: 'GET_GEAR', payload: data });
+        consoleMessages.success('gear has been fetched');
+      }
+    } catch (err) {
+      consoleMessages.fail('gear has not been fetched');
+    }
+  };
+
   // actions for user/about - not auth
   const getUser = async () => {
     try {
-      const res = await api({ url: '/api/v1/users', method: 'get' });
+      const { data } = await api({ url: '/api/v1/users', method: 'get' });
 
-      if (res.data) {
-        dispatch({ type: 'GET_USER', payload: res.data[0] });
+      if (data) {
+        dispatch({ type: 'GET_USER', payload: data[0] });
         consoleMessages.success('user has been fetched');
       }
     } catch (err) {
@@ -247,13 +261,14 @@ export default function useDataContext() {
   return {
     getStudio,
     updateGeneral,
+    addService,
+    updateService,
+    deleteService,
+    getGear,
     getUser,
     updateUser,
     addImage,
     updateImage,
     deleteImage,
-    addService,
-    updateService,
-    deleteService,
   };
 }

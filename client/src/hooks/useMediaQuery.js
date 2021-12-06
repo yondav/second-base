@@ -6,7 +6,7 @@ export default function useMediaQuery() {
   const [isDesktop, setIsDesktop] = useState(false);
 
   const updateMedia = () => {
-    window.innerWidth > 768 ? setIsMobile(false) : setIsMobile(true);
+    window.innerWidth > 775 ? setIsMobile(false) : setIsMobile(true);
     window.innerWidth > 768 && window.innerWidth < 992
       ? setIsTablet(true)
       : setIsTablet(false);

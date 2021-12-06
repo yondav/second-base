@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Col } from 'react-bootstrap';
-import { FormSelect } from '../../styled/form';
+import { Form } from 'react-bootstrap';
+import { Column, FormSelect } from '../../styled';
 
 const YearSelect = ({ xs, md, name }) => {
   const [yearsOptions, setYearsOptions] = useState([]);
@@ -16,7 +16,7 @@ const YearSelect = ({ xs, md, name }) => {
 
   useEffect(() => yearsOptSetter(), []);
   return (
-    <Col xs={xs} md={md}>
+    <Column xs={xs} md={md}>
       <Form.Group className='mb-5'>
         <Form.Label>Year</Form.Label>
         <FormSelect type='text' name={name}>
@@ -28,7 +28,7 @@ const YearSelect = ({ xs, md, name }) => {
           ))}
         </FormSelect>
       </Form.Group>
-    </Col>
+    </Column>
   );
 };
 

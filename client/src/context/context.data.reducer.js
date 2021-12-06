@@ -1,38 +1,22 @@
 export default function dataReducer(state, action) {
+  const { data } = state;
+  const { studio, user, gear } = data;
+  let list;
+  let target;
+
   switch (action.type) {
     case 'GET_STUDIO':
       return {
-        loading: false,
-        data: { ...state.data, studio: action.payload },
-      };
-
-    case 'GET_USER':
-      return {
         ...state,
         loading: false,
-        data: { ...state.data, user: action.payload },
-      };
-
-    case 'UPDATE_USER':
-      return {
-        ...state,
-        loading: false,
-        data: {
-          ...state.data,
-          user: { ...state.data.user, ...action.payload },
-        },
+        data: { ...data, studio: action.payload },
       };
 
     case 'UPDATE_GENERAL':
-      const { email, address } = action.payload;
-
       return {
         ...state,
         loading: false,
-        data: {
-          ...state.data,
-          studio: { ...state.data.studio, email, address },
-        },
+        data: { ...data, studio: { ...studio, ...action.payload } },
       };
 
     case 'ADD_SERVICE':
@@ -40,27 +24,57 @@ export default function dataReducer(state, action) {
         ...state,
         loading: false,
         data: {
-          ...state.data,
+          ...data,
           studio: {
-            ...state.data.studio,
-            services: [...state.data.studio.services, ...action.payload],
+            ...studio,
+            services: [...studio.services, ...action.payload],
           },
         },
       };
 
+    case 'UPDATE_SERVICE':
+      list = [...studio.services];
+      action.payload.forEach(service => {
+        let target = list.indexOf(list.find(serv => serv._id === service._id));
+        if (target) list[target] = { ...list[target], ...service };
+      });
+      return {
+        ...state,
+        loading: false,
+        data: { ...data, studio: { ...studio, services: list } },
+      };
+
     case 'DELETE_SERVICE':
-      let list = [...state.data.studio.services];
-      let target = list.indexOf(
+      list = [...studio.services];
+      target = list.indexOf(
         list.find(service => service._id === action.payload)
       );
       list.splice(target, 1);
       return {
         ...state,
         loading: false,
-        data: {
-          ...state.data,
-          studio: { ...state.data.studio, services: list },
-        },
+        data: { ...data, studio: { ...studio, services: list } },
+      };
+
+    case 'GET_USER':
+      return {
+        ...state,
+        loading: false,
+        data: { ...data, user: action.payload },
+      };
+
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        loading: false,
+        data: { ...data, user: { ...user, ...action.payload } },
+      };
+
+    case 'GET_GEAR':
+      return {
+        ...state,
+        loading: false,
+        data: { ...data, gear: action.payload },
       };
 
     case 'ADD_IMAGE':
@@ -72,11 +86,8 @@ export default function dataReducer(state, action) {
               ...state,
               loading: false,
               data: {
-                ...state.data,
-                user: {
-                  ...state.data.user,
-                  images: [...state.data.user.images, ...data],
-                },
+                ...data,
+                user: { ...user, images: [...user.images, ...data] },
               },
             };
           case 'studio':
@@ -84,32 +95,32 @@ export default function dataReducer(state, action) {
             switch (subCollection) {
               case 'home':
                 imgsObj = {
-                  ...state.data.studio.images,
-                  home: [...state.data.studio.images.home, ...data],
+                  ...studio.images,
+                  home: [...studio.images.home, ...data],
                 };
                 break;
               case 'about':
                 imgsObj = {
-                  ...state.data.studio.images,
-                  about: [...state.data.studio.images.about, ...data],
+                  ...studio.images,
+                  about: [...studio.images.about, ...data],
                 };
                 break;
               case 'gear':
                 imgsObj = {
-                  ...state.data.studio.images,
-                  gear: [...state.data.studio.images.gear, ...data],
+                  ...studio.images,
+                  gear: [...studio.images.gear, ...data],
                 };
                 break;
               case 'artists':
                 imgsObj = {
-                  ...state.data.studio.images,
-                  artists: [...state.data.studio.images.artists, ...data],
+                  ...studio.images,
+                  artists: [...studio.images.artists, ...data],
                 };
                 break;
               case 'booking':
                 imgsObj = {
-                  ...state.data.studio.images,
-                  booking: [...state.data.studio.images.booking, ...data],
+                  ...studio.images,
+                  booking: [...studio.images.booking, ...data],
                 };
                 break;
               default:
@@ -118,13 +129,7 @@ export default function dataReducer(state, action) {
             return {
               ...state,
               loading: false,
-              data: {
-                ...state.data,
-                studio: {
-                  ...state.data.studio,
-                  images: imgsObj,
-                },
-              },
+              data: { ...data, studio: { ...studio, images: imgsObj } },
             };
           default:
             break;
@@ -139,46 +144,44 @@ export default function dataReducer(state, action) {
         let dataSwap = () => {
           data.forEach(image => {
             let target = list.indexOf(list.find(img => img._id === image._id));
-            if (list[target]) {
-              list[target] = { ...list[target], ...image };
-            }
+            if (list[target]) list[target] = { ...list[target], ...image };
           });
         };
 
         switch (collection) {
           case 'user':
-            list = state.data.user.images;
+            list = user.images;
             dataSwap();
 
             return {
               ...state,
               loading: false,
               data: {
-                ...state.data,
-                user: { ...state.data.user, images: list },
+                ...data,
+                user: { ...user, images: list },
               },
             };
 
           case 'studio':
-            list = state.data.studio.images[subCollection];
+            list = studio.images[subCollection];
             dataSwap();
 
             let imgsObj;
             switch (subCollection) {
               case 'home':
-                imgsObj = { ...state.data.studio.images, home: list };
+                imgsObj = { ...studio.images, home: list };
                 break;
               case 'about':
-                imgsObj = { ...state.data.studio.images, about: list };
+                imgsObj = { ...studio.images, about: list };
                 break;
               case 'gear':
-                imgsObj = { ...state.data.studio.images, gear: list };
+                imgsObj = { ...studio.images, gear: list };
                 break;
               case 'artists':
-                imgsObj = { ...state.data.studio.images, artists: list };
+                imgsObj = { ...studio.images, artists: list };
                 break;
               case 'booking':
-                imgsObj = { ...state.data.studio.images, booking: list };
+                imgsObj = { ...studio.images, booking: list };
                 break;
               default:
                 break;
@@ -186,13 +189,7 @@ export default function dataReducer(state, action) {
             return {
               ...state,
               loading: false,
-              data: {
-                ...state.data,
-                studio: {
-                  ...state.data.studio,
-                  images: imgsObj,
-                },
-              },
+              data: { ...data, studio: { ...studio, images: imgsObj } },
             };
           default:
             break;
@@ -215,37 +212,37 @@ export default function dataReducer(state, action) {
 
         switch (collection) {
           case 'user':
-            list = removeImg(state.data.user.images);
+            list = removeImg(user.images);
 
             return {
               ...state,
               loading: false,
               data: {
-                ...state.data,
-                user: { ...state.data.user, images: list },
+                ...data,
+                user: { ...user, images: list },
               },
             };
 
           case 'studio':
-            list = removeImg(state.data.studio.images[subCollection]);
+            list = removeImg(studio.images[subCollection]);
 
             let imgsObj;
 
             switch (subCollection) {
               case 'home':
-                imgsObj = { ...state.data.studio.images, home: list };
+                imgsObj = { ...studio.images, home: list };
                 break;
               case 'about':
-                imgsObj = { ...state.data.studio.images, about: list };
+                imgsObj = { ...studio.images, about: list };
                 break;
               case 'gear':
-                imgsObj = { ...state.data.studio.images, gear: list };
+                imgsObj = { ...studio.images, gear: list };
                 break;
               case 'artists':
-                imgsObj = { ...state.data.studio.images, artists: list };
+                imgsObj = { ...studio.images, artists: list };
                 break;
               case 'booking':
-                imgsObj = { ...state.data.studio.images, booking: list };
+                imgsObj = { ...studio.images, booking: list };
                 break;
               default:
                 break;
@@ -253,13 +250,7 @@ export default function dataReducer(state, action) {
             return {
               ...state,
               loading: false,
-              data: {
-                ...state.data,
-                studio: {
-                  ...state.data.studio,
-                  images: imgsObj,
-                },
-              },
+              data: { ...data, studio: { ...studio, images: imgsObj } },
             };
           default:
             break;

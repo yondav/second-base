@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Card, Col, Tabs, Tab, Carousel } from 'react-bootstrap';
+import { Card, Tabs, Tab, Carousel } from 'react-bootstrap';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 
-import { toTitle } from '../../utils/helperFuncs';
 import { DataContext } from '../../context/context.data';
+import { toTitle } from '../../utils/helperFuncs';
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer } from '../styled/general';
+import { ImgContainer, Column } from '../styled/general';
 
 const PortalGeneral = ({ setEdit }) => {
   const {
@@ -23,9 +23,10 @@ const PortalGeneral = ({ setEdit }) => {
   const handleEdit = e => setEdit('general_info');
 
   useEffect(() => console.log(services), []);
+
   return (
     <TabWrapper title='General Info' handleEdit={handleEdit}>
-      <Col xs={12} md={5} lg={6} className='mb-5'>
+      <Column xs={12} md={5} lg={6} className='mb-5'>
         <div className='logo-container p-3 mb-3'>
           <img src={logo} alt={name} className='w-100' />
         </div>
@@ -71,8 +72,8 @@ const PortalGeneral = ({ setEdit }) => {
             ))}
           </ul>
         )}
-      </Col>
-      <Col xs={12} md={7} lg={6}>
+      </Column>
+      <Column xs={12} md={7} lg={6}>
         <h4>Page Images</h4>
         <ImgContainer className='w-100'>
           <Tabs defaultActiveKey='home' className='mt-3 admin-tab img-tab'>
@@ -81,7 +82,7 @@ const PortalGeneral = ({ setEdit }) => {
               .map((page, i) => (
                 <Tab eventKey={page} title={toTitle(page)} key={i}>
                   <Card style={{ borderTopLeftRadius: 0 }}>
-                    {images[page].length ? (
+                    {images[page].length > 0 && (
                       <Carousel
                         indicators={false}
                         interval={null}
@@ -89,31 +90,29 @@ const PortalGeneral = ({ setEdit }) => {
                       >
                         {images[page]
                           .sort((a, b) => a.sequence - b.sequence)
-                          .map(img => (
+                          .map(({ _id, url, color }) => (
                             <Carousel.Item
-                              key={img._id}
+                              key={_id}
                               className='portal-carousel-item'
                             >
                               <img
-                                className='d-block w-100 portal-carousel-img'
-                                src={img.url}
-                                alt={img._id}
+                                className='d-block w-100'
+                                src={url}
+                                alt={_id}
                                 style={{
-                                  filter: !img.color && 'saturate(0)',
+                                  filter: !color && 'saturate(0)',
                                 }}
                               />
                             </Carousel.Item>
                           ))}
                       </Carousel>
-                    ) : (
-                      <div />
                     )}
                   </Card>
                 </Tab>
               ))}
           </Tabs>
         </ImgContainer>
-      </Col>
+      </Column>
     </TabWrapper>
   );
 };

@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Alert, Container, Row, Col } from 'react-bootstrap';
+import { Alert, Container, Row } from 'react-bootstrap';
+
 import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
+
+import { Column } from '../styled/general';
 import {
   FormWrapper,
   ButtonGroup,
@@ -120,7 +123,7 @@ const ProfileForm = ({ setEdit }) => {
       {renderInputs(profileInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Col xs={12} md={6} className='d-flex align-items-center mb-5'>
+      <Column xs={12} md={6} className='d-flex align-items-center mb-5'>
         {!resetToken ? (
           <span
             className='nav-link pointer'
@@ -150,7 +153,7 @@ const ProfileForm = ({ setEdit }) => {
             />
           </Container>
         )}
-      </Col>
+      </Column>
       <RichTextBio setFormData={setFormData} value={bio} />
       <ImageUploader
         type='user'

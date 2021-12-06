@@ -14,7 +14,7 @@ const TabWrapper = ({ title, handleEdit, children }) => {
         />
       </Card.Header>
       <Card.Body>
-        <Container className='py-5'>
+        <Container fluid className='py-5'>
           <Row>{children}</Row>
         </Container>
       </Card.Body>{' '}

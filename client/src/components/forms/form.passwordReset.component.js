@@ -1,23 +1,13 @@
 import React from 'react';
-import { Card, Container, Row, Form } from 'react-bootstrap'; // Alert
-import { FormHeader, Input, ButtonGroup } from './formComponents';
+import { Input, FormWrapper } from './formComponents';
 
 const PasswordResetForm = () => {
   return (
-    <Card>
-      <FormHeader method='put' edit='Update Password' />
-      <Card.Body>
-        <Container>
-          <Form>
-            <Row>
-              <Input label='New Password' type='password' xs={12} />
-              <Input label='Confirm Password' type='confirm_password' xs={12} />
-            </Row>
-            <ButtonGroup />
-          </Form>
-        </Container>
-      </Card.Body>
-    </Card>
+    // need to add remaining props to formwrapper and likely implement input render function
+    <FormWrapper headerEdit='Update Password'>
+      <Input label='New Password' type='password' xs={12} />
+      <Input label='Confirm Password' type='confirm_password' xs={12} />
+    </FormWrapper>
   );
 };
 

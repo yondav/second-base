@@ -1,8 +1,9 @@
 import React from 'react';
-import { Col, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { VscAdd, VscRemove } from 'react-icons/all';
 import { FormSelect } from 'react-bootstrap';
 import { Input } from './index';
+import { Column } from '../../styled';
 
 const streams = [
   { val: 'artist_site', display: "Artist's Site" },
@@ -34,7 +35,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
 
   return (
     <>
-      <Col xs={4}>
+      <Column xs={4}>
         <Form.Group className='mb-5'>
           <Form.Label>Service</Form.Label>
           <FormSelect
@@ -50,7 +51,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
             ))}
           </FormSelect>
         </Form.Group>
-      </Col>
+      </Column>
       <Input
         label='URL'
         type='text'
@@ -58,7 +59,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
         xs={6}
         changehandler={e => handleInputChange(e, index)}
       />
-      <Col xs={2} className='d-flex'>
+      <Column xs={2} className='d-flex'>
         {linkList.length !== 1 && (
           <div className='d-flex flex-column justify-content-end align-items-center mb-5 ml-1'>
             <Form.Label style={{ color: 'transparent' }}>Remove</Form.Label>
@@ -83,7 +84,7 @@ const StreamLink = ({ linkList, setLinkList, index }) => {
             </Button>
           </div>
         )}
-      </Col>
+      </Column>
     </>
   );
 };

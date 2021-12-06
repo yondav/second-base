@@ -1,19 +1,21 @@
 import React from 'react';
-import { Form, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { Column, FormTextArea } from '../../styled';
 
-const TextArea = ({ label, rows, name, xs, md, onChange }) => {
+const TextArea = ({ label, rows, name, xs, md, changehandler, val }) => {
   return (
-    <Col xs={xs} md={md}>
+    <Column xs={xs} md={md}>
       <Form.Group className='mb-5'>
         <Form.Label>{label}</Form.Label>
-        <Form.Control
+        <FormTextArea
           as='textarea'
           name={name}
           rows={rows}
-          onChange={onChange}
+          onChange={changehandler}
+          defaultValue={val}
         />
       </Form.Group>
-    </Col>
+    </Column>
   );
 };
 

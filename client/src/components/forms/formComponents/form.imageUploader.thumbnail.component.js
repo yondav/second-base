@@ -9,6 +9,8 @@ import {
 import { FormCheck } from '../../styled/form';
 import { Input } from '.';
 
+import '../form_styles.css';
+
 const ImageUploaderThumbnail = ({
   type,
   index,

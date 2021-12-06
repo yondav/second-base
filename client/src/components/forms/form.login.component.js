@@ -1,18 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Alert, Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import useAdminContext from '../../hooks/useAdminContext';
 import { loginInputs, inputHandler, renderInputs } from './formComponents';
 import { FormCheck, FormButton } from '../styled/form';
 
-const LoginForm = () => {
+const LoginForm = ({ setAlert }) => {
   const { login } = useAdminContext();
   const navigate = useNavigate();
   const radioRef = useRef();
-  const [alert, setAlert] = useState({
-    variant: '',
-    message: '',
-  });
 
   const checkIfRemembered = key => localStorage.getItem(key);
 
@@ -56,30 +52,23 @@ const LoginForm = () => {
   };
 
   return (
-    <Card className='login-card'>
-      <Alert variant={alert.variant} className='login-status text-center'>
-        {alert.message}
-      </Alert>
-      <Card.Body className='d-flex justify-content-center align-items-center'>
-        <Form className='login-form' onSubmit={handleSubmit}>
-          {renderInputs(loginInputs(formData), e =>
-            inputHandler(e, formData, setFormData)
-          )}
-          <FormCheck
-            ref={radioRef}
-            type='radio'
-            label="Don't Be Denied"
-            defaultChecked={checkIfRemembered('2bEmail') ? true : false}
-            className='mb-5'
-          />
-          <div className='d-flex justify-content-end'>
-            <FormButton variant='outline-dark' type='submit'>
-              login
-            </FormButton>
-          </div>
-        </Form>
-      </Card.Body>
-    </Card>
+    <Form className='login-form' onSubmit={handleSubmit}>
+      {renderInputs(loginInputs(formData), e =>
+        inputHandler(e, formData, setFormData)
+      )}
+      <FormCheck
+        ref={radioRef}
+        type='radio'
+        label="Don't Be Denied"
+        defaultChecked={checkIfRemembered('2bEmail') ? true : false}
+        className='mb-5'
+      />
+      <div className='d-flex justify-content-end'>
+        <FormButton variant='outline-dark' type='submit'>
+          login
+        </FormButton>
+      </div>
+    </Form>
   );
 };
 

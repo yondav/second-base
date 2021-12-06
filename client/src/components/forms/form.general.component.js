@@ -1,5 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Form, Col, Tabs, Tab } from 'react-bootstrap';
+import { Form, Tabs, Tab } from 'react-bootstrap';
+
+import { DataContext } from '../../context/context.data';
+import useDataContext from '../../hooks/useDataContext';
+import { toTitle } from '../../utils/helperFuncs';
+
+import { Column } from '../styled/general';
 import {
   FormWrapper,
   ImageUploader,
@@ -9,9 +15,6 @@ import {
   renderInputs,
   ServiceGroup,
 } from './formComponents';
-import { DataContext } from '../../context/context.data';
-import useDataContext from '../../hooks/useDataContext';
-import { toTitle } from '../../utils/helperFuncs';
 
 const GeneralForm = ({ setEdit }) => {
   const {
@@ -130,7 +133,7 @@ const GeneralForm = ({ setEdit }) => {
       {renderInputs(addressInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Col>
+      <Column>
         <Form.Label>Images</Form.Label>
         <Form.Text> (select a page)</Form.Text>
         <div className='img-tab-container'>
@@ -148,7 +151,7 @@ const GeneralForm = ({ setEdit }) => {
             ))}
           </Tabs>
         </div>
-      </Col>
+      </Column>
       <h4 className='mb-4'>Services</h4>
       {serviceList.map((serv, i) => (
         <ServiceGroup

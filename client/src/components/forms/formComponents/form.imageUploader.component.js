@@ -4,12 +4,16 @@ import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Card, Alert, Form, Spinner, Col } from 'react-bootstrap';
+import { Card, Alert, Form } from 'react-bootstrap';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
+import Loading from '../../loading';
 import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
+import { Column } from '../../styled/general';
+
+import '../form_styles.css';
 
 const ImageUploader = ({
   single,
@@ -158,7 +162,7 @@ const ImageUploader = ({
   );
 
   return (
-    <Col xs={12}>
+    <Column xs={12} className='p-0'>
       <Card className='mb-5'>
         {statusMessage && (
           <Alert variant={statusMessage.variant} className='text-center'>
@@ -168,7 +172,7 @@ const ImageUploader = ({
         {label && <Form.Label>{label}</Form.Label>}
         <Card.Header
           {...getRootProps({ className: 'dropzone' })}
-          className='d-flex justify-content-center p-5 pointer'
+          className='d-flex justify-content-center p-5 pointer img-drop'
         >
           {!loading ? (
             <>
@@ -181,7 +185,7 @@ const ImageUploader = ({
               </div>
             </>
           ) : (
-            <Spinner animation='border' />
+            <Loading />
           )}
         </Card.Header>
         {images.length > 0 && (
@@ -192,7 +196,7 @@ const ImageUploader = ({
           </Card.Body>
         )}
       </Card>
-    </Col>
+    </Column>
   );
 };
 

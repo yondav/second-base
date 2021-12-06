@@ -1,12 +1,15 @@
 import React, { useEffect, useContext } from 'react';
-import Col from 'react-bootstrap/Col';
 
-import { toTitle } from '../../utils/helperFuncs';
 import { DataContext } from '../../context/context.data';
+import { toTitle } from '../../utils/helperFuncs';
+
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer } from '../styled/general';
+import { ImgContainer, Column } from '../styled/general';
+
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 const PortalProfile = ({ setEdit }) => {
+  const { isTablet, isMobile, isDesktop } = useMediaQuery();
   const {
     state: {
       data: {
@@ -31,18 +34,20 @@ const PortalProfile = ({ setEdit }) => {
       title={`Welcome Back ${toTitle(first_name)}`}
       handleEdit={handleEdit}
     >
-      <Col xs={12} md={6}>
-        <h4>Profile</h4>
+      <Column xs={12} md={6}>
         <ImgContainer>
           <img
             name='img'
-            className='w-100'
             src={
               images && images.length
                 ? images[0].url
                 : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
             }
             alt='profile'
+            style={{
+              width: isTablet ? '80%' : '100%',
+              borderRadius: 'var(--radius)',
+            }}
           />
         </ImgContainer>
         <div
@@ -52,11 +57,11 @@ const PortalProfile = ({ setEdit }) => {
           <h3 name='info'>{toTitle(`${first_name} ${last_name}`)}</h3>
           <p name='info'>{email}</p>
         </div>
-      </Col>
-      <Col xs={12} md={6}>
+      </Column>
+      <Column xs={12} md={6}>
         <h4>Bio</h4>
         <div name='bio' className='h-100 profile-bio' />
-      </Col>
+      </Column>
     </TabWrapper>
   );
 };

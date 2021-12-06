@@ -1,33 +1,14 @@
-/* BOOTSTRAP/QUILL MODS */
-.ql-container {
-  padding: 0;
-  height: 20rem !important;
-  border: none !important;
-}
-
-.ql-editor {
-  padding: 1rem 0.75rem !important;
-}
-
-.ql-editor {
-  border-bottom: 1px solid #ced4da;
-  border-left: 1px solid #ced4da;
-  border-right: 1px solid #ced4da;
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-}
-
-.ql-editor:focus,
-.ql-editor:focus-visible {
-  border-color: transparent !important;
-  box-shadow: var(--shadow) !important;
-  outline: none !important;
-}
-
 /* PHOTO UPLOAD */
 .dropzone {
   border: none !important;
   border-radius: var(--radius);
+}
+
+.img-drop {
+  border-bottom: none;
+  border-bottom-left-radius: var(--radius) !important;
+  border-bottom-right-radius: var(--radius) !important;
+  border-top-right-radius: var(--radius) !important;
 }
 
 .upload-square {

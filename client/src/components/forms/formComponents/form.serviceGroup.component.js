@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Form, Button } from 'react-bootstrap';
 import { VscAdd, VscRemove } from 'react-icons/vsc';
+import { Column } from '../../styled';
 import { Input, TextArea } from './index';
 
 const ServiceGroup = ({
@@ -10,12 +11,15 @@ const ServiceGroup = ({
   index,
   deleteService,
 }) => {
-  const [addDescription, setAddDescription] = useState(false);
+  const [addDescription, setAddDescription] = useState(
+    serviceList[index].description
+  );
   const handleInputChange = (e, i) => {
     const { name, value } = e.target;
     const list = [...serviceList];
     list[i][name] = value;
     setServiceList(list);
+    console.log(serviceList);
   };
 
   const handleRemoveClick = i => {
@@ -32,7 +36,7 @@ const ServiceGroup = ({
 
   return (
     <>
-      <Col xs={10}>
+      <Column xs={10}>
         <Row>
           <Input
             label='Service'
@@ -43,7 +47,7 @@ const ServiceGroup = ({
             changehandler={e => handleInputChange(e, index)}
           />
           {!addDescription && (
-            <Col xs={4}>
+            <Column xs={4}>
               <span
                 className='nav-link pointer mt-5'
                 onClick={() => setAddDescription(true)}
@@ -51,7 +55,7 @@ const ServiceGroup = ({
               >
                 Add Description
               </span>
-            </Col>
+            </Column>
           )}
           {addDescription && (
             <TextArea
@@ -59,12 +63,13 @@ const ServiceGroup = ({
               name='description'
               rows={3}
               xs={12}
-              onChange={e => handleInputChange(e, index)}
+              changehandler={e => handleInputChange(e, index)}
+              val={serviceList[index].description}
             />
           )}
         </Row>
-      </Col>
-      <Col xs={2}>
+      </Column>
+      <Column xs={2}>
         {serviceList.length !== 1 && (
           <div className='d-flex flex-column justify-content-end align-items-center mb-5 ml-1'>
             <Form.Label style={{ color: 'transparent' }}>Remove</Form.Label>
@@ -89,7 +94,7 @@ const ServiceGroup = ({
             </Button>
           </div>
         )}
-      </Col>
+      </Column>
     </>
   );
 };

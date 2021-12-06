@@ -7,11 +7,6 @@ nav {
   transition: var(--transition);
 }
 
-.nav-link {
-  font-size: 0.875em !important;
-  white-space: nowrap;
-}
-
 .expanded-nav-link {
   font-size: 3.5em !important;
   color: var(--primary-black) !important;
@@ -75,13 +70,11 @@ nav {
 }
 
 .top-bun-active {
-  background-color: var(--primary-black);
   transform: translatex(3.5px) rotate(-135deg);
   width: 28px;
 }
 
 .bottom-bun-active {
-  background-color: var(--primary-black);
   transform: translatex(3.5px) rotate(135deg);
   width: 28px;
 }
