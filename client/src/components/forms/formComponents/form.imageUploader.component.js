@@ -11,7 +11,7 @@ import { ImageUploaderThumbnail } from './index';
 import Loading from '../../loading';
 import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
-import { Column } from '../../styled/general';
+import { Column } from '../../styled';
 
 import '../form_styles.css';
 

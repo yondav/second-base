@@ -5,7 +5,7 @@ import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 
-import { Column } from '../styled/general';
+import { Column } from '../styled';
 import {
   FormWrapper,
   ButtonGroup,

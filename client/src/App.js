@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, Suspense } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Suspense,
+} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { DataContext } from './context/context.data';
 import useDataContext from './hooks/useDataContext';
@@ -16,8 +22,10 @@ const Gear = React.lazy(() => import('./pages/client/gear'));
 const Home = React.lazy(() => import('./pages/client/home'));
 
 const App = () => {
+  const navRef = useRef();
   const { state } = useContext(DataContext);
   const { getStudio, getUser, getGear } = useDataContext();
+  const [wrapperHeight, setWrapperHeight] = useState();
 
   const fetch = async () => {
     await getStudio();
@@ -31,10 +39,19 @@ const App = () => {
 
   useEffect(() => state && consoleMessages.state(state), [state]);
 
+  useEffect(() => console.log(navRef.current.offsetHeight), [navRef.current]);
+  useEffect(() => console.log(!window.scrollY), [navRef.current]);
+
+  useEffect(() => {
+    if (!window.scrollY) {
+      setWrapperHeight(`calc(100vh - ${navRef.current.offsetHeight}px)`);
+    }
+  }, [navRef, window.scrollY]);
+
   return (
     <>
-      <AppWrapper>
-        <Nav />
+      <Nav innerRef={navRef} />
+      <AppWrapper style={{ height: wrapperHeight }}>
         <Suspense fallback=''>
           <Routes>
             <Route exact path='/' element={<Home />} />

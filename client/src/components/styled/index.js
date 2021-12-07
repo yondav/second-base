@@ -14,13 +14,14 @@ export {
 } from './form';
 
 export {
-  AppWrapper,
   ImgContainer,
-  Column,
-  AccordionItem,
-  AccordionHeader,
   Card,
   CardBody,
+  CardHeader,
+  Accordion,
+  AccordionSection,
 } from './general';
+
+export { AppWrapper, Grid, Column } from './layout';
 
 export { NavBar } from './nav';

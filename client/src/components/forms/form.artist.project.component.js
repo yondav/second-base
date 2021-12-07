@@ -8,7 +8,7 @@ import {
   ImageUploader,
   StreamLink,
 } from './formComponents';
-import { Column } from '../styled/general';
+import { Column } from '../styled';
 
 const PrjectForm = ({ method }) => {
   const [linkList, setLinkList] = useState([{ link_service: '', link: '' }]);

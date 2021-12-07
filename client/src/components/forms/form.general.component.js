@@ -5,7 +5,7 @@ import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import { toTitle } from '../../utils/helperFuncs';
 
-import { Column } from '../styled/general';
+import { Column } from '../styled';
 import {
   FormWrapper,
   ImageUploader,

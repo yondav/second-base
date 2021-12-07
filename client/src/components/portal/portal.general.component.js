@@ -5,7 +5,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Column } from '../styled/general';
+import { ImgContainer, Column } from '../styled';
 
 const PortalGeneral = ({ setEdit }) => {
   const {

@@ -24,22 +24,23 @@ const PortalGear = ({ setEdit }) => {
     []
   );
   return (
-    <TabWrapper title='Gear' handleEdit={handleEdit}>
-      <Accordion>
-        {Object.keys(gear)
-          .filter(key => !key.includes('_') && key !== 'name')
-          .map((item, i) => (
-            <AccordionItem key={i} eventKey={i}>
-              <AccordionHeader>{toTitle(item)}</AccordionHeader>
-              <Accordion.Body>
-                {/* {gear[item].map(g => (
+    <div></div>
+    // <TabWrapper title='Gear' handleEdit={handleEdit}>
+    //   <Accordion>
+    //     {Object.keys(gear)
+    //       .filter(key => !key.includes('_') && key !== 'name')
+    //       .map((item, i) => (
+    //         <AccordionItem key={i} eventKey={i}>
+    //           <AccordionHeader>{toTitle(item)}</AccordionHeader>
+    //           <Accordion.Body>
+    //             {/* {gear[item].map(g => (
 
-                ))} */}
-              </Accordion.Body>
-            </AccordionItem>
-          ))}
-      </Accordion>
-    </TabWrapper>
+    //             ))} */}
+    //           </Accordion.Body>
+    //         </AccordionItem>
+    //       ))}
+    //   </Accordion>
+    // </TabWrapper>
   );
 };
 

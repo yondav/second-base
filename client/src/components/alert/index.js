@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { pathAnimation } from '../../utils/framer';
 
 const Alert = ({ alert: { variant, message } }) => {
   const renderIcon = () => {
@@ -19,20 +20,8 @@ const Alert = ({ alert: { variant, message } }) => {
           xmlns='http://www.w3.org/2000/svg'
         >
           <motion.path
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: 1,
-              opacity: 1,
-              transition: {
-                pathLength: {
-                  delay: 1,
-                  type: 'spring',
-                  duration: 1.5,
-                  bounce: 0,
-                },
-                opacity: { delay: 1, duration: 0.01 },
-              },
-            }}
+            initial={pathAnimation().hidden}
+            animate={pathAnimation().visible}
             strokeLinecap='round'
             strokeLinejoin='round'
             strokeWidth='10'

@@ -11,7 +11,7 @@ import NavExpand from '../navExpand';
 
 import { ImgContainer, NavBar } from '../styled';
 
-const Nav = () => {
+const Nav = ({ innerRef }) => {
   const {
     state: {
       data: {
@@ -32,7 +32,7 @@ const Nav = () => {
   }, [isDesktop, isTablet, isMobile]);
 
   return (
-    <NavBar>
+    <NavBar ref={innerRef}>
       <ImgContainer as={Link} to='/' style={{ flexBasis: logoSize }}>
         <img src={logo} alt='secondBase' className='w-full' />
       </ImgContainer>

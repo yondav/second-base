@@ -4,7 +4,7 @@ import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Column } from '../styled/general';
+import { ImgContainer, Column } from '../styled';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
 

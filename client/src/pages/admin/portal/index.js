@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext, Suspense } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Row, Tabs, Tab, Modal, Card } from 'react-bootstrap';
 import { DataContext } from '../../../context/context.data';
 import useAdminContext from '../../../hooks/useAdminContext';
 import {
@@ -10,11 +9,18 @@ import {
   PortalGear,
 } from '../../../components/portal';
 import Loading from '../../../components/loading';
-import { Column } from '../../../components/styled/general';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Accordion,
+  AccordionSection,
+} from '../../../components/styled';
+import { toTitle } from '../../../utils/helperFuncs';
 
 import './portal.css';
 
-const tabs = [
+const pages = [
   { eventKey: 'user', title: 'Profile', component: PortalProfile },
   { eventKey: 'general_info', title: 'General', component: PortalGeneral },
   { eventKey: 'gear', title: 'Gear', component: PortalGear },
@@ -27,6 +33,17 @@ const Portal = () => {
   const [edit, setEdit] = useState(false);
   const { state } = useContext(DataContext);
 
+  const [active, setActive] = useState(['user']);
+
+  const activeSetter = eventKey => {
+    let list = [...active];
+    let isActive = list.find(key => key === eventKey);
+
+    isActive ? list.splice(list.indexOf(isActive), 1) : list.push(eventKey);
+
+    setActive(list);
+  };
+
   useEffect(() => {
     verifyToken().then(res => {
       if (!res.verified) navigate('/login');
@@ -34,39 +51,31 @@ const Portal = () => {
   }, [edit]);
 
   return (
-    <>
-      {state.data.user.first_name ? (
-        <>
-          {edit && (
-            <Modal
-              centered
-              show={true}
-              size='xl'
-              fullscreen={'lg-down'}
-              onHide={() => setEdit(false)}
-            >
-              <Modal.Header closeButton />
-              <ModalContent edit={edit} setEdit={setEdit} />
-            </Modal>
-          )}
-          <Container fluid>
-            <Row>
-              <Column>
-                <Tabs defaultActiveKey='user' className='mt-5 admin-tab'>
-                  {tabs.map((tab, i) => (
-                    <Tab eventKey={tab.eventKey} title={tab.title} key={i}>
-                      {React.createElement(tab.component, { setEdit })}
-                    </Tab>
-                  ))}
-                </Tabs>
-              </Column>
-            </Row>
-          </Container>
-        </>
-      ) : (
+    <Card>
+      {!state.data.user.first_name ? (
         <Loading />
+      ) : (
+        <>
+          <CardHeader>
+            <h1>Welcome back {toTitle(state.data.user.first_name)}</h1>
+          </CardHeader>
+          <CardBody>
+            <Accordion>
+              {pages.map(page => (
+                <AccordionSection
+                  key={page.title}
+                  title={page.title}
+                  active={active.includes(page.eventKey)}
+                  setActive={() => activeSetter(page.eventKey)}
+                >
+                  {React.createElement(page.component, { setEdit })}
+                </AccordionSection>
+              ))}
+            </Accordion>
+          </CardBody>
+        </>
       )}
-    </>
+    </Card>
   );
 };
 
