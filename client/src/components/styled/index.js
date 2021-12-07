@@ -1,6 +1,8 @@
 export { SmCarouselImg, SmCarouselItem } from './carousel';
 
 export {
+  FormGroup,
+  FormLabel,
   FormInput,
   FormTextArea,
   FormSelect,
@@ -8,6 +10,7 @@ export {
   RichTextToolbar,
   RichTextButton,
   FormButton,
+  Button,
 } from './form';
 
 export {
@@ -16,6 +19,8 @@ export {
   Column,
   AccordionItem,
   AccordionHeader,
+  Card,
+  CardBody,
 } from './general';
 
 export { NavBar } from './nav';

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
 import { Column, FormInput } from '../../styled';
 
 const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
@@ -9,8 +8,10 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
 
   return (
     <Column xs={xs} md={md}>
-      <Form.Group className='mb-5' style={style}>
-        <Form.Label>{label}</Form.Label>
+      <div className='mb-8' style={style}>
+        <label htmlFor={name} className='mb-3'>
+          {label}
+        </label>
         <FormInput
           type={type}
           name={name}
@@ -18,7 +19,7 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
           defaultValue={value}
           onKeyPress={handleReturn}
         />
-      </Form.Group>
+      </div>
     </Column>
   );
 };

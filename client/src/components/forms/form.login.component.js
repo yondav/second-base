@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import useAdminContext from '../../hooks/useAdminContext';
 import { loginInputs, inputHandler, renderInputs } from './formComponents';
-import { FormCheck, FormButton } from '../styled/form';
+import { FormCheck, Button, Column } from '../styled';
 
 const LoginForm = ({ setAlert }) => {
   const { login } = useAdminContext();
@@ -43,32 +42,34 @@ const LoginForm = ({ setAlert }) => {
       setAlert({ variant: 'success', message: 'Welcome back Neil' });
       setTimeout(() => {
         navigate('/admin/portal');
-      }, 1000);
+      }, 3100);
     } else {
       setAlert({ variant: 'danger', message: 'Go home Crosby' });
+      setTimeout(() => setAlert({ variant: '', message: '' }), 4000);
     }
-
-    document.querySelector('.login-status').style.display = 'block';
   };
 
   return (
-    <Form className='login-form' onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       {renderInputs(loginInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <FormCheck
-        ref={radioRef}
-        type='radio'
-        label="Don't Be Denied"
-        defaultChecked={checkIfRemembered('2bEmail') ? true : false}
-        className='mb-5'
-      />
-      <div className='d-flex justify-content-end'>
-        <FormButton variant='outline-dark' type='submit'>
-          login
-        </FormButton>
+      <Column>
+        <div className='mb-8 flex flex-row-reverse justify-end items-center'>
+          <label htmlFor='remember'>Don't Be Denied</label>
+          <FormCheck
+            ref={radioRef}
+            name='remember'
+            defaultChecked={checkIfRemembered('2bEmail') ? true : false}
+          />
+        </div>
+      </Column>
+      <div className='flex justify-end'>
+        <Button variant='outline-dark' type='submit'>
+          Login
+        </Button>
       </div>
-    </Form>
+    </form>
   );
 };
 

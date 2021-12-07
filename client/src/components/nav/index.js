@@ -9,7 +9,6 @@ import { BsInstagram } from 'react-icons/bs';
 import NavCollapse from '../navCollapse';
 import NavExpand from '../navExpand';
 
-import './navigation.css';
 import { ImgContainer, NavBar } from '../styled';
 
 const Nav = () => {
@@ -27,21 +26,6 @@ const Nav = () => {
   const [logoSize, setLogoSize] = useState();
 
   useEffect(() => {
-    const nav = document.querySelector('nav');
-    const navLink = document.querySelectorAll('.nav-link');
-
-    if (navExpand) {
-      nav.classList.add('expanded-nav');
-      navLink.forEach(link => link.classList.add('expanded-nav-link'));
-    } else {
-      nav.classList.remove('expanded-nav');
-      setTimeout(() => {
-        navLink.forEach(link => link.classList.remove('expanded-nav-link'));
-      }, 1000);
-    }
-  }, [navExpand]);
-
-  useEffect(() => {
     if (isDesktop) setLogoSize('20%');
     if (isTablet) setLogoSize('25%');
     if (isMobile) setLogoSize('35%');
@@ -55,13 +39,13 @@ const Nav = () => {
       {!isDesktop ? (
         <>
           <NavCollapse navExpand={navExpand} setNavExpand={setNavExpand} />
-          {navExpand && (
-            <div className='exp-links'>
-              <AnimatePresence>
+          <AnimatePresence>
+            {navExpand && (
+              <div className='exp-links'>
                 {navExpand && <NavExpand setNavExpand={setNavExpand} />}
-              </AnimatePresence>
-            </div>
-          )}
+              </div>
+            )}
+          </AnimatePresence>
         </>
       ) : (
         <div className='dt-links' style={{ flexBasis: '50%' }}>

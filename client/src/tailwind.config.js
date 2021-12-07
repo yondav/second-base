@@ -4,7 +4,10 @@ module.exports = {
       '-135': '-135deg',
       135: '135deg',
     },
-    extend: {},
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+    },
   },
   variants: {},
   plugins: [],

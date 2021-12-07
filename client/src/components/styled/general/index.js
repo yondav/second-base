@@ -1,13 +1,32 @@
 import styled from 'styled-components';
-import { Accordion, Col } from 'react-bootstrap';
+import tw from 'tailwind.macro';
+import { Accordion } from 'react-bootstrap';
 
 export const AppWrapper = styled.div.attrs({
-  className: 'w-full h-screen bg-gray-100 p-2',
+  className: 'w-full h-screen bg-gray-100 p-2 text-gray-800',
 })`
   & a {
     transition: 300ms all ease-in-out;
   }
 `;
+
+export const Card = styled.div.attrs({
+  className: `relative flex flex-col bg-white m-auto py-10 container rounded-md w-full`,
+})`
+  ${props => props.login && tw`sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/4`}
+  ${props =>
+    props.login &&
+    `top: 50%;
+    transform: translateY(-50%);`}
+  
+  & .card-body {
+    ${tw`p-4`}
+  }
+`;
+
+export const CardBody = ({ children }) => (
+  <div className='card-body'>{children}</div>
+);
 
 export const AccordionItem = styled(Accordion)`
   &:focus {
@@ -55,9 +74,9 @@ export const AccordionHeader = styled(Accordion.Header)`
   }
 `;
 
-export const Column = styled(Col)`
-  padding: 0 1.1rem;
-`;
+export const Column = styled.div.attrs({
+  className: 'auto-cols-auto py-0 px-4',
+})``;
 
 export const ImgContainer = styled.div`
   border-radius: var(--radius);

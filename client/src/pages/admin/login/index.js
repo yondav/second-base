@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LoginForm } from '../../../components/forms';
-import { Card, Alert } from 'react-bootstrap';
+import { Card, CardBody } from '../../../components/styled';
+import Alert from '../../../components/alert';
 
 const Login = () => {
   const [alert, setAlert] = useState({
@@ -9,13 +10,14 @@ const Login = () => {
   });
 
   return (
-    <Card className='login-card'>
-      <Alert variant={alert.variant} className='login-status text-center'>
-        {alert.message}
-      </Alert>
-      <Card.Body className='d-flex justify-content-center align-items-center'>
-        {/* <LoginForm setAlert={setAlert} /> */}
-      </Card.Body>
+    <Card login>
+      <CardBody>
+        {alert.variant ? (
+          <Alert alert={alert} />
+        ) : (
+          <LoginForm setAlert={setAlert} />
+        )}
+      </CardBody>
     </Card>
   );
 };

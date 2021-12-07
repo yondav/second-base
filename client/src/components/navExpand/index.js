@@ -9,10 +9,10 @@ const NavExpand = ({ setNavExpand }) => {
   const admin = useContext(AdminContext);
   const { logout } = useAdminContext();
 
-  const navigate = (e, logout) => {
+  const navigate = (e, str) => {
     setNavExpand(false);
 
-    if (logout) logout();
+    if (str) logout();
   };
 
   return (

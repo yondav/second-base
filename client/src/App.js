@@ -33,8 +33,8 @@ const App = () => {
 
   return (
     <>
-      <Nav />
       <AppWrapper>
+        <Nav />
         <Suspense fallback=''>
           <Routes>
             <Route exact path='/' element={<Home />} />
