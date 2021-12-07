@@ -1,36 +1,3 @@
-.admin-tab {
-  width: fit-content;
-  margin-bottom: -1px !important;
-  background-color: #fff;
-  border-top-left-radius: var(--radius);
-  border-top-right-radius: var(--radius);
-}
-
-.admin-tab li button {
-  font-size: 1.1em !important;
-  color: var(--grey) !important;
-}
-
-.admin-tab li button:hover,
-.admin-tab li button:active,
-.admin-tab li button:focus,
-.admin-tab li button:focus-visible {
-  color: var(--primar-black) !important;
-  border: none !important;
-  box-shadow: var(--shadow);
-  outline: none;
-}
-
-.nav-link.active {
-  color: var(--primar-black) !important;
-  background-color: rgba(0, 0, 0, 0.03) !important;
-  border: none !important;
-}
-
-.nav-tabs {
-  border-bottom: none !important;
-}
-
 /* PROFILE */
 .back-icon,
 .edit-icon {
