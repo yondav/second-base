@@ -15,3 +15,9 @@ export const pathAnimation = repeat => ({
     },
   },
 });
+
+export const swivelCard = {
+  hidden: { opacity: 0, rotateY: -180 },
+  visible: { opacity: 1, rotateY: 0 },
+  transition: duration => ({ duration, ease: 'easeInOut' }),
+};

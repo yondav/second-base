@@ -5,9 +5,9 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Column } from '../styled';
+import { ImgContainer, Grid } from '../styled';
 
-const PortalGeneral = ({ setEdit }) => {
+const Studio = ({ setEdit }) => {
   const {
     state: {
       data: {
@@ -26,7 +26,7 @@ const PortalGeneral = ({ setEdit }) => {
 
   return (
     <TabWrapper title='General Info' handleEdit={handleEdit}>
-      <Column xs={12} md={5} lg={6} className='mb-5'>
+      <Grid.Col xs={12} md={5} lg={6} className='mb-5'>
         <div className='logo-container p-3 mb-3'>
           <img src={logo} alt={name} className='w-100' />
         </div>
@@ -72,8 +72,8 @@ const PortalGeneral = ({ setEdit }) => {
             ))}
           </ul>
         )}
-      </Column>
-      <Column xs={12} md={7} lg={6}>
+      </Grid.Col>
+      <Grid.Col xs={12} md={7} lg={6}>
         <h4>Page Images</h4>
         <ImgContainer className='w-100'>
           <Tabs defaultActiveKey='home' className='mt-3 admin-tab img-tab'>
@@ -112,9 +112,9 @@ const PortalGeneral = ({ setEdit }) => {
               ))}
           </Tabs>
         </ImgContainer>
-      </Column>
+      </Grid.Col>
     </TabWrapper>
   );
 };
 
-export default PortalGeneral;
+export default Studio;

@@ -2,42 +2,8 @@ import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { IoIosArrowDown } from 'react-icons/io';
 import { AnimatePresence, motion } from 'framer-motion';
-// import { Accordion } from 'react-bootstrap';
 
-export const Card = styled.div.attrs({
-  className: `relative flex flex-col bg-white m-auto py-10 container rounded-md w-full overflow-hidden`,
-})`
-  ${props => props.login && tw`sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/4`}
-  ${props =>
-    props.login &&
-    `top: 50%;
-    transform: translateY(-50%);`}
-  
-  & header {
-    ${tw`bg-gray-200 absolute top-0 w-full p-5`}
-
-    & h1 {
-      ${tw`text-2xl`}
-    }
-  }
-
-  & .card-body {
-    ${tw`p-4 pt-8 overflow-scroll`}
-  }
-`;
-
-export const CardBody = ({ children }) => (
-  <div className='card-body'>{children}</div>
-);
-
-export const CardHeader = ({ children }) => <header>{children}</header>;
-
-export const ImgContainer = styled.div`
-  border-radius: var(--radius);
-  overflow: hidden;
-`;
-
-export const Accordion = styled.section.attrs({
+export const Base = styled.section.attrs({
   className: 'w-full flex flex-col justify-start items-center',
 })`
   & .accordion-section {
@@ -54,7 +20,7 @@ export const Accordion = styled.section.attrs({
   }
 `;
 
-const AccordionButton = ({ title, setActive, active }) => (
+const Button = ({ title, setActive, active }) => (
   <button onClick={() => (!active ? setActive(true) : setActive(false))}>
     <span>{title}</span>
     <IoIosArrowDown
@@ -66,9 +32,9 @@ const AccordionButton = ({ title, setActive, active }) => (
   </button>
 );
 
-export const AccordionSection = ({ title, setActive, active, children }) => (
+export const Section = ({ title, setActive, active, children }) => (
   <article className='accordion-section'>
-    <AccordionButton title={title} active={active} setActive={setActive} />
+    <Button title={title} active={active} setActive={setActive} />
     <AnimatePresence>
       {active && (
         <motion.div

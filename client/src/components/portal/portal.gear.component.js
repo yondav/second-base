@@ -4,10 +4,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 
-import { AccordionItem, AccordionHeader } from '../styled/general';
 import TabWrapper from './portal.tabWrapper.component';
 
-const PortalGear = ({ setEdit }) => {
+const Gear = ({ setEdit }) => {
   const {
     state: {
       data: { gear },
@@ -44,4 +43,4 @@ const PortalGear = ({ setEdit }) => {
   );
 };
 
-export default PortalGear;
+export default Gear;

@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+// import { Form } from 'react-bootstrap';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   VscChromeClose,
   RiEditBoxLine,
   IoIosArrowRoundBack,
 } from 'react-icons/all';
-import { FormCheck } from '../../styled/form';
+import { Form } from '../../styled';
 import { Input } from '.';
 
 import '../form_styles.css';
@@ -121,7 +121,7 @@ const ImageUploaderThumbnail = ({
                     style={{ height: 'fit-content', width: '40%' }}
                   >
                     <Form.Label>{color ? 'Color' : 'B&W'}</Form.Label>
-                    <FormCheck
+                    <Form.Check
                       type='switch'
                       id='custom-switch'
                       defaultChecked={color}

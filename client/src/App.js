@@ -37,17 +37,13 @@ const App = () => {
     fetch();
   }, []);
 
-  useEffect(() => state && consoleMessages.state(state), [state]);
-
-  useEffect(() => console.log(navRef.current.offsetHeight), [navRef.current]);
-  useEffect(() => console.log(!window.scrollY), [navRef.current]);
-
   useEffect(() => {
     if (!window.scrollY) {
       setWrapperHeight(`calc(100vh - ${navRef.current.offsetHeight}px)`);
     }
   }, [navRef, window.scrollY]);
 
+  useEffect(() => state && consoleMessages.state(state), [state]);
   return (
     <>
       <Nav innerRef={navRef} />

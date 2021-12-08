@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAdminContext from '../../hooks/useAdminContext';
 import { loginInputs, inputHandler, renderInputs } from './formComponents';
-import { FormCheck, Button, Column } from '../styled';
+import { Form, Grid } from '../styled';
 
 const LoginForm = ({ setAlert }) => {
   const { login } = useAdminContext();
@@ -54,20 +54,20 @@ const LoginForm = ({ setAlert }) => {
       {renderInputs(loginInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Column>
+      <Grid.Col>
         <div className='mb-8 flex flex-row-reverse justify-end items-center'>
           <label htmlFor='remember'>Don't Be Denied</label>
-          <FormCheck
+          <Form.Check
             ref={radioRef}
             name='remember'
             defaultChecked={checkIfRemembered('2bEmail') ? true : false}
           />
         </div>
-      </Column>
+      </Grid.Col>
       <div className='flex justify-end'>
-        <Button variant='outline-dark' type='submit'>
+        <Form.Button variant='outline-dark' type='submit'>
           Login
-        </Button>
+        </Form.Button>
       </div>
     </form>
   );

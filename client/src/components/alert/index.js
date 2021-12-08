@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { pathAnimation } from '../../utils/framer';
+import { pathAnimation, swivelCard } from '../../utils/framer';
 
 const Alert = ({ alert: { variant, message } }) => {
   const renderIcon = () => {
@@ -39,10 +39,9 @@ const Alert = ({ alert: { variant, message } }) => {
   return (
     <motion.div
       className='mx-auto w-full rounded-md bg-white'
-      initial={{ opacity: 0, rotateY: -180 }}
-      animate={{ opacity: 1, rotateY: 0 }}
-      exit={{ opacity: 0, rotateY: -180 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      initial={swivelCard.hidden}
+      animate={swivelCard.visible}
+      transition={swivelCard.transition(0.5)}
     >
       <div className='text-center'>
         {renderIcon()}

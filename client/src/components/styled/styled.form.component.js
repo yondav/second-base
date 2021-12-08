@@ -1,25 +1,18 @@
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 
-export { FormTextArea, FormSelect } from './styled.form.input.component';
-export {
-  RichTextToolbar,
-  RichTextButton,
-} from './styled.form.richText.component';
-export { FormButton } from './styled.form.button.component';
-
-export const FormGroup = styled.div.attrs({
+export const Group = styled.div.attrs({
   className: 'mb-8',
 })`
   ${props =>
     props.check && tw`mb-8 flex flex-row-reverse justify-end items-center`}
 `;
 
-export const FormLabel = styled.label`
+export const Label = styled.label`
   ${props => props.group && tw`mb-3`}
 `;
 
-export const FormInput = styled.input.attrs({
+export const Input = styled.input.attrs({
   className:
     'p-3 block w-full text-gray-800 bg-gray-100 rounded-lg focus:shadow-lg',
 })`
@@ -30,7 +23,7 @@ export const FormInput = styled.input.attrs({
   }
 `;
 
-export const FormCheck = styled.input.attrs({
+export const Check = styled.input.attrs({
   type: 'checkbox',
   className: 'mb-0 mr-3',
 })`

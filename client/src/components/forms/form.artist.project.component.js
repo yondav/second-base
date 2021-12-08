@@ -8,7 +8,7 @@ import {
   ImageUploader,
   StreamLink,
 } from './formComponents';
-import { Column } from '../styled';
+import { Grid } from '../styled';
 
 const PrjectForm = ({ method }) => {
   const [linkList, setLinkList] = useState([{ link_service: '', link: '' }]);
@@ -26,9 +26,9 @@ const PrjectForm = ({ method }) => {
             <Row>
               <Input label='Name' type='text' name='name' xs={12} md={6} />
               <YearSelect name='year' xs={12} md={6} />
-              <Column xs={12}>
+              <Grid.Col xs={12}>
                 <h5>Links</h5>
-              </Column>
+              </Grid.Col>
               {linkList.map((link, i) => (
                 <StreamLink
                   key={i}

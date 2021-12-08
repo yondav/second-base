@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LoginForm } from '../../../components/forms';
-import { Card, CardBody } from '../../../components/styled';
+import { Card } from '../../../components/styled';
 import Alert from '../../../components/alert';
 
 const Login = () => {
@@ -10,15 +10,15 @@ const Login = () => {
   });
 
   return (
-    <Card login>
-      <CardBody>
+    <Card.Base login>
+      <Card.Body>
         {alert.variant ? (
           <Alert alert={alert} />
         ) : (
           <LoginForm setAlert={setAlert} />
         )}
-      </CardBody>
-    </Card>
+      </Card.Body>
+    </Card.Base>
   );
 };
 

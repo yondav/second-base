@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column, FormInput } from '../../styled';
+import { Grid, Form } from '../../styled';
 
 const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
   const handleReturn = e => {
@@ -7,12 +7,12 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
   };
 
   return (
-    <Column xs={xs} md={md}>
+    <Grid.Col xs={xs} md={md}>
       <div className='mb-8' style={style}>
-        <label htmlFor={name} className='mb-3'>
+        <Form.Label htmlFor={name} className='mb-3'>
           {label}
-        </label>
-        <FormInput
+        </Form.Label>
+        <Form.Input
           type={type}
           name={name}
           onChange={changehandler}
@@ -20,7 +20,7 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
           onKeyPress={handleReturn}
         />
       </div>
-    </Column>
+    </Grid.Col>
   );
 };
 

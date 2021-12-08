@@ -5,7 +5,7 @@ import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import { toTitle } from '../../utils/helperFuncs';
 
-import { Column } from '../styled';
+import { Grid } from '../styled';
 import {
   FormWrapper,
   ImageUploader,
@@ -133,7 +133,7 @@ const GeneralForm = ({ setEdit }) => {
       {renderInputs(addressInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Column>
+      <Grid.Col>
         <Form.Label>Images</Form.Label>
         <Form.Text> (select a page)</Form.Text>
         <div className='img-tab-container'>
@@ -151,7 +151,7 @@ const GeneralForm = ({ setEdit }) => {
             ))}
           </Tabs>
         </div>
-      </Column>
+      </Grid.Col>
       <h4 className='mb-4'>Services</h4>
       {serviceList.map((serv, i) => (
         <ServiceGroup

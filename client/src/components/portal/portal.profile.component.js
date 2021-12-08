@@ -4,11 +4,11 @@ import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Column } from '../styled';
+import { ImgContainer, Grid } from '../styled';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-const PortalProfile = ({ setEdit }) => {
+const Profile = ({ setEdit }) => {
   const { isTablet, isMobile, isDesktop } = useMediaQuery();
   const {
     state: {
@@ -34,7 +34,7 @@ const PortalProfile = ({ setEdit }) => {
       title={`Welcome Back ${toTitle(first_name)}`}
       handleEdit={handleEdit}
     >
-      <Column xs={12} md={6}>
+      <Grid.Col xs={12} md={6}>
         <ImgContainer>
           <img
             name='img'
@@ -57,13 +57,13 @@ const PortalProfile = ({ setEdit }) => {
           <h3 name='info'>{toTitle(`${first_name} ${last_name}`)}</h3>
           <p name='info'>{email}</p>
         </div>
-      </Column>
-      <Column xs={12} md={6}>
+      </Grid.Col>
+      <Grid.Col xs={12} md={6}>
         <h4>Bio</h4>
         <div name='bio' className='h-100 profile-bio' />
-      </Column>
+      </Grid.Col>
     </TabWrapper>
   );
 };
 
-export default PortalProfile;
+export default Profile;

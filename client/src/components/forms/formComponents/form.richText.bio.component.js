@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { Form } from 'react-bootstrap';
-import { RichTextToolbar, RichTextButton, Column } from '../../styled';
+import { RichTextToolbar, RichTextButton, Grid } from '../../styled';
 import 'react-quill/dist/quill.snow.css';
 
 const modules = {
@@ -42,7 +42,7 @@ const RichTextBio = ({ setFormData, value }) => {
   );
 
   return (
-    <Column xs={12}>
+    <Grid.Col xs={12}>
       <Form.Group className='text-editor px-0 mb-5'>
         <Form.Label>Bio</Form.Label>
         <RichTextToolbar id='toolbar'>
@@ -80,7 +80,7 @@ const RichTextBio = ({ setFormData, value }) => {
           <div style={{ border: 'none' }} />
         </ReactQuill>
       </Form.Group>
-    </Column>
+    </Grid.Col>
   );
 };
 

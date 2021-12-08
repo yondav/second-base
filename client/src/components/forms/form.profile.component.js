@@ -5,7 +5,7 @@ import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 
-import { Column } from '../styled';
+import { Grid } from '../styled';
 import {
   FormWrapper,
   ButtonGroup,
@@ -123,7 +123,7 @@ const ProfileForm = ({ setEdit }) => {
       {renderInputs(profileInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Column xs={12} md={6} className='d-flex align-items-center mb-5'>
+      <Grid.Col xs={12} md={6} className='d-flex align-items-center mb-5'>
         {!resetToken ? (
           <span
             className='nav-link pointer'
@@ -153,7 +153,7 @@ const ProfileForm = ({ setEdit }) => {
             />
           </Container>
         )}
-      </Column>
+      </Grid.Col>
       <RichTextBio setFormData={setFormData} value={bio} />
       <ImageUploader
         type='user'

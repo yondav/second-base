@@ -11,7 +11,7 @@ import { ImageUploaderThumbnail } from './index';
 import Loading from '../../loading';
 import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
-import { Column } from '../../styled';
+import { Grid } from '../../styled';
 
 import '../form_styles.css';
 
@@ -162,7 +162,7 @@ const ImageUploader = ({
   );
 
   return (
-    <Column xs={12} className='p-0'>
+    <Grid.Col xs={12} className='p-0'>
       <Card className='mb-5'>
         {statusMessage && (
           <Alert variant={statusMessage.variant} className='text-center'>
@@ -196,7 +196,7 @@ const ImageUploader = ({
           </Card.Body>
         )}
       </Card>
-    </Column>
+    </Grid.Col>
   );
 };
 

@@ -1,27 +1,20 @@
 export { SmCarouselImg, SmCarouselItem } from './carousel';
 
+export { AppWrapper, ImgContainer } from './styled.containers.component';
+
+export * as Accordion from './styled.accordion.component';
+
+export * as Card from './styled.card.component';
+
+export * as Form from './styled.form.component.js';
+
+export * as Grid from './styled.layout.component';
+
+export * as NavBar from './styled.nav.component.js';
+
+export { FormTextArea, FormSelect } from './form/styled.form.input.component';
 export {
-  FormGroup,
-  FormLabel,
-  FormInput,
-  FormTextArea,
-  FormSelect,
-  FormCheck,
   RichTextToolbar,
   RichTextButton,
-  FormButton,
-  Button,
-} from './form';
-
-export {
-  ImgContainer,
-  Card,
-  CardBody,
-  CardHeader,
-  Accordion,
-  AccordionSection,
-} from './general';
-
-export { AppWrapper, Grid, Column } from './layout';
-
-export { NavBar } from './nav';
+} from './form/styled.form.richText.component';
+export { FormButton } from './form/styled.form.button.component';
