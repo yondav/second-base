@@ -1,32 +1,22 @@
 import React from 'react';
-import { Card, Alert, Form, Container, Row } from 'react-bootstrap';
-import { FormHeader, ButtonGroup } from '.';
+import Alert from '../../alert';
+import { Grid } from '../../styled';
+import { ButtonGroup } from '.';
 
-const FormWrapper = ({
-  handleSubmit,
-  setEdit,
-  headerEdit,
-  children,
-  alert,
-}) => {
+const FormWrapper = ({ handleSubmit, setEdit, children, alert }) => {
   return (
-    <Card>
-      <FormHeader method='put' edit={headerEdit} />
-      <Card.Body>
-        <Container>
-          <Form className='my-5' onSubmit={handleSubmit}>
-            <Row>
-              {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
-              {children}
-              <ButtonGroup
-                handleCancel={() => setEdit(false)}
-                handleSubmit={handleSubmit}
-              />
-            </Row>
-          </Form>
-        </Container>
-      </Card.Body>
-    </Card>
+    <form className='my-8' onSubmit={handleSubmit}>
+      <Grid.Container>
+        {alert && <Alert alert={alert} />}
+        {children}
+        <Grid.Col>
+          <ButtonGroup
+            handleCancel={() => setEdit(false)}
+            handleSubmit={handleSubmit}
+          />
+        </Grid.Col>
+      </Grid.Container>
+    </form>
   );
 };
 

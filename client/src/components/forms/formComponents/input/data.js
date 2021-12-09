@@ -21,8 +21,13 @@ export const profileInputs = state => [
 ];
 
 export const passwordInputs = () => [
-  { label: 'New Password', type: 'password', name: 'new_password' },
-  { label: 'Confirm Password', type: 'password', name: 'confirm_password' },
+  { label: 'New Password', type: 'password', name: 'new_password', md: 12 },
+  {
+    label: 'Confirm Password',
+    type: 'password',
+    name: 'confirm_password',
+    md: 12,
+  },
 ];
 
 // general

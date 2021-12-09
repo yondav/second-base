@@ -1,17 +1,22 @@
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import { motion } from 'framer-motion';
 
-export const Base = styled.div.attrs({
-  className: `relative flex flex-col bg-white m-auto py-10 container rounded-md w-full overflow-hidden`,
+export const Base = styled(motion.div).attrs({
+  className: `relative flex flex-col bg-gray-50 m-auto py-10 container rounded-md w-full overflow-hidden`,
 })`
   ${props => props.login && tw`sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/4`}
   ${props =>
     props.login &&
     `top: 50%;
     transform: translateY(-50%);`}
+
+  ${props =>
+    props.modal &&
+    tw`w-full md:w-11/12 mx-auto rounded-lg shadow-lg z-50 overflow-y-auto`}
   
   & header {
-    ${tw`bg-gray-200 absolute top-0 w-full p-5`}
+    ${tw`bg-gray-100 absolute top-0 w-full p-5 border-b border-gray-250`}
 
     & h1 {
       ${tw`text-2xl`}
@@ -23,7 +28,9 @@ export const Base = styled.div.attrs({
   }
 `;
 
-export const Header = ({ children }) => <header>{children}</header>;
+export const Header = ({ children }) => (
+  <header className='flex justify-between items-center'>{children}</header>
+);
 
 export const Body = ({ children }) => (
   <div className='card-body'>{children}</div>

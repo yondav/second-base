@@ -9,7 +9,7 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 
 import { BsInstagram } from 'react-icons/bs';
 
-import { ImgContainer, NavBar } from '../styled';
+import { NavBar } from '../styled';
 
 const Nav = ({ innerRef }) => {
   const { state } = useContext(DataContext);
@@ -51,9 +51,9 @@ const Nav = ({ innerRef }) => {
 
   return (
     <NavBar.Bar ref={innerRef}>
-      <ImgContainer as={Link} to='/' className='w-2/5 md:w-1/4 lg:1/5'>
+      <Link to='/' className='w-2/5 md:w-1/4 lg:1/5'>
         <img src={state.data.studio.logo} alt='secondBase' className='w-full' />
-      </ImgContainer>
+      </Link>
       {!isDesktop && (
         <NavBar.Collapse
           expand={navExpand}

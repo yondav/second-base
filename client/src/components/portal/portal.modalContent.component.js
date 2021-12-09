@@ -1,33 +1,46 @@
-import React, { Suspense } from 'react';
-import Loading from '../loading';
+import React, { useEffect, Suspense } from 'react';
+import pMinDelay from 'p-min-delay';
 
-const ProfileForm = React.lazy(() => import('../forms/form.profile.component'));
+import Loading from '../loading';
+import Modal from '../modal';
+
+const ProfileForm = React.lazy(() =>
+  pMinDelay(import('../forms/form.profile.component'), 3500)
+);
 const GeneralForm = React.lazy(() => import('../forms/form.general.component'));
 
 const ModalContent = ({ edit, setEdit }) => {
+  const bodyToggle = () =>
+    ['overflow-x-hidden', 'overflow-y-hidden'].map(cl =>
+      document.querySelector('body').classList.toggle(cl)
+    );
+
+  const handleClose = () => {
+    setEdit(false);
+    bodyToggle();
+  };
+
   const editContent = () => {
     switch (edit) {
       case 'profile':
         return <ProfileForm setEdit={setEdit} />;
       case 'general_info':
         return <GeneralForm setEdit={setEdit} />;
+      case 'profile_photo':
+        return <div>PROFILE PHOTO MODAL</div>;
       default:
         break;
     }
   };
+
+  useEffect(() => {
+    bodyToggle();
+  }, []);
+
   return (
-    <Suspense
-      fallback={
-        <div
-          style={{ height: '100vh', width: '100vw' }}
-          className='w-100 d-flex justify-content-center align-items-center'
-        >
-          <Loading />
-        </div>
-      }
-    >
-      {editContent()}
-    </Suspense>
+    <Modal handleClose={handleClose}>
+      <Suspense fallback={<Loading />}>{editContent()}</Suspense>
+    </Modal>
   );
 };
 

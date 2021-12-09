@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { pathAnimation, swivelCard } from '../../utils/framer';
+import { drawPath, swivelCard } from '../../utils/framer';
 
 const Alert = ({ alert: { variant, message } }) => {
   const renderIcon = () => {
     return (
       <div
-        className={`mx-auto mb-3 flex items-center justify-center h-1/2 w-1/2 rounded-full ${
+        className={`mx-auto mb-3 flex items-center justify-center h-1/2 w-1/2 rounded-full p-4 ${
           variant === 'success' ? 'bg-green-100' : 'bg-red-100'
         }`}
       >
@@ -20,8 +20,8 @@ const Alert = ({ alert: { variant, message } }) => {
           xmlns='http://www.w3.org/2000/svg'
         >
           <motion.path
-            initial={pathAnimation().hidden}
-            animate={pathAnimation().visible}
+            initial={drawPath().hidden}
+            animate={drawPath().visible}
             strokeLinecap='round'
             strokeLinejoin='round'
             strokeWidth='10'
@@ -38,7 +38,7 @@ const Alert = ({ alert: { variant, message } }) => {
 
   return (
     <motion.div
-      className='mx-auto w-full rounded-md bg-white'
+      className='mx-auto w-full rounded-md bg-gray-50'
       initial={swivelCard.hidden}
       animate={swivelCard.visible}
       transition={swivelCard.transition(0.5)}

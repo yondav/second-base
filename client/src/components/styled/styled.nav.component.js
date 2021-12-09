@@ -5,22 +5,22 @@ import { swivelCard } from '../../utils/framer';
 
 export const Bar = styled.nav.attrs({
   className:
-    'absolute top-0 left-0 w-screen flex justify-between items-center	py-6 px-8 bg-gray-900',
+    'absolute top-0 left-0 w-screen flex justify-between items-center	py-6 px-8 bg-gray-900 font-primary font-light',
 })`
   & .dt-links {
     ${tw`flex justify-around items-center`}
 
     & a {
-      ${tw`text-sm font-normal no-underline text-gray-300 whitespace-no-wrap hover:text-white`}
+      ${tw`text-sm no-underline text-gray-300 whitespace-no-wrap hover:text-gray-100`}
       transition: 300ms all ease-in-out;
     }
   }
 
   & .exp-links {
-    ${tw`absolute top-0 left-0 flex flex-col items-center justify-center w-screen h-screen bg-white z-10`}
+    ${tw`absolute top-0 left-0 flex flex-col items-center justify-center w-screen h-screen bg-gray-100 z-10`}
 
     & a {
-      ${tw`text-4xl text-gray-800 hover:text-black my-5`}
+      ${tw`text-4xl text-gray-800 hover:text-gray-950 my-5`}
       transition: 300ms all ease-in-out;
     }
   }
@@ -53,8 +53,8 @@ export const Collapse = ({ expand, setter, animation }) => (
   </div>
 );
 
-export const Links = ({ stacked, children }) => {
-  return stacked ? (
+export const Links = ({ stacked, children }) =>
+  stacked ? (
     <motion.div
       initial={swivelCard.hidden}
       animate={swivelCard.visible}
@@ -71,4 +71,3 @@ export const Links = ({ stacked, children }) => {
       {children}
     </div>
   );
-};

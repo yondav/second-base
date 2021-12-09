@@ -1,6 +1,6 @@
 import { Input } from '..';
 
-export const renderInputs = (inputs, changeHandler, xs, md) =>
+export const renderInputs = (inputs, changeHandler) =>
   inputs.map((input, i) => (
     <Input
       key={i}
@@ -9,7 +9,7 @@ export const renderInputs = (inputs, changeHandler, xs, md) =>
       name={input?.name}
       changehandler={changeHandler}
       value={input?.value}
-      xs={input.xs || 12}
+      sm={input.sm || 12}
       md={input.md || 6}
     />
   ));

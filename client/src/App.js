@@ -39,7 +39,7 @@ const App = () => {
 
   useEffect(() => {
     if (!window.scrollY) {
-      setWrapperHeight(`calc(100vh - ${navRef.current.offsetHeight}px)`);
+      setWrapperHeight(`calc(100vh - ${navRef.current.clientHeight}px)`);
     }
   }, [navRef, window.scrollY]);
 
@@ -50,13 +50,15 @@ const App = () => {
       <AppWrapper style={{ height: wrapperHeight }}>
         <Suspense fallback=''>
           <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/about' element={<About />} />
-            <Route exact path='/artists' element={<Artists />} />
-            <Route exact path='/booking' element={<Booking />} />
-            <Route exact path='/gear' element={<Gear />} />
-            <Route exact path='/login' element={<Login />} />
-            <Route exact path='/admin/portal' element={<Portal />} />
+            <Route path='/' element={<Home />}>
+              <Route path='about' element={<About />} />
+              <Route path='artists' element={<Artists />} />
+              <Route path='booking' element={<Booking />} />
+              <Route path='gear' element={<Gear />} />
+              <Route path='admin/portal' element={<Portal />} />
+            </Route>
+            <Route path='login' element={<Login />} />
+            <Route path='*' element={<div>404</div>} />
           </Routes>
         </Suspense>
       </AppWrapper>

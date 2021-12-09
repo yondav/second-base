@@ -9,7 +9,7 @@ const Input = ({ label, type, name, xs, md, changehandler, value, style }) => {
   return (
     <Grid.Col xs={xs} md={md}>
       <div className='mb-8' style={style}>
-        <Form.Label htmlFor={name} className='mb-3'>
+        <Form.Label htmlFor={name} group>
           {label}
         </Form.Label>
         <Form.Input

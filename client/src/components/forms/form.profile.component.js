@@ -5,7 +5,7 @@ import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 
-import { Grid } from '../styled';
+import { Grid, A } from '../styled';
 import {
   FormWrapper,
   ButtonGroup,
@@ -123,38 +123,31 @@ const ProfileForm = ({ setEdit }) => {
       {renderInputs(profileInputs(formData), e =>
         inputHandler(e, formData, setFormData)
       )}
-      <Grid.Col xs={12} md={6} className='d-flex align-items-center mb-5'>
+      <Grid.Col md={6}>
         {!resetToken ? (
-          <span
-            className='nav-link pointer'
-            onClick={handleResetRequest}
-            style={{ textDecoration: 'underline', fontStyle: 'italic' }}
-          >
-            Change Password
-          </span>
+          <div className='flex items-center h-full'>
+            <A onClick={handleResetRequest}>Change Password</A>
+          </div>
         ) : (
-          <Container>
-            <Row>
-              {resetPassword.response && (
-                <Alert variant={resetPassword.response.variant}>
-                  {resetPassword.response.message}
-                </Alert>
-              )}
-              {renderInputs(
-                passwordInputs(),
-                e => passwordInputHandler(e, resetPassword, setResetPassword),
-                12,
-                12
-              )}
-            </Row>
-            <ButtonGroup
-              handleCancel={() => setResetToken(null)}
-              handleSubmit={handlePasswordSubmission}
-            />
-          </Container>
+          <Grid.Container>
+            {resetPassword.response && (
+              <Alert variant={resetPassword.response.variant}>
+                {resetPassword.response.message}
+              </Alert>
+            )}
+            {renderInputs(passwordInputs(), e =>
+              passwordInputHandler(e, resetPassword, setResetPassword)
+            )}
+            <Grid.Col>
+              <ButtonGroup
+                handleCancel={() => setResetToken(null)}
+                handleSubmit={handlePasswordSubmission}
+              />
+            </Grid.Col>
+          </Grid.Container>
         )}
       </Grid.Col>
-      <RichTextBio setFormData={setFormData} value={bio} />
+      <RichTextBio setFormData={setFormData} value={bio} name='bio' />
       <ImageUploader
         type='user'
         single={true}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { pathAnimation } from '../../utils/framer';
+import { drawPath } from '../../utils/framer';
 
 const Loading = () => {
   return (
@@ -13,8 +13,8 @@ const Loading = () => {
       >
         <g>
           <motion.path
-            initial={pathAnimation().hidden}
-            animate={pathAnimation('infinit').visible}
+            initial={drawPath().hidden}
+            animate={drawPath('infinit').visible}
             fill='none'
             strokeWidth={3}
             strokeLinecap='round'
@@ -23,8 +23,8 @@ const Loading = () => {
             d='M8.8,78.46V78c0-7.78,5.12-15.83,16.22-24.24,8.63-6.58,11-8.67,11-14.62,0-5.4-2.87-9.49-9.34-9.49s-9.58,3.4-10.71,10h-7c.95-9.11,6.77-16,17.75-16,12.07,0,16.76,7.76,16.76,15.31C43.41,47.1,40,50.29,30,58,22.59,63.71,18.63,68,17.29,72.13H45.54l-1,6.33Z'
           />
           <motion.path
-            initial={pathAnimation().hidden}
-            animate={pathAnimation('infinit').visible}
+            initial={drawPath().hidden}
+            animate={drawPath('infinit').visible}
             fill='none'
             strokeWidth={3}
             strokeLinecap='round'

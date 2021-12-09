@@ -5,7 +5,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Grid } from '../styled';
+import { Grid } from '../styled';
 
 const Studio = ({ setEdit }) => {
   const {
@@ -75,7 +75,7 @@ const Studio = ({ setEdit }) => {
       </Grid.Col>
       <Grid.Col xs={12} md={7} lg={6}>
         <h4>Page Images</h4>
-        <ImgContainer className='w-100'>
+        <div className='w-100'>
           <Tabs defaultActiveKey='home' className='mt-3 admin-tab img-tab'>
             {Object.keys(images)
               .filter(page => !page.includes('_') && page !== 'name')
@@ -111,7 +111,7 @@ const Studio = ({ setEdit }) => {
                 </Tab>
               ))}
           </Tabs>
-        </ImgContainer>
+        </div>
       </Grid.Col>
     </TabWrapper>
   );

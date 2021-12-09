@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { IoIosArrowDown } from 'react-icons/io';
 import { AnimatePresence, motion } from 'framer-motion';
+import { fade, growHeight } from '../../utils/framer';
 
 export const Base = styled.section.attrs({
   className: 'w-full flex flex-col justify-start items-center',
@@ -32,16 +33,17 @@ const Button = ({ title, setActive, active }) => (
   </button>
 );
 
-export const Section = ({ title, setActive, active, children }) => (
+export const Section = ({ param, title, setActive, active, children }) => (
   <article className='accordion-section'>
     <Button title={title} active={active} setActive={setActive} />
+
     <AnimatePresence>
       {active && (
         <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0 }}
-          transition={{ duration: 0.3, delay: 0.1, ease: 'easeInOut' }}
+          initial={{ ...fade.hidden, ...growHeight.hidden }}
+          animate={{ ...fade.visible(1), ...growHeight.visible }}
+          exit={{ ...fade.hidden, ...growHeight.hidden }}
+          transition={{ ...fade.transition(0.3), delay: 0.1 }}
         >
           {children}
         </motion.div>

@@ -1,19 +1,16 @@
 import React, { useEffect, useContext } from 'react';
+import { AiOutlineEdit } from 'react-icons/ai';
 
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 
-import TabWrapper from './portal.tabWrapper.component';
-import { ImgContainer, Grid } from '../styled';
-
-import useMediaQuery from '../../hooks/useMediaQuery';
+import { PortalItem, Grid, H3 } from '../styled';
 
 const Profile = ({ setEdit }) => {
-  const { isTablet, isMobile, isDesktop } = useMediaQuery();
   const {
     state: {
       data: {
-        user: { first_name, last_name, email, bio, images },
+        user: { first_name, last_name, email, bio, images, _id },
       },
     },
   } = useContext(DataContext);
@@ -25,17 +22,12 @@ const Profile = ({ setEdit }) => {
       );
   };
 
-  const handleEdit = () => setEdit('profile');
-
   useEffect(() => renderBio(), [bio]);
 
   return (
-    <TabWrapper
-      title={`Welcome Back ${toTitle(first_name)}`}
-      handleEdit={handleEdit}
-    >
-      <Grid.Col xs={12} md={6}>
-        <ImgContainer>
+    <Grid.Container>
+      <Grid.Col md={4}>
+        <PortalItem.Wrapper>
           <img
             name='img'
             src={
@@ -44,25 +36,28 @@ const Profile = ({ setEdit }) => {
                 : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
             }
             alt='profile'
-            style={{
-              width: isTablet ? '80%' : '100%',
-              borderRadius: 'var(--radius)',
-            }}
+            className='w-full rounded-full'
           />
-        </ImgContainer>
-        <div
-          name='info'
-          className='profile-info d-flex flex-column justify-content-between mt-3'
-        >
-          <h3 name='info'>{toTitle(`${first_name} ${last_name}`)}</h3>
+        </PortalItem.Wrapper>
+      </Grid.Col>
+      <Grid.Col md={8}>
+        <div className='flex justify-end'>
+          <AiOutlineEdit
+            size='1.3em'
+            className='cursor-pointer hover:text-blue-900 transition-all duration-300 ease-in-out'
+            onClick={() => setEdit('profile')}
+          />
+        </div>
+        <div name='info' className='flex flex-col justify-end h-full'>
+          <H3 name='info'>{toTitle(`${first_name} ${last_name}`)}</H3>
           <p name='info'>{email}</p>
+          <div name='bio' className='h-100 profile-bio' />
         </div>
       </Grid.Col>
-      <Grid.Col xs={12} md={6}>
+      <Grid.Col>
         <h4>Bio</h4>
-        <div name='bio' className='h-100 profile-bio' />
       </Grid.Col>
-    </TabWrapper>
+    </Grid.Container>
   );
 };
 
