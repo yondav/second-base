@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import ContentEditable from 'react-contenteditable';
 
 export const Group = styled.div.attrs({
   className: 'mb-8',
@@ -16,6 +17,8 @@ export const Input = styled.input.attrs({
   className:
     'p-3 block w-full text-gray-800 bg-gray-150 rounded-lg focus:shadow-lg transition-all duration-300 ease-in-out',
 })`
+  font-weight: normal;
+
   &:focus-visible {
     outline: none;
   }
@@ -30,31 +33,65 @@ export const Check = styled.input.attrs({
   }
 `;
 
-export const RichText = {
-  Toolbar: styled.div.attrs({
-    className: 'p-3 bg-gray-150 border-gray-150 flex',
-  })``,
+export const RichText = styled.div.attrs({
+  className: '',
+})`
+  & .jodit-container {
+    --bg-opacity: 1;
+    background-color: #f5f5f4;
+    background-color: rgba(245, 245, 244, var(--bg-opacity));
+    border: none !important;
+    border-radius: 0.5rem !important;
+    transition: 300ms all ease-in-out;
 
-  Button: styled.button.attrs({
-    className:
-      'm-0.5 h-8 w-8 border rounded hover:border-0 hover:outline-none hover:shadow-lg focus:border-0 focus:outline-none focus:shadow-lg transition-all duration-300 ease-in-out',
-  })`
-    &:focus-visible {
-      border: none;
-      outline: none;
-      box-shadow: var(--shadow);
+    &:focus-within {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
-  `,
-};
+
+    & .jodit-toolbar__box:not(:empty) {
+      --bg-opacity: 1;
+      background-color: #f2f2f0;
+      background-color: rgba(242, 242, 240, var(--bg-opacity));
+      border-radius: 0 !important;
+      border-top-left-radius: 0.5rem !important;
+      border-top-right-radius: 0.5rem !important;
+      border: none !important;
+
+      & button {
+        border-radius: 0.5rem !important;
+        transition: 300ms all ease-in-out;
+
+        &:hover {
+          --bg-opacity: 1;
+          background-color: #e9e9e5;
+          background-color: rgba(233, 233, 229, var(--bg-opacity));
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        &:active {
+          --bg-opacity: 1;
+          background-color: #f5f5f4;
+          background-color: rgba(245, 245, 244, var(--bg-opacity));
+        }
+      }
+      & .jodit-status-bar__item-right {
+        opacity: 0 !important;
+      }
+    }
+  }
+`;
 
 export const Button = styled.button.attrs({
   className:
-    'cursor-pointer text-gray-850 border border-gray-850 px-3 py-2 rounded-md hover:bg-gray-850 hover:text-gray-50 hover:shadow-lg focus:bg-gray-850 focus:text-gray-50 focus:shadow-lg transition-all duration-300 ease-in-out',
+    'cursor-pointer text-gray-850 border border-gray-850 px-3 py-2 m-1 rounded-md hover:bg-gray-850 hover:text-gray-50 hover:shadow-lg focus:bg-gray-850 focus:text-gray-50 focus:shadow-lg transition-all duration-300 ease-in-out',
+  // type: props.type||'button',
 })`
-  ${props => props.cancel && tw`text-red-800 border-red-800 hover:bg-red-800`}
+  ${props => props.danger && tw`text-red-800 border-red-800 hover:bg-red-800`}
 
   ${props =>
-    props.submit &&
+    props.success &&
     tw`text-green-800 border-green-800 shadow-lg hover:bg-green-800`}
 
   &:focus-visible {

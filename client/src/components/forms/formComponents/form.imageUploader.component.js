@@ -4,14 +4,15 @@ import { useDropzone } from 'react-dropzone';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
-import { Card, Alert, Form } from 'react-bootstrap';
+
+import Alert from '../../alert';
 import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
 import Loading from '../../loading';
 import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
-import { Grid } from '../../styled';
+import { Grid, Card, Form } from '../../styled';
 
 import '../form_styles.css';
 
@@ -30,6 +31,7 @@ const ImageUploader = ({
   const [render, setRender] = useState(1);
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
+    clickable: true,
     onDrop: files => handleDrop(files),
   });
 
@@ -163,39 +165,38 @@ const ImageUploader = ({
 
   return (
     <Grid.Col xs={12} className='p-0'>
-      <Card className='mb-5'>
-        {statusMessage && (
-          <Alert variant={statusMessage.variant} className='text-center'>
-            {statusMessage.message}
-          </Alert>
-        )}
-        {label && <Form.Label>{label}</Form.Label>}
-        <Card.Header
-          {...getRootProps({ className: 'dropzone' })}
-          className='d-flex justify-content-center p-5 pointer img-drop'
-        >
-          {!loading ? (
-            <>
-              <Form.Control {...getInputProps()} />
-              <div className='upload-square p-3 d-flex align-items-center justify-content-center'>
-                <div className='upload-square-content d-flex flex-column align-items-center'>
-                  <IoIosCloudUpload size={'3.5em'} />
-                  <h5>Drag and Drop images here</h5>
+      <Card.Base className='mb-5'>
+        {label && <Form.Label group>{label}</Form.Label>}
+        {statusMessage ? (
+          <Alert alert={statusMessage} />
+        ) : (
+          <div
+            {...getRootProps({ className: 'dropzone' })}
+            className='flex justify-center p-5 cursor-pointer bg-gray-150 rounded-lg hover:shadow-lg transition-all duration-300 ease-in-out'
+          >
+            {!loading ? (
+              <>
+                <Form.Input {...getInputProps()} />
+                <div className='upload-square p-3 flex items-center justify-center'>
+                  <div className='upload-square-content flex flex-col items-center'>
+                    <IoIosCloudUpload size={'3.5em'} />
+                    <h5>Drag and Drop images here</h5>
+                  </div>
                 </div>
-              </div>
-            </>
-          ) : (
-            <Loading />
-          )}
-        </Card.Header>
+              </>
+            ) : (
+              <Loading />
+            )}
+          </div>
+        )}
         {images.length > 0 && (
-          <Card.Body className='d-flex justify-content-center flex-wrap preview-imgs'>
+          <Card.Body className='flex justify-center flex-wrap preview-imgs'>
             <DndProvider backend={HTML5Backend}>
               {images && images.map((img, i) => renderThumbnail(img, i))}
             </DndProvider>
           </Card.Body>
         )}
-      </Card>
+      </Card.Base>
     </Grid.Col>
   );
 };

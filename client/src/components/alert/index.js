@@ -41,6 +41,7 @@ const Alert = ({ alert: { variant, message } }) => {
       className='mx-auto w-full rounded-md bg-gray-50'
       initial={swivelCard.hidden}
       animate={swivelCard.visible}
+      exit={swivelCard.hidden}
       transition={swivelCard.transition(0.5)}
     >
       <div className='text-center'>

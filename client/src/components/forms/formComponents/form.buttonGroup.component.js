@@ -5,7 +5,7 @@ const ButtonGroup = ({ handleCancel, handleSubmit }) => {
   return (
     <div className='w-full flex justify-end'>
       <Form.Button
-        cancel
+        danger
         variant='outline-dark'
         type='button'
         className='m-1'
@@ -14,7 +14,7 @@ const ButtonGroup = ({ handleCancel, handleSubmit }) => {
         cancel
       </Form.Button>
       <Form.Button
-        submit
+        success
         variant='outline-dark'
         type='submit'
         className='m-1'

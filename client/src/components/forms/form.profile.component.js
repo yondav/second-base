@@ -1,16 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Alert, Container, Row } from 'react-bootstrap';
-
 import { DataContext } from '../../context/context.data';
 import useDataContext from '../../hooks/useDataContext';
 import useAdminContext from '../../hooks/useAdminContext';
 
+import Alert from '../alert';
 import { Grid, A } from '../styled';
 import {
   FormWrapper,
   ButtonGroup,
   ImageUploader,
-  RichTextBio,
+  RichText,
   inputHandler,
   passwordInputHandler,
   profileInputs,
@@ -68,7 +67,7 @@ const ProfileForm = ({ setEdit }) => {
 
     if (res) {
       setAlert({ message: 'Profile updated', variant: 'success' });
-      setTimeout(() => setEdit(false), 1500);
+      setTimeout(() => setEdit(false), 3000);
     } else {
       setAlert({
         message: 'Profile was not updated. Bad request.',
@@ -110,7 +109,7 @@ const ProfileForm = ({ setEdit }) => {
     return setTimeout(() => {
       setResetToken(null);
       setResetPassword(prev => ({ ...prev, response: null }));
-    }, 1500);
+    }, 3000);
   };
 
   return (
@@ -130,24 +129,27 @@ const ProfileForm = ({ setEdit }) => {
           </div>
         ) : (
           <Grid.Container>
-            {resetPassword.response && (
-              <Alert variant={resetPassword.response.variant}>
-                {resetPassword.response.message}
-              </Alert>
+            {resetPassword.response ? (
+              <Grid.Col>
+                <Alert alert={resetPassword.response} />
+              </Grid.Col>
+            ) : (
+              <>
+                {renderInputs(passwordInputs(), e =>
+                  passwordInputHandler(e, resetPassword, setResetPassword)
+                )}
+                <Grid.Col>
+                  <ButtonGroup
+                    handleCancel={() => setResetToken(null)}
+                    handleSubmit={handlePasswordSubmission}
+                  />
+                </Grid.Col>
+              </>
             )}
-            {renderInputs(passwordInputs(), e =>
-              passwordInputHandler(e, resetPassword, setResetPassword)
-            )}
-            <Grid.Col>
-              <ButtonGroup
-                handleCancel={() => setResetToken(null)}
-                handleSubmit={handlePasswordSubmission}
-              />
-            </Grid.Col>
           </Grid.Container>
         )}
       </Grid.Col>
-      <RichTextBio setFormData={setFormData} value={bio} name='bio' />
+      <RichText setFormData={setFormData} value={bio} name='bio' />
       <ImageUploader
         type='user'
         single={true}
