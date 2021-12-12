@@ -5,15 +5,14 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 
-import Alert from '../../alert';
-
-import { ImageUploaderThumbnail } from './index';
-import Loading from '../../loading';
 import useDataContext from '../../../hooks/useDataContext';
 import api from '../../../utils/api';
-import { Grid, Card, Form } from '../../styled';
 
-import '../form_styles.css';
+import Alert from '../../alert';
+import Loading from '../../loading';
+
+import { ImageUploaderThumbnail } from './index';
+import { Grid, Card, Form } from '../../styled';
 
 const ImageUploader = ({
   single,

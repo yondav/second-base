@@ -17,13 +17,14 @@ import Loading from './components/loading';
 import Nav from './components/nav';
 import { AppWrapper } from './components/styled';
 
+// pages
 const del = 1500;
-const Login = React.lazy(() => pMinDelay(import('./pages/admin/login'), del));
-const Portal = React.lazy(() => pMinDelay(import('./pages/admin/portal'), del));
 const About = React.lazy(() => import('./pages/client/about'));
 const Artists = React.lazy(() => import('./pages/client/artists'));
 const Booking = React.lazy(() => import('./pages/client/booking'));
 const Gear = React.lazy(() => import('./pages/client/gear'));
+const Login = React.lazy(() => pMinDelay(import('./pages/admin/login'), del));
+const Portal = React.lazy(() => pMinDelay(import('./pages/admin/portal'), del));
 const Home = React.lazy(() => pMinDelay(import('./pages/client/home'), del));
 
 const App = () => {

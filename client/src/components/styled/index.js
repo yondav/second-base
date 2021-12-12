@@ -1,4 +1,4 @@
-export { SmCarouselImg, SmCarouselItem } from './carousel';
+export * as Carousel from './styled.carousel.small.component';
 
 export {
   AppWrapper,

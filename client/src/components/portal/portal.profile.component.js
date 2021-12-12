@@ -26,7 +26,7 @@ const Profile = ({ setEdit }) => {
 
   return (
     <Grid.Container>
-      <Grid.Col className='py-1'>
+      <Grid.Col>
         <div className='flex justify-end'>
           <AiOutlineEdit
             size='1.3em'

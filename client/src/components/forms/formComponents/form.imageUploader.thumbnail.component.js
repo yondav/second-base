@@ -96,7 +96,7 @@ const ImageUploaderThumbnail = ({
             <img
               src={url}
               alt={url}
-              className='tounded-lg cursor-move hover:shadow-lg'
+              className='rounded-lg cursor-move hover:shadow-lg'
               style={{ filter: `saturate(${color ? '100' : '0'})` }}
             />
           </ImgContainer>
