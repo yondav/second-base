@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { Grid, FormSelect } from '../../styled';
+import { Grid } from '../../styled';
 
 const YearSelect = ({ xs, md, name }) => {
   const [yearsOptions, setYearsOptions] = useState([]);
@@ -19,14 +19,14 @@ const YearSelect = ({ xs, md, name }) => {
     <Grid.Col xs={xs} md={md}>
       <Form.Group className='mb-5'>
         <Form.Label>Year</Form.Label>
-        <FormSelect type='text' name={name}>
+        {/* <FormSelect type='text' name={name}>
           <option>Select Year</option>
           {yearsOptions.map((yr, i) => (
             <option key={i} value={yr}>
               {yr}
             </option>
           ))}
-        </FormSelect>
+        </FormSelect> */}
       </Form.Group>
     </Grid.Col>
   );

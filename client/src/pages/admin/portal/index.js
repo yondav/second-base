@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 
 import { DataContext } from '../../../context/context.data';
 import useAdminContext from '../../../hooks/useAdminContext';
-import { toTitle } from '../../../utils/helperFuncs';
+import { toTitle, bodyToggle } from '../../../utils/helperFuncs';
 
 import Loading from '../../../components/loading';
 import * as Admin from '../../../components/portal';
@@ -37,6 +37,7 @@ const Portal = () => {
   };
 
   useEffect(() => {
+    bodyToggle(edit);
     verifyToken().then(res => {
       if (!res.verified) navigate('/login');
     });

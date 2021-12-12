@@ -6,10 +6,10 @@ import {
   RiEditBoxLine,
   IoIosArrowRoundBack,
 } from 'react-icons/all';
-import { Form } from '../../styled';
-import { Input } from '.';
+import { Grid, ImgContainer } from '../../styled';
+// import { Input } from '.';
 
-import '../form_styles.css';
+// import '../form_styles.css';
 
 const ImageUploaderThumbnail = ({
   type,
@@ -86,77 +86,93 @@ const ImageUploaderThumbnail = ({
   return (
     <>
       {images.length > 0 && (
-        <div
-          ref={ref}
-          style={{ opacity }}
-          data-handler-id={handlerId}
-          className='d-flex flex-column justify-content-center align-items-center m-2'
-        >
-          <img
-            src={url}
-            alt={url}
-            style={{ filter: !color && 'saturate(0)' }}
-          />
-          <div
-            className='thumbnail-overlay d-flex justify-content-center align-items-center'
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{ opacity: opacityState, padding: edit && '.75rem' }}
+        <Grid.Col sm={6} md={4}>
+          <ImgContainer
+            square
+            ref={ref}
+            data-handler-id={handlerId}
+            style={{ opacity }}
           >
-            {edit ? (
-              <div className='image-form-overlay d-flex flex-column justify-content-center w-100 h-100'>
-                <div className='back-container d-flex justify-content-end align-items-center h-25'>
-                  <IoIosArrowRoundBack
-                    size='2em'
-                    className='pointer back-icon mx-2'
-                    onClick={() => setEdit(false)}
-                  />
-                </div>
-                <div
-                  className='photo-form h-75 d-flex flex-column justify-content-around'
-                  style={{ width: 'auto' }}
-                >
-                  <div
-                    className='mb-3 d-flex justify-content-between align-items-start'
-                    style={{ height: 'fit-content', width: '40%' }}
-                  >
-                    <Form.Label>{color ? 'Color' : 'B&W'}</Form.Label>
-                    <Form.Check
-                      type='switch'
-                      id='custom-switch'
-                      defaultChecked={color}
-                      onClick={e => {
-                        switchHandler(e, url);
-                        console.log(color);
-                      }}
+            <img
+              src={url}
+              alt={url}
+              className='tounded-lg cursor-move hover:shadow-lg'
+              style={{ filter: `saturate(${color ? '100' : '0'})` }}
+            />
+          </ImgContainer>
+          {/* <div
+            ref={ref}
+            style={{ opacity }}
+            data-handler-id={handlerId}
+            className='relative overflow-hidden w-full after:content-none after:block after:pb-full'
+          >
+            <img
+              src={url}
+              alt={url}
+              className='absolute h-full w-auto'
+              style={{ filter: !color && 'saturate(0)' }}
+            />
+            <div
+              className='thumbnail-overlay flex justify-center items-center'
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              style={{ opacity: opacityState, padding: edit && '.75rem' }}
+            >
+              {edit ? (
+                <div className='image-form-overlay flex flex-col content-center w-full h-full'>
+                  <div className='back-container flex justify-end items-center h-1/4'>
+                    <IoIosArrowRoundBack
+                      size='2em'
+                      className='cursor-pointer back-icon mx-2'
+                      onClick={() => setEdit(false)}
                     />
                   </div>
-                  <Input
-                    // style={{ height: 'fit-content' }}
-                    type='text'
-                    name='photo_credit'
-                    label='Photographer'
-                    value={photo_credit}
-                    changehandler={e => inputHandler(e, _id)}
-                  />
+                  <div
+                    className='photo-form h-3/4 flex flex-col justify-around'
+                    style={{ width: 'auto' }}
+                  >
+                    <div
+                      className='mb-3 flex justify-between items-start'
+                      style={{ height: 'fit-content', width: '40%' }}
+                    >
+                      <Form.Label>{color ? 'Color' : 'B&W'}</Form.Label>
+                      <Form.Check
+                        type='switch'
+                        id='custom-switch'
+                        defaultChecked={color}
+                        onClick={e => {
+                          switchHandler(e, url);
+                          console.log(color);
+                        }}
+                      />
+                    </div>
+                    <Input
+                      // style={{ height: 'fit-content' }}
+                      type='text'
+                      name='photo_credit'
+                      label='Photographer'
+                      value={photo_credit}
+                      changehandler={e => inputHandler(e, _id)}
+                    />
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <>
-                <VscChromeClose
-                  className='pointer thumbnail-delete'
-                  size='2em'
-                  onClick={e => removeImage(e, _id)}
-                />
-                <RiEditBoxLine
-                  size='2em'
-                  className='pointer edit-icon'
-                  onClick={() => setEdit(true)}
-                />
-              </>
-            )}
-          </div>
-        </div>
+              ) : (
+                <>
+                  <VscChromeClose
+                    className='pointer thumbnail-delete'
+                    size='2em'
+                    onClick={e => removeImage(e, _id)}
+                  />
+                  <RiEditBoxLine
+                    size='2em'
+                    className='pointer edit-icon'
+                    onClick={() => setEdit(true)}
+                  />
+                </>
+              )}
+            </div>
+          </div> */}
+        </Grid.Col>
       )}
     </>
   );

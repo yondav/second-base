@@ -6,7 +6,6 @@ import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 
 import Alert from '../../alert';
-import { IoIosCloudUpload } from 'react-icons/io';
 
 import { ImageUploaderThumbnail } from './index';
 import Loading from '../../loading';
@@ -164,8 +163,8 @@ const ImageUploader = ({
   );
 
   return (
-    <Grid.Col xs={12} className='p-0'>
-      <Card.Base className='mb-5'>
+    <Grid.Col>
+      <Card.Base>
         {label && <Form.Label group>{label}</Form.Label>}
         {statusMessage ? (
           <Alert alert={statusMessage} />
@@ -177,12 +176,7 @@ const ImageUploader = ({
             {!loading ? (
               <>
                 <Form.Input {...getInputProps()} />
-                <div className='upload-square p-3 flex items-center justify-center'>
-                  <div className='upload-square-content flex flex-col items-center'>
-                    <IoIosCloudUpload size={'3.5em'} />
-                    <h5>Drag and Drop images here</h5>
-                  </div>
-                </div>
+                <Form.ImgUploader.Icon />
               </>
             ) : (
               <Loading />
@@ -190,9 +184,11 @@ const ImageUploader = ({
           </div>
         )}
         {images.length > 0 && (
-          <Card.Body className='flex justify-center flex-wrap preview-imgs'>
+          <Card.Body>
             <DndProvider backend={HTML5Backend}>
-              {images && images.map((img, i) => renderThumbnail(img, i))}
+              <Grid.Container>
+                {images && images.map((img, i) => renderThumbnail(img, i))}
+              </Grid.Container>
             </DndProvider>
           </Card.Body>
         )}

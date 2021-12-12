@@ -19,6 +19,12 @@ export const Base = styled(motion.div).attrs({
     props.dialogue &&
     tw`w-full sm:w-4/5 md:w-2/3 lg:w-1/2 p-3 shadow-lg rounded-lg md:ml-24 focus:border focus:border-gray-150`}
   
+  ${props =>
+    props.img &&
+    `& .card-body {
+    ${tw`flex justify-center flex-wrap`}
+  }`}
+
   & header {
     ${tw`bg-gray-100 absolute top-0 w-full p-5 border-b border-gray-250`}
 

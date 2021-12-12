@@ -8,7 +8,7 @@ export const Container = styled.div.attrs({
 export const Col = ({ sm, md, lg, children }) => {
   const renderClasses = () => {
     let classes = ['py-3', 'px-4', 'col-span-12'];
-    if (sm) classes.push(`col-span-${sm}`);
+    if (sm) classes.push(`sm:col-span-${sm}`);
     if (md) classes.push(`md:col-span-${md}`);
     if (lg) classes.push(`lg:col-span-${lg}`);
 

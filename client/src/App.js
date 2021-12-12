@@ -6,20 +6,25 @@ import React, {
   Suspense,
 } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import pMinDelay from 'p-min-delay';
+
 import { DataContext } from './context/context.data';
 import useDataContext from './hooks/useDataContext';
 
-import Nav from './components/nav';
 import { consoleMessages } from './utils/console';
+
+import Loading from './components/loading';
+import Nav from './components/nav';
 import { AppWrapper } from './components/styled';
 
-const Login = React.lazy(() => import('./pages/admin/login'));
-const Portal = React.lazy(() => import('./pages/admin/portal'));
+const del = 1500;
+const Login = React.lazy(() => pMinDelay(import('./pages/admin/login'), del));
+const Portal = React.lazy(() => pMinDelay(import('./pages/admin/portal'), del));
 const About = React.lazy(() => import('./pages/client/about'));
 const Artists = React.lazy(() => import('./pages/client/artists'));
 const Booking = React.lazy(() => import('./pages/client/booking'));
 const Gear = React.lazy(() => import('./pages/client/gear'));
-const Home = React.lazy(() => import('./pages/client/home'));
+const Home = React.lazy(() => pMinDelay(import('./pages/client/home'), del));
 
 const App = () => {
   const navRef = useRef();
@@ -33,14 +38,11 @@ const App = () => {
     await getGear();
   };
 
-  useEffect(() => {
-    fetch();
-  }, []);
+  useEffect(() => fetch(), []);
 
   useEffect(() => {
-    if (!window.scrollY) {
+    if (!window.scrollY)
       setWrapperHeight(`calc(100vh - ${navRef.current.clientHeight}px)`);
-    }
   }, [navRef, window.scrollY]);
 
   useEffect(() => state && consoleMessages.state(state), [state]);
@@ -48,7 +50,7 @@ const App = () => {
     <>
       <Nav innerRef={navRef} />
       <AppWrapper style={{ height: wrapperHeight }}>
-        <Suspense fallback=''>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path='/' element={<Home />}>
               <Route path='about' element={<About />} />

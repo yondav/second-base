@@ -9,5 +9,5 @@ export const consoleMessages = {
     console.log('%cstate', consoleColors.purpleBlock, '\n', state),
   success: message =>
     console.log('%csuccess:', consoleColors.greenBlock, message),
-  fail: message => console.log('%csuccess:', consoleColors.redBlock, message),
+  fail: message => console.log('%cfail:', consoleColors.redBlock, message),
 };

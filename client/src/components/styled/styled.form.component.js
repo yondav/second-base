@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import ContentEditable from 'react-contenteditable';
+import { IoIosCloudUpload } from 'react-icons/io';
 
 export const Group = styled.div.attrs({
   className: 'mb-8',
@@ -83,10 +83,37 @@ export const RichText = styled.div.attrs({
   }
 `;
 
+export const ImgUploader = {
+  Icon: () => (
+    <div className='relative w-40 h-40 border-dashed border-4 rounded-lg border-gray-50 p-3 flex items-center justify-center'>
+      <div className='upload-square-content flex flex-col items-center'>
+        <IoIosCloudUpload size={'3.5em'} />
+        <h5>Drag and Drop images here</h5>
+      </div>
+    </div>
+  ),
+
+  Thumbnail: styled.div.attrs({
+    className: 'relative overflow-hidden w-full cursor-move rounded-lg',
+  })`
+    &:before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+
+    & img {
+      ${tw`absolute hover:shadow-lg`}
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  `,
+};
+
 export const Button = styled.button.attrs({
   className:
     'cursor-pointer text-gray-850 border border-gray-850 px-3 py-2 m-1 rounded-md hover:bg-gray-850 hover:text-gray-50 hover:shadow-lg focus:bg-gray-850 focus:text-gray-50 focus:shadow-lg transition-all duration-300 ease-in-out',
-  // type: props.type||'button',
 })`
   ${props => props.danger && tw`text-red-800 border-red-800 hover:bg-red-800`}
 

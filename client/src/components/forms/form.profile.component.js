@@ -57,11 +57,11 @@ const ProfileForm = ({ setEdit }) => {
         parentId: _id,
       });
 
-    if (existingImgs)
-      await updateImage({
-        imgs: existingImgs,
-        collection: 'user',
-      });
+    // if (existingImgs)
+    //   await updateImage({
+    //     imgs: existingImgs,
+    //     collection: 'user',
+    //   });
 
     const res = await updateUser(_id, formData);
 
@@ -152,7 +152,7 @@ const ProfileForm = ({ setEdit }) => {
       <RichText setFormData={setFormData} value={bio} name='bio' />
       <ImageUploader
         type='user'
-        single={true}
+        // single={true}
         originalList={images}
         images={imgs}
         setImages={setImgs}

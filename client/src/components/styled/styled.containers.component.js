@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import tw from 'tailwind.macro';
+import tw from 'tailwind.macro';
 
 export const AppWrapper = styled.div.attrs({
   className:
@@ -22,3 +22,27 @@ export const PortalItem = {
     transition: 300ms all ease-in-out;
   `,
 };
+
+export const ImgContainer = styled.div.attrs({
+  className: 'overflow-hidden w-full rounded-lg',
+})`
+  ${props => props.square && tw`relative`}
+  ${props =>
+    props.square &&
+    `
+&:before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+
+& img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 300ms all ease-in-out;
+}`}
+
+${props => props.circle && tw`rounded-full`}
+`;

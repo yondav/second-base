@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import pMinDelay from 'p-min-delay';
 
 import Loading from '../loading';
@@ -10,14 +10,8 @@ const ProfileForm = React.lazy(() =>
 const GeneralForm = React.lazy(() => import('../forms/form.general.component'));
 
 const ModalContent = ({ edit, setEdit }) => {
-  const bodyToggle = () =>
-    ['overflow-x-hidden', 'overflow-y-hidden'].map(cl =>
-      document.querySelector('body').classList.toggle(cl)
-    );
-
   const handleClose = () => {
     setEdit(false);
-    bodyToggle();
   };
 
   const editContent = () => {
@@ -32,10 +26,6 @@ const ModalContent = ({ edit, setEdit }) => {
         break;
     }
   };
-
-  useEffect(() => {
-    bodyToggle();
-  }, []);
 
   return (
     <Modal handleClose={handleClose}>

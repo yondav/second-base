@@ -207,6 +207,7 @@ export default function useDataContext() {
       }
     } catch (err) {
       consoleMessages.fail('image has not been added');
+      console.log(err);
     }
   };
 

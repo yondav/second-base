@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import useAdminContext from '../../../hooks/useAdminContext';
+
 import { LoginForm } from '../../../components/forms';
-import { Card } from '../../../components/styled';
 import Alert from '../../../components/alert';
+import { Card } from '../../../components/styled';
 
 const Login = () => {
+  const { verifyToken } = useAdminContext();
+  const navigate = useNavigate();
+
   const [alert, setAlert] = useState({
     variant: '',
     message: '',
   });
+
+  useEffect(
+    () =>
+      verifyToken().then(res => {
+        if (res.verified) navigate('/admin/portal');
+      }),
+    []
+  );
 
   return (
     <Card.Base login>

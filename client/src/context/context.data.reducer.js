@@ -86,7 +86,7 @@ export default function dataReducer(state, action) {
               ...state,
               loading: false,
               data: {
-                ...data,
+                ...state.data,
                 user: { ...user, images: [...user.images, ...data] },
               },
             };

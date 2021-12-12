@@ -30,6 +30,6 @@ exports.getRoutes = [
     path: '/users',
     method: 'get',
     func: getController.user,
-    middleware: [cacheMethods.get],
+    middleware: [],
   },
 ];
