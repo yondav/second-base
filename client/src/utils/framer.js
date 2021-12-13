@@ -41,3 +41,22 @@ export const growHeight = {
   visible: { height: 'auto' },
   transition: duration => ({ duration, ease: 'easeInOut' }),
 };
+
+// slider for carousel
+export const carouselSlide = direction => {
+  let hidden = x => ({ opacity: 0, x });
+  let exit = x => ({
+    oopacity: 1,
+    x,
+    transition: { duration: 0.4, ease: 'easeInOut' },
+  });
+  let animate = {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.3, delay: 0.35, ease: 'easeInOut' },
+  };
+
+  return direction === 'next'
+    ? { hidden: hidden('30%'), animate, exit: exit('-150%') }
+    : { hidden: hidden('-30%'), animate, exit: exit('150%') };
+};

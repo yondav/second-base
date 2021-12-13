@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../../../context/context.data';
-import Carousel from '../../../components/carousel';
+import Slider from '../../../components/slider';
 
 const About = () => {
   const [loaded, setLoaded] = useState(false);
@@ -17,7 +17,7 @@ const About = () => {
     <>
       {loaded && (
         <div className='w-1/2'>
-          <Carousel images={images} />
+          <Slider images={images} />
         </div>
       )}
     </>

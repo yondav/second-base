@@ -5,11 +5,7 @@ import { motion } from 'framer-motion';
 export const Base = styled(motion.div).attrs({
   className: `relative flex flex-col bg-gray-50 m-auto py-10 container rounded-md w-full overflow-hidden`,
 })`
-  ${props => props.login && tw`sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/4`}
-  ${props =>
-    props.login &&
-    `top: 50%;
-    transform: translateY(-50%);`}
+  ${props => props.login && tw`sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/4 shadow-lg`}
 
   ${props =>
     props.modal &&

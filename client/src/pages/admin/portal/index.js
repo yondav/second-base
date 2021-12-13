@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import { DataContext } from '../../../context/context.data';
@@ -8,9 +8,7 @@ import { toTitle, bodyToggle } from '../../../utils/helperFuncs';
 
 import Loading from '../../../components/loading';
 import * as Admin from '../../../components/portal';
-import { Card, Accordion, H3 } from '../../../components/styled';
-
-import './portal.css';
+import { Card, Accordion, H1, Grid } from '../../../components/styled';
 
 const pages = [
   { title: 'profile', component: Admin.Profile },
@@ -44,36 +42,50 @@ const Portal = () => {
   }, [edit]);
 
   return (
-    <Card.Base>
-      {!state.data.user.first_name ? (
-        <Loading />
-      ) : (
-        <>
-          <Card.Header>
-            <H3>Welcome back {toTitle(state.data.user.first_name)}</H3>
-          </Card.Header>
-          <Card.Body>
-            <Accordion.Base>
-              {pages.map(pg => (
-                <Accordion.Section
-                  key={pg.title}
-                  param={pg.title}
-                  title={toTitle(pg.title)}
-                  active={active.includes(pg.title)}
-                  setActive={() => activeSetter(pg.title)}
-                >
-                  {React.createElement(pg.component, { setEdit })}
-                </Accordion.Section>
-              ))}
-            </Accordion.Base>
-          </Card.Body>
-          <AnimatePresence>
-            {edit && <Admin.ModalContent edit={edit} setEdit={setEdit} />}
-          </AnimatePresence>
-        </>
-      )}
-    </Card.Base>
+    <div className='w-full'>
+      <div
+        className='h-screen text-center bg-no-repeat	bg-center bg-fixed bg-cover'
+        style={{
+          backgroundImage:
+            "url('http://res.cloudinary.com/yup-schlepp/image/upload/v1639363829/secondBase/f1zfjoyazpc8m9a5w9vb.webp')",
+        }}
+      ></div>
+      <Grid.Col>
+        <H1>Welcome Back {toTitle(state.data.user.first_name)}</H1>
+      </Grid.Col>
+      <Outlet />
+    </div>
   );
+  // return (
+  //   <Card.Base>
+  //     {!state.data.user.first_name ? (
+  //       <Loading />
+  //     ) : (
+  //       <>
+  //         <Card.Header>
+  //           <H3>Welcome back {toTitle(state.data.user.first_name)}</H3>
+  //         </Card.Header>
+  //         <Card.Body>
+  //           <Accordion.Base>
+  //             {pages.map(pg => (
+  //               <Accordion.Section
+  //                 key={pg.title}
+  //                 title={toTitle(pg.title)}
+  //                 active={active.includes(pg.title)}
+  //                 setActive={() => activeSetter(pg.title)}
+  //               >
+  //                 {React.createElement(pg.component, { setEdit })}
+  //               </Accordion.Section>
+  //             ))}
+  //           </Accordion.Base>
+  //         </Card.Body>
+  //         <AnimatePresence>
+  //           {edit && <Admin.ModalContent edit={edit} setEdit={setEdit} />}
+  //         </AnimatePresence>
+  //       </>
+  //     )}
+  //   </Card.Base>
+  // );
 };
 
 export default Portal;

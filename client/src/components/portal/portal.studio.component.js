@@ -5,6 +5,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { DataContext } from '../../context/context.data';
 import { toTitle } from '../../utils/helperFuncs';
 import TabWrapper from './portal.tabWrapper.component';
+import Slider from '../slider';
 import { Grid } from '../styled';
 
 const Studio = ({ setEdit }) => {
@@ -56,6 +57,7 @@ const Studio = ({ setEdit }) => {
           </div>
         </div>
       </Grid.Col>
+      <Grid.Col></Grid.Col>
       <div
         className='d-flex align-items-center my-3 pointer'
         onClick={handleServices}

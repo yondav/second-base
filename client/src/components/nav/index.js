@@ -11,7 +11,7 @@ import { BsInstagram } from 'react-icons/bs';
 
 import { NavBar } from '../styled';
 
-const Nav = ({ innerRef }) => {
+const Nav = ({ innerRef, sticky }) => {
   const { state } = useContext(DataContext);
   const { isDesktop } = useMediaQuery();
   const { logout } = useAdminContext();
@@ -50,7 +50,14 @@ const Nav = ({ innerRef }) => {
   };
 
   return (
-    <NavBar.Bar ref={innerRef}>
+    <NavBar.Bar
+      layout
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      transition={{ duration: 0.3, delay: 0.1, ease: 'easeInOut' }}
+      sticky={sticky}
+      ref={innerRef}
+    >
       <Link to='/' className='w-2/5 md:w-1/4 lg:1/5'>
         <img src={state.data.studio.logo} alt='secondBase' className='w-full' />
       </Link>

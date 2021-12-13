@@ -19,3 +19,8 @@ export const bodyToggle = edit =>
     : ['overflow-x-hidden', 'overflow-y-hidden'].map(cl =>
         document.querySelector('body').classList.remove(cl)
       );
+
+export const toggleStickyNav = () =>
+  ['bg-gray-900', 'fixed'].map(cl =>
+    document.querySelector('nav').classList.toggle(cl)
+  );

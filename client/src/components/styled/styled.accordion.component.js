@@ -22,7 +22,7 @@ export const Base = styled.section.attrs({
 `;
 
 const Button = ({ title, setActive, active }) => (
-  <button onClick={() => (!active ? setActive(true) : setActive(false))}>
+  <button onClick={() => setActive(!active)}>
     <span>{title}</span>
     <IoIosArrowDown
       style={{
@@ -33,7 +33,7 @@ const Button = ({ title, setActive, active }) => (
   </button>
 );
 
-export const Section = ({ param, title, setActive, active, children }) => (
+export const Section = ({ title, setActive, active, children }) => (
   <article className='accordion-section'>
     <Button title={title} active={active} setActive={setActive} />
 

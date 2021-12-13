@@ -25,15 +25,17 @@ const Login = () => {
   );
 
   return (
-    <Card.Base login>
-      <Card.Body>
-        {alert.variant ? (
-          <Alert alert={alert} />
-        ) : (
-          <LoginForm setAlert={setAlert} />
-        )}
-      </Card.Body>
-    </Card.Base>
+    <div className='flex items-center h-screen'>
+      <Card.Base login>
+        <Card.Body>
+          {alert.variant ? (
+            <Alert alert={alert} />
+          ) : (
+            <LoginForm setAlert={setAlert} />
+          )}
+        </Card.Body>
+      </Card.Base>
+    </div>
   );
 };
 

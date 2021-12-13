@@ -3,12 +3,14 @@ import tw from 'tailwind.macro';
 import { motion } from 'framer-motion';
 import { swivelCard } from '../../utils/framer';
 
-export const Bar = styled.nav.attrs({
+export const Bar = styled(motion.nav).attrs({
   className:
-    'absolute top-0 left-0 w-screen flex justify-between items-center	py-6 px-8 bg-gray-900 font-primary font-light',
+    'bg-gray-900 absolute top-0 left-0 w-screen flex justify-between items-center	py-6 px-8 font-primary font-light transition-all duration-300 ease-in-out',
 })`
+  ${props => props.sticky && tw`fixed bg-gray-900 z-10`}
+
   & .dt-links {
-    ${tw`flex justify-around items-center`}
+    ${tw`flex justify-around items-center bg-gray-900`}
 
     & a {
       ${tw`text-sm no-underline text-gray-300 whitespace-no-wrap hover:text-gray-100`}

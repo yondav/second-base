@@ -3,7 +3,7 @@ import tw from 'tailwind.macro';
 
 export const AppWrapper = styled.div.attrs({
   className:
-    'absolute bottom-0 w-full bg-gray-100 p-2 text-gray-800 font-primary font-light',
+    'w-full min-h-screen bg-gray-100 text-gray-800 font-primary font-light',
 })`
   & a {
     transition: 300ms all ease-in-out;
